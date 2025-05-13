@@ -2,31 +2,30 @@
   type: map
   contents:
     - name: Full Name
-      value: Albert Einstein
+      value: Shourav Misro
     - name: Date of Birth
-      value: 14th March 1879
+      value: 1st february 2002
     - name: Languages
-      value: English, German
+      value: Bangla, English, Hindi
 
 - title: Education
   type: time_table
   contents:
-    - title: PhD
-      institution: University of Zurich, Zurich, Switzerland
-      year: 1905
+    - title: Bachelor of Science .
+      institution: Ahsanullah University of Science and Technology, Dhaka, Bangladesh
+      year: 2021-present
       description:
-        - Description 1.
+        - Bachelor of Science in Computer Science & Engineering
         - Description 2.
         - title: Description 3.
           contents:
             - Sub-description 1.
             - Sub-description 2.
-    - title: Federal teaching diploma
-      institution: Eidgenössische Technische Hochschule, Zurich, Switzerland
-      year: 1900
+    - title: Higher secondary school certificate
+      institution: Bir shrestha munshi abdur rouf public college, Dhaka, Bangladesh
+      year: 2020
       description:
-        - Description 1.
-        - Description 2.
+        - grafe: 5.00 out of 5.00
 
 - title: Experience
   type: time_table
