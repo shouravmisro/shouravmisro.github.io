@@ -7,10 +7,19 @@ first_name: Shourav
 middle_name: 
 last_name: Misro
 contact_note: mshourav05@gmail.com
+<<<<<<< HEAD
+  You can even add a little note about which of these is the best way to reach you.
+description: # the ">" symbol means to ignore newlines until "footer_text:"
+=======
 #  You can even add a little note about which of these is the best way to reach you.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
+>>>>>>> 838bd423905a814e49fbcc04b1deb2cd526a5ef4
   A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+<<<<<<< HEAD
+footer_text: Hiiii
+=======
 footer_text:
+>>>>>>> 838bd423905a814e49fbcc04b1deb2cd526a5ef4
 keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: ⚛️ # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
@@ -632,7 +641,6 @@ jsonresume:
   - work
   - education
   - publications
-  - projects
   - volunteer
   - awards
   - certificates
@@ -640,3 +648,4 @@ jsonresume:
   - languages
   - interests
   - references
+  -projects
