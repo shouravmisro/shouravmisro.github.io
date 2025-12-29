@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/contact.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <strong id="siteName">Loading…</strong>
+        <span id="siteTagline"></span>
+      </div>
+      <div class="menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="skills.html">Skills</a>
+        <a href="projects.html">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="education.html">Education</a>
+        <a href="achievements.html">Achievements</a>
+        <a class="active" href="contact.html">Contact</a>
+        <a href="admin.html">Make Yours</a>
+        <button class="btn" onclick="toggleTheme()">Toggle</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <h2 class="reveal">contact</h2>
+
+    <section class="card reveal">
+      <p class="muted">
+        fastest way to reach me is via email.
+      </p>
+
+      <div class="actions">
+        <a class="btn" id="emailBtn" href="#">email me</a>
+        <a class="btn" id="cvBtn" href="#">download cv</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/reveal.js"></script>
+  <script src="assets/js/site.js"></script>
+  <script>boot("contact");</script>
+</body>
+</html>

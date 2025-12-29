@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>make yours</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <strong>make yours</strong>
+        <span>easy builder → export site.json + cv.html</span>
+      </div>
+      <div class="menu">
+        <a href="index.html">preview</a>
+        <button class="btn" onclick="toggleTheme()">toggle</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <h2 class="reveal">build your portfolio (no coding)</h2>
+
+    <!-- basics -->
+    <section class="card reveal">
+      <h3>basics</h3>
+      <div class="grid two">
+        <label>full name<br><input id="b_name" class="in" /></label>
+        <label>tagline<br><input id="b_tagline" class="in" /></label>
+
+        <label>email<br><input id="b_email" class="in" placeholder="name@email.com" /></label>
+        <label>location<br><input id="b_location" class="in" placeholder="city, country" /></label>
+
+        <label>profile image path<br><input id="b_img" class="in" placeholder="assets/img/profile.jpg" /></label>
+        <label>cv pdf path (download cv button)<br><input id="b_cvpdf" class="in" placeholder="assets/my_cv.pdf" /></label>
+      </div>
+
+      <hr class="sep" />
+
+      <h3>social links</h3>
+      <div class="grid two">
+        <label>github<br><input id="s_github" class="in" placeholder="https://github.com/username" /></label>
+        <label>linkedin<br><input id="s_linkedin" class="in" placeholder="https://linkedin.com/in/..." /></label>
+        <label>facebook<br><input id="s_facebook" class="in" placeholder="https://facebook.com/..." /></label>
+        <label>website<br><input id="s_website" class="in" placeholder="https://..." /></label>
+      </div>
+
+      <hr class="sep" />
+
+      <h3>about</h3>
+      <p class="muted" style="margin-top:0">add one paragraph at a time</p>
+      <div class="row">
+        <input id="a_text" class="in" placeholder="write one about paragraph..." />
+        <button class="btn" id="a_add" type="button">add</button>
+      </div>
+      <div id="a_list" class="list"></div>
+    </section>
+
+    <!-- skills -->
+    <section class="card reveal">
+      <h3>skills</h3>
+      <p class="muted" style="margin-top:0">add skill → choose category → add</p>
+      <div class="grid two">
+        <label>category<br>
+          <input id="sk_cat" class="in" placeholder="e.g. programming / web / iot / tools" />
+        </label>
+        <label>skill<br>
+          <input id="sk_item" class="in" placeholder="e.g. python" />
+        </label>
+      </div>
+      <div class="row">
+        <button class="btn" id="sk_add" type="button">add skill</button>
+        <button class="btn" id="sk_newcat" type="button">create category</button>
+      </div>
+      <div id="sk_view" class="list"></div>
+    </section>
+
+    <!-- projects -->
+    <section class="card reveal">
+      <h3>projects</h3>
+      <p class="muted" style="margin-top:0">hardware + software separated. each project can have github + published/demo link.</p>
+
+      <div class="grid two">
+        <label>type<br>
+          <select id="p_type" class="in">
+            <option value="hardware">hardware</option>
+            <option value="software">software</option>
+          </select>
+        </label>
+        <label>title<br><input id="p_title" class="in" placeholder="project title" /></label>
+
+        <label>year<br><input id="p_year" class="in" placeholder="2025" /></label>
+        <label>short description<br><input id="p_desc" class="in" placeholder="1-2 lines summary" /></label>
+
+        <label>github link<br><input id="p_github" class="in" placeholder="https://github.com/..." /></label>
+        <label>published/demo link<br><input id="p_published" class="in" placeholder="https://..." /></label>
+
+        <label>stack (comma separated)<br><input id="p_stack" class="in" placeholder="python, flask, html" /></label>
+        <label>components (comma separated)<br><input id="p_comp" class="in" placeholder="esp32, bme280, relay" /></label>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="p_add" type="button">add project</button>
+      </div>
+
+      <h4 class="sub">hardware projects</h4>
+      <div id="p_hw" class="list"></div>
+
+      <h4 class="sub">software projects</h4>
+      <div id="p_sw" class="list"></div>
+    </section>
+
+    <!-- experience -->
+    <section class="card reveal">
+      <h3>experience</h3>
+      <p class="muted" style="margin-top:0">add one job at a time + add highlights one by one</p>
+
+      <div class="grid two">
+        <label>role<br><input id="e_role" class="in" placeholder="ai & hardware developer" /></label>
+        <label>organization<br><input id="e_org" class="in" placeholder="company/org name" /></label>
+        <label>years<br><input id="e_years" class="in" placeholder="2016–2019" /></label>
+        <label>highlight (one at a time)<br><input id="e_hi" class="in" placeholder="did xyz..." /></label>
+      </div>
+
+      <div class="row">
+        <button class="btn" id="e_add_hi" type="button">add highlight</button>
+        <button class="btn" id="e_add_job" type="button">add job</button>
+        <button class="btn" id="e_clear" type="button">clear current</button>
+      </div>
+
+      <div id="e_current" class="list"></div>
+      <div id="e_list" class="list"></div>
+    </section>
+
+    <!-- education -->
+    <section class="card reveal">
+      <h3>education</h3>
+      <div class="grid two">
+        <label>degree<br><input id="ed_degree" class="in" /></label>
+        <label>organization<br><input id="ed_org" class="in" /></label>
+        <label>years<br><input id="ed_years" class="in" /></label>
+      </div>
+      <div class="row">
+        <button class="btn" id="ed_add" type="button">add education</button>
+      </div>
+      <div id="ed_list" class="list"></div>
+    </section>
+
+    <!-- achievements -->
+    <section class="card reveal">
+      <h3>achievements (include sports)</h3>
+      <div class="row">
+        <input id="ac_text" class="in" placeholder="add one achievement..." />
+        <button class="btn" id="ac_add" type="button">add</button>
+      </div>
+      <div id="ac_list" class="list"></div>
+    </section>
+
+    <!-- export -->
+    <section class="card reveal">
+      <h3>export</h3>
+      <div class="row">
+        <button class="btn" id="x_site" type="button">download site.json</button>
+        <button class="btn" id="x_cv" type="button">download cv.html (print → save as pdf)</button>
+      </div>
+      <p class="muted" style="margin-top:10px">
+        after download: replace <b>data/site.json</b> in repo. then refresh website.
+      </p>
+    </section>
+  </main>
+
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/reveal.js"></script>
+  <script src="assets/js/admin.js"></script>
+  <script>initReveal();</script>
+</body>
+</html>

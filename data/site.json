@@ -1,0 +1,189 @@
+{
+    "name": "Shourav Misro",
+    "tagline": "CSE Undergraduate | IoT & Embedded Systems | Software & QA",
+    "email": "mshourav05@gmail.com",
+    "phone": "+88-01400300661",
+    "location": "Dhaka, Bangladesh",
+    "profileImage": "assets/img/profile.jpg",
+    "cvPdf": "assets/Shourav_Misro_CV.pdf",
+  
+    "socialLinks": [
+      { "label": "github", "url": "https://github.com/shouravmisro" },
+      { "label": "linkedin", "url": "" },
+      { "label": "facebook", "url": "" },
+      { "label": "instagram", "url": "" },
+      { "label": "youtube", "url": "" },
+      { "label": "website", "url": "" }
+    ],
+  
+    "about": [
+      "I am enthusiastic and passionate about solving real-world problems. With a strong interest in programming and hardware, I have honed my technical skills, communication abilities, and leadership qualities through team collaborations and organizing competitive events.",
+      "Eager to join a reputed company, I aim to contribute to innovative solutions, adapt to dynamic challenges, and grow professionally."
+    ],
+  
+    "skills": {
+      "Programming Languages": ["Python", "C#", "Java", "C", "C++", "HTML", "CSS", "JavaScript"],
+      "QA & Testing Tools": ["Postman", "Jira", "TestRail", "Selenium"],
+      "Testing Knowledge": ["Manual Testing", "Test Case Design", "Bug Reporting", "API Testing", "Regression Testing"],
+      "Development Tools": ["Git", "Docker"],
+      "IDEs": ["Visual Studio", "VS Code", "NetBeans", "Android Studio", "Google Colab", "Arduino IDE"],
+      "Framework & Database": ["ASP.NET MVC", "Android", "PHP", "MySQL", "Firebase"],
+      "Hardware": ["Arduino", "ESP32", "Basic Sensors"]
+    },
+  
+    "projects": [
+      {
+        "category": "software",
+        "title": "LearnLink (QA Engineer)",
+        "year": "2024",
+        "description": "Created/executed 50+ test cases, tested 20+ user journeys, verified 100+ records, and tracked 25+ issues with developers until fixes.",
+        "github": "",
+        "published": "",
+        "stack": ["HTML", "JavaScript", "CSS", "C#", "ASP.NET MVC"],
+        "components": []
+      },
+      {
+        "category": "software",
+        "title": "Personal Dashboard",
+        "year": "2025",
+        "description": "Cloud-deployed personal dashboard web app to organize and visualize personal data with a clean UI.",
+        "github": "https://github.com/shouravmisro/personaldashboard",
+        "published": "",
+        "stack": ["Python", "Flask", "HTML", "CSS"],
+        "components": []
+      },
+      {
+        "category": "software",
+        "title": "Local Business Directory",
+        "year": "2024",
+        "description": "Web-based business directory with database support to manage and display local business info efficiently.",
+        "github": "",
+        "published": "",
+        "stack": ["HTML", "CSS", "Bootstrap", "PHP", "MySQL"],
+        "components": []
+      },
+      {
+        "category": "software",
+        "title": "Root (Android)",
+        "year": "2023",
+        "description": "E-commerce Android app focused on smooth, user-friendly shopping experience.",
+        "github": "https://github.com/shouravmisro/root-android",
+        "published": "",
+        "stack": ["Java", "Android"],
+        "components": []
+      },
+      {
+        "category": "software",
+        "title": "Hospital Management System",
+        "year": "2023",
+        "description": "Streamlines patient records, appointments, and operations with database-backed workflows.",
+        "github": "https://github.com/shouravmisro/Hospital-management-system",
+        "published": "",
+        "stack": ["Java", "MySQL Server"],
+        "components": []
+      },
+      {
+        "category": "software",
+        "title": "Underground Racing (iGraphics)",
+        "year": "2022",
+        "description": "Racing game focused on fast-paced gameplay and engaging experience.",
+        "github": "https://github.com/shouravmisro/underground-racing-igraphic",
+        "published": "",
+        "stack": ["C++", "iGraphics"],
+        "components": []
+      },
+  
+      {
+        "category": "hardware",
+        "title": "Implementation of Intelligent Solar Panel System",
+        "year": "2024–2025",
+        "description": "Centralized solar system for protection, cleaning, power sharing, weather monitoring and other features.",
+        "github": "https://github.com/shouravmisro/Optimal_solar_system",
+        "published": "",
+        "stack": ["IoT", "Embedded", "Edge"],
+        "components": ["ESP32", "BME280", "BH1750", "Dust Sensor", "Relay", "Jetson Nano", "MPPT/PWM Module", "Volt/Current Sensor"]
+      },
+      {
+        "category": "hardware",
+        "title": "Unified Smart Home Ecosystem",
+        "year": "2025",
+        "description": "Centralized IoT system integrating wellness, security, and energy management with smart automation.",
+        "github": "https://github.com/shouravmisro/The-Unified-Smart-Home-Ecosystem-for-Wellness-Security-and-Efficiency",
+        "published": "",
+        "stack": ["IoT", "Automation"],
+        "components": ["ESP32", "Raspberry Pi 4", "mmWave Radar", "PIR", "Sound Sensor", "Current Sensor"]
+      },
+      {
+        "category": "hardware",
+        "title": "Traffic Management System",
+        "year": "2024",
+        "description": "Fog and edge network system for making real-time decisions.",
+        "github": "",
+        "published": "",
+        "stack": ["Fog", "Edge", "IoT"],
+        "components": ["ESP32", "Gyroscope", "Accelerometer", "Magnetometer"]
+      },
+      {
+        "category": "hardware",
+        "title": "Smart Security System",
+        "year": "2016",
+        "description": "IoT project with real-time tracking and calling/messaging feature.",
+        "github": "",
+        "published": "",
+        "stack": ["IoT", "Embedded"],
+        "components": ["Arduino Uno", "Sonar", "Keypads", "GSM Module", "Wi-Fi Module"]
+      },
+      {
+        "category": "hardware",
+        "title": "Water Tank Spill Alarm System",
+        "year": "2015",
+        "description": "Alarm system to stop water tank spilling.",
+        "github": "",
+        "published": "",
+        "stack": ["Embedded"],
+        "components": ["Arduino", "Relay"]
+      }
+    ],
+  
+    "experience": [
+      {
+        "role": "AI & Hardware Developer",
+        "org": "AI Robot Bondhu (ICT Ministry, Bangladesh)",
+        "years": "2016–2019",
+        "highlights": [
+          "Worked on hardware + AI demonstrations and practical prototypes.",
+          "Contributed to system assembly, debugging, and iterative improvements."
+        ]
+      }
+    ],
+  
+    "volunteering": [
+      { "title": "AUST CSE Carnival 5.0 (Spring 2024)", "year": "2025" },
+      { "title": "AUST CSE Revelry (Spring 2024)", "year": "2024" },
+      { "title": "The Last Note (Fall 2024)", "year": "2024" }
+    ],
+  
+    "achievements": [
+      "BCSIR National Science Fest 2016 — Project Showcase: Smart Security System (Champion)",
+      "BCSIR National Science Fest 2019 — Project Showcase: Affordable Prosthetic Hand",
+      "Robomania 1.0 2024 — Bot Fight (Runner-up)",
+      "AC Red League Football Tournament 2024–2025 — Champion",
+      "AUST CSE Futsal Championship (Fall ’24) — Champion",
+      "AUST CSE Football Championship (Fall ’24) — Runner-up",
+      "AUST CSE Cricket Tournament (Spring ’24) — Champion"
+    ],
+  
+    "education": [
+      {
+        "degree": "B.Sc. in Computer Science & Engineering",
+        "org": "Ahsanullah University of Science & Technology (AUST)",
+        "years": "Nov 2021 – Dec 2025"
+      },
+      {
+        "degree": "HSC",
+        "org": "Bir Shreshtha Munshi Abdur Rouf Public College",
+        "years": "2020 (GPA 5.0)"
+      }
+    ]
+  }
+  
