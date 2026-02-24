@@ -1,0 +1,34 @@
+{
+  "basics": {
+    "name": "Shourav Misro",
+    "headline": "Building reliable software and IoT systems with clean UI and a strong QA mindset.",
+    "roles": ["SQA Intern", "Junior QA", "IoT"],
+    "location": "Bangladesh",
+    "email": "misroshourav@gmail.com",
+    "phone": "01400300661",
+    "github": "https://github.com/shouravmisro",
+    "linkedin": "",
+    "facebook": "https://www.facebook.com/shourav.05"
+  },
+  "about": {
+    "short": "I focus on quality-first development: clear test cases, reliable workflows, and practical IoT projects. I enjoy building things that feel smooth to use and stable to maintain.",
+    "long": ""
+  },
+  "skills": [
+    { "id": "skill_qa", "name": "Test Case Design", "level": "Intermediate" },
+    { "id": "skill_api", "name": "API Testing (Postman)", "level": "Intermediate" },
+    { "id": "skill_bug", "name": "Bug Reporting", "level": "Intermediate" },
+    { "id": "skill_iot", "name": "IoT / Sensors", "level": "Intermediate" }
+  ],
+  "projects": [],
+  "experience": [],
+  "education": [],
+  "achievements": [],
+  "settings": {
+    "themeStyle": "CleanGradient",
+    "showPhone": true,
+    "cvLayout": "Modern",
+    "compactSpacing": false,
+    "onePageMode": false
+  }
+}

@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/Container.astro";
+import Button from "../components/Button.astro";
+import { loadSiteJson } from "../lib/sitejson";
+
+const data = loadSiteJson();
+const b = data.basics;
+---
+
+<BaseLayout title="CV" description="Curriculum Vitae">
+  <section class="py-14">
+    <Container>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-3xl font-extrabold tracking-tight reveal">CV</h1>
+          <p class="mt-2 text-[rgb(var(--fg)/0.70)] reveal">
+            Print to PDF from the browser for best results.
+          </p>
+        </div>
+        <div class="flex gap-2 reveal">
+          <Button href="/make" variant="secondary">Open Builder</Button>
+          <Button href="/resume">Resume</Button>
+        </div>
+      </div>
+
+      <div class="mt-8 overflow-hidden rounded-2xl border border-[rgb(var(--border))] reveal">
+        <iframe title="CV" src="/cv.html" class="h-[85vh] w-full"></iframe>
+      </div>
+
+      <p class="mt-4 text-xs text-[rgb(var(--fg)/0.55)] reveal">
+        This page loads <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">public/cv.html</code>. Export it from <code>/make</code> and overwrite the file.
+      </p>
+    </Container>
+  </section>
+</BaseLayout>

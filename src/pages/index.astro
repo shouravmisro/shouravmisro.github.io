@@ -2,27 +2,30 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
 import Button from "../components/Button.astro";
-import { site } from "../lib/site";
+import { loadSiteJson } from "../lib/sitejson";
+
+const data = loadSiteJson();
+const b = data.basics;
 ---
 
-<BaseLayout title={`${site.name} — Portfolio`} description={site.heroSub}>
+<BaseLayout title={`${b.name} — Portfolio`} description={b.headline}>
   <section class="py-16 sm:py-24">
     <Container>
       <div class="max-w-2xl">
         <p class="text-sm text-[rgb(var(--fg)/0.60)] reveal">
-          {site.location}
+          {b.location ?? ""}
         </p>
 
         <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl reveal">
-          {site.heroHeadline}
+          {b.headline}
         </h1>
 
         <p class="mt-5 text-base text-[rgb(var(--fg)/0.70)] reveal">
-          {site.heroSub}
+          Recruiters: download resume or contact. Clients: email/social links. Collaborators: projects + GitHub.
         </p>
 
         <div class="mt-6 flex flex-wrap gap-2 reveal">
-          {site.roles.map((r) => (
+          {b.roles?.map((r) => (
             <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.70)]">
               {r}
             </span>
@@ -30,9 +33,9 @@ import { site } from "../lib/site";
         </div>
 
         <div class="mt-8 flex flex-wrap gap-3 reveal">
-          <Button href={site.resumeUrl}>Download Resume</Button>
+          <Button href="/resume">Download Resume</Button>
           <Button href="/contact" variant="secondary">Contact</Button>
-          <Button href={site.github} variant="secondary">GitHub</Button>
+          {b.github && <Button href={b.github} variant="secondary">GitHub</Button>}
         </div>
 
         <div class="mt-10 rounded-2xl border border-[rgb(var(--border))] p-5 reveal">
