@@ -3,11 +3,13 @@ import { z } from "zod";
 export const SkillLevel = z.enum(["Beginner", "Intermediate", "Advanced"]);
 
 export const SkillSchema = z.object({
+  id: z.string(),
   name: z.string().min(1, "Skill name is required"),
   level: SkillLevel.optional(),
 });
 
 export const ProjectSchema = z.object({
+  id: z.string(),
   title: z.string().min(1, "Project title is required"),
   year: z.number().int().min(2000).max(2100),
   summary: z.string().min(1, "Summary is required").max(180),
@@ -19,6 +21,7 @@ export const ProjectSchema = z.object({
 });
 
 export const ExperienceSchema = z.object({
+  id: z.string(),
   company: z.string().min(1),
   title: z.string().min(1),
   start: z.string().min(1), // e.g. "Jan 2024"
@@ -27,12 +30,14 @@ export const ExperienceSchema = z.object({
 });
 
 export const EducationSchema = z.object({
+  id: z.string(),
   school: z.string().min(1),
   degree: z.string().min(1),
   year: z.string().min(1),
 });
 
 export const AchievementSchema = z.object({
+  id: z.string(),
   title: z.string().min(1),
   date: z.string().min(1),
   org: z.string().optional(),
@@ -63,9 +68,21 @@ export const SiteJsonSchema = z.object({
 
   settings: z.object({
     themeStyle: z.enum(["CleanGradient"]).default("CleanGradient"),
+
+    // privacy + export
     showPhone: z.boolean().default(true),
+
+    // CV export style
     cvLayout: z.enum(["ATS", "Modern"]).default("Modern"),
-  }).default({ themeStyle: "CleanGradient", showPhone: true, cvLayout: "Modern" }),
+    compactSpacing: z.boolean().default(false),
+    onePageMode: z.boolean().default(false),
+  }).default({
+    themeStyle: "CleanGradient",
+    showPhone: true,
+    cvLayout: "Modern",
+    compactSpacing: false,
+    onePageMode: false,
+  }),
 });
 
 export type SiteJson = z.infer<typeof SiteJsonSchema>;
