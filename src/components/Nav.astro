@@ -1,0 +1,53 @@
+---
+import Container from "./Container.astro";
+import { site } from "../lib/site";
+
+const links = [
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
+  { href: "/achievements", label: "Achievements" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
+];
+---
+<header class="sticky top-0 z-50 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.82)] backdrop-blur">
+  <Container class="flex h-16 items-center justify-between gap-4">
+    <a href="/" class="font-bold tracking-tight">{site.name}</a>
+
+    <nav class="hidden items-center gap-6 md:flex">
+      {links.map((l) => (
+        <a class="text-sm text-[rgb(var(--fg)/0.70)] hover:text-[rgb(var(--fg))] transition" href={l.href}>
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        class="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
+        onclick="window.__theme?.toggleTheme?.()"
+        aria-label="Toggle theme"
+        title="Toggle light/dark"
+      >
+        ☾ / ☀
+      </button>
+
+      <a
+        class="hidden rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition sm:inline"
+        href={site.github}
+        target="_blank"
+        rel="noreferrer"
+      >
+        GitHub
+      </a>
+
+      <a
+        class="rounded-xl bg-[linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)))] px-3 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
+        href={site.resumeUrl}
+      >
+        Resume
+      </a>
+    </div>
+  </Container>
+</header>

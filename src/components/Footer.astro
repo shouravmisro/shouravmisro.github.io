@@ -1,0 +1,18 @@
+---
+import Container from "./Container.astro";
+import { site } from "../lib/site";
+---
+<footer class="border-t border-[rgb(var(--border))] py-10">
+  <Container class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-sm text-[rgb(var(--fg)/0.60)]">
+      © {new Date().getFullYear()} {site.name}
+    </p>
+
+    <div class="flex flex-wrap gap-4 text-sm">
+      <a class="text-[rgb(var(--fg)/0.70)] hover:text-[rgb(var(--fg))] transition" href={site.github} target="_blank" rel="noreferrer">GitHub</a>
+      {site.linkedin && <a class="text-[rgb(var(--fg)/0.70)] hover:text-[rgb(var(--fg))] transition" href={site.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
+      <a class="text-[rgb(var(--fg)/0.70)] hover:text-[rgb(var(--fg))] transition" href={site.facebook} target="_blank" rel="noreferrer">Facebook</a>
+      <a class="text-[rgb(var(--fg)/0.70)] hover:text-[rgb(var(--fg))] transition" href={`mailto:${site.email}`}>Email</a>
+    </div>
+  </Container>
+</footer>

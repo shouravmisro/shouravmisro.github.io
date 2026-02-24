@@ -1,0 +1,47 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+const { title, description, noindex = false } = Astro.props;
+
+const metaTitle = title ?? "Portfolio";
+const metaDesc = description ?? "Personal portfolio";
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{metaTitle}</title>
+    <meta name="description" content={metaDesc} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+    <!-- Prevent theme flash -->
+    <script>
+      {String.raw`
+        (function () {
+          try {
+            var key = "theme_v1";
+            var saved = localStorage.getItem(key);
+            var theme = saved === "light" || saved === "dark"
+              ? saved
+              : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            if (theme === "dark") document.documentElement.classList.add("dark");
+            document.documentElement.dataset.theme = theme;
+          } catch (e) {}
+        })();
+      `}
+    </script>
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script type="module" src="/theme/theme.js"></script>
+    <script type="module" src="/motion/reveal.js"></script>
+  </body>
+</html>

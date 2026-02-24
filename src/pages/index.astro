@@ -1,13 +1,51 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/Container.astro";
+import Button from "../components/Button.astro";
+import { site } from "../lib/site";
+---
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
----
----
-import "../styles/global.css";
----
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout title={`${site.name} — Portfolio`} description={site.heroSub}>
+  <section class="py-16 sm:py-24">
+    <Container>
+      <div class="max-w-2xl">
+        <p class="text-sm text-[rgb(var(--fg)/0.60)] reveal">
+          {site.location}
+        </p>
+
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl reveal">
+          {site.heroHeadline}
+        </h1>
+
+        <p class="mt-5 text-base text-[rgb(var(--fg)/0.70)] reveal">
+          {site.heroSub}
+        </p>
+
+        <div class="mt-6 flex flex-wrap gap-2 reveal">
+          {site.roles.map((r) => (
+            <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.70)]">
+              {r}
+            </span>
+          ))}
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3 reveal">
+          <Button href={site.resumeUrl}>Download Resume</Button>
+          <Button href="/contact" variant="secondary">Contact</Button>
+          <Button href={site.github} variant="secondary">GitHub</Button>
+        </div>
+
+        <div class="mt-10 rounded-2xl border border-[rgb(var(--border))] p-5 reveal">
+          <p class="text-sm text-[rgb(var(--fg)/0.70)]">
+            Want to create your own website + CV like this?
+          </p>
+          <div class="mt-3">
+            <Button href="/make" variant="ghost">
+              Create your website →
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
+import MakeApp from "../../components/make/MakeApp";
+---
+
+<BaseLayout
+  title="Create your website"
+  description="Build your portfolio + CV and export files"
+>
+  <section class="py-14">
+    <Container>
+      <MakeApp client:load />
+    </Container>
+  </section>
+</BaseLayout>
