@@ -6,49 +6,110 @@ import { loadSiteJson } from "../lib/sitejson";
 
 const data = loadSiteJson();
 const b = data.basics;
+
+const headshot =
+  b.headshotUrl && typeof b.headshotUrl === "string" && b.headshotUrl.trim().length > 0
+    ? b.headshotUrl
+    : null;
 ---
 
 <BaseLayout title={`${b.name} — Portfolio`} description={b.headline}>
-  <section class="py-16 sm:py-24">
+  <section class="py-12 sm:py-16">
     <Container>
-      <div class="relative overflow-hidden rounded-3xl border border-[rgb(var(--border))] p-10">
+      <div class="relative overflow-hidden rounded-3xl border border-[rgb(var(--border))]">
         <div class="mesh"></div>
 
-        <div class="relative max-w-2xl">
-          <p class="text-sm text-[rgb(var(--fg)/0.60)] reveal">
-            {b.location ?? ""}
-          </p>
+        <div class="relative p-6 sm:p-10">
+          <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            <!-- LEFT: Text -->
+            <div class="max-w-2xl">
+              <p class="text-sm text-[rgb(var(--fg)/0.60)] reveal">
+                {b.location ?? ""}
+              </p>
 
-          <h1 class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl reveal">
-            {b.headline}
-          </h1>
+              <h1 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-5xl reveal">
+                {b.headline}
+              </h1>
 
-          <p class="mt-5 text-base text-[rgb(var(--fg)/0.70)] reveal">
-            Recruiters: download resume or contact. Clients: email/social links. Collaborators: view projects + GitHub.
-          </p>
+              <p class="mt-4 text-base text-[rgb(var(--fg)/0.75)] reveal">
+                I’m <span class="font-semibold">{b.name}</span> — focused on
+                <span class="font-semibold"> Software QA</span> and
+                <span class="font-semibold"> IoT</span>. I build reliable systems, test thoughtfully, and ship clean UI.
+              </p>
 
-          <div class="mt-6 flex flex-wrap gap-2 reveal">
-            {b.roles?.map((r) => (
-              <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.70)]">
-                {r}
-              </span>
-            ))}
-          </div>
+              <div class="mt-5 flex flex-wrap gap-2 reveal">
+                {b.roles?.map((r) => (
+                  <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.30)] px-3 py-1 text-xs text-[rgb(var(--fg)/0.75)]">
+                    {r}
+                  </span>
+                ))}
+              </div>
 
-          <div class="mt-8 flex flex-wrap gap-3 reveal">
-            <Button href="/resume">Download Resume</Button>
-            <Button href="/contact" variant="secondary">Contact</Button>
-            {b.github && <Button href={b.github} variant="secondary">GitHub</Button>}
-          </div>
+              <div class="mt-7 flex flex-wrap gap-3 reveal">
+                <Button href="/resume">Download Resume</Button>
+                <Button href="/contact" variant="secondary">Contact</Button>
+                {b.github && <Button href={b.github} variant="secondary">GitHub</Button>}
+              </div>
 
-          <div class="mt-10 card p-5 reveal" data-spotlight>
-            <p class="text-sm text-[rgb(var(--fg)/0.70)]">
-              Want to create your own website + CV like this?
-            </p>
-            <div class="mt-3">
-              <Button href="/make" variant="ghost">
-                Create your website →
-              </Button>
+              <div class="mt-8 card p-5 reveal" data-spotlight>
+                <p class="text-sm text-[rgb(var(--fg)/0.75)]">
+                  Want to create your own website + CV like this? Fork the template and edit your info in minutes.
+                </p>
+                <div class="mt-3">
+                  <Button href="/make" variant="ghost">
+                    Create your website →
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: Headshot + quick actions -->
+            <div class="reveal">
+              <div class="mx-auto w-full max-w-sm">
+                <div class="card p-5" data-spotlight>
+                  <div class="flex items-center gap-4">
+                    {headshot ? (
+                      <img
+                        src={headshot}
+                        alt={`${b.name} headshot`}
+                        class="h-24 w-24 shrink-0 rounded-full border border-[rgb(var(--border))] object-cover sm:h-28 sm:w-28"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="h-24 w-24 shrink-0 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.06)] sm:h-28 sm:w-28" />
+                    )}
+
+                    <div>
+                      <div class="text-lg font-bold">{b.name}</div>
+                      <div class="text-sm text-[rgb(var(--fg)/0.70)]">
+                        SQA Intern • Junior QA • IoT
+                      </div>
+                      <div class="mt-2 text-xs text-[rgb(var(--fg)/0.60)]">
+                        Recruiters: resume/contact • Clients: email/social • Collaborators: projects/GitHub
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-5 grid gap-2">
+                    <a
+                      class="rounded-xl border border-[rgb(var(--border))] px-4 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
+                      href="/projects"
+                    >
+                      View Projects →
+                    </a>
+                    <a
+                      class="rounded-xl border border-[rgb(var(--border))] px-4 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
+                      href="/cv"
+                    >
+                      View CV →
+                    </a>
+                  </div>
+                </div>
+
+                <p class="mt-3 text-xs text-[rgb(var(--fg)/0.55)] text-center">
+                  Tip: replace <code>/public/headshot.jpg</code> anytime.
+                </p>
+              </div>
             </div>
           </div>
         </div>

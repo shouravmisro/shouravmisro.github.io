@@ -14,21 +14,23 @@ const links = [
   { href: "/create", label: "Create" },
 ];
 
-const headshot = (site.headshotUrl ?? "");
+const headshot = (site.headshotUrl ?? "").trim();
 ---
 
 <header class="sticky top-0 z-50 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.82)] backdrop-blur">
-  <Container class="flex h-16 items-center justify-between gap-4">
-    <a href="/" class="flex items-center gap-3 font-bold tracking-tight">
+  <Container class="flex h-16 items-center justify-between gap-2">
+    <!-- Brand -->
+    <a href="/" class="flex min-w-0 items-center gap-3 font-bold tracking-tight">
       {headshot && (
         <img
-          src={headshot}
-          alt={`${site.name} headshot`}
-          class="h-9 w-9 rounded-full border border-[rgb(var(--border))] object-cover"
-          loading="lazy"
-        />
+  src={headshot}
+  alt={`${site.name} headshot`}
+  style="width:36px;height:36px;object-fit:cover;border-radius:9999px;"
+  class="shrink-0 border border-[rgb(var(--border))]"
+  loading="lazy"
+/>
       )}
-      <span>{site.name}</span>
+      <span class="min-w-0 truncate">{site.name}</span>
     </a>
 
     <!-- Desktop nav -->
@@ -40,7 +42,9 @@ const headshot = (site.headshotUrl ?? "");
       ))}
     </nav>
 
+    <!-- Actions -->
     <div class="flex items-center gap-2">
+      <!-- Theme toggle always visible -->
       <button
         type="button"
         class="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
@@ -51,9 +55,10 @@ const headshot = (site.headshotUrl ?? "");
         ☾ / ☀
       </button>
 
+      <!-- GitHub: show only on >= sm -->
       {site.github && (
         <a
-          class="hidden rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition sm:inline"
+          class="hidden sm:inline-flex rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
           href={site.github}
           target="_blank"
           rel="noreferrer"
@@ -62,9 +67,9 @@ const headshot = (site.headshotUrl ?? "");
         </a>
       )}
 
-      <!-- Resume should go to CV page -->
+      <!-- Resume button: hide on very small, show on >= sm -->
       <a
-        class="rounded-xl bg-[linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)))] px-3 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
+        class="hidden sm:inline-flex rounded-xl bg-[linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)))] px-3 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
         href="/cv"
       >
         Resume
@@ -88,13 +93,21 @@ const headshot = (site.headshotUrl ?? "");
     <Container class="py-3">
       <nav class="grid gap-2">
         {links.map((l) => (
-          <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.80)] hover:bg-[rgb(var(--fg)/0.06)] transition" href={l.href}>
+          <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.82)] hover:bg-[rgb(var(--fg)/0.06)] transition" href={l.href}>
             {l.label}
           </a>
         ))}
-        <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.80)] hover:bg-[rgb(var(--fg)/0.06)] transition" href="/cv">
+
+        <!-- Put Resume + GitHub inside mobile menu -->
+        <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.82)] hover:bg-[rgb(var(--fg)/0.06)] transition" href="/cv">
           Resume / CV
         </a>
+
+        {site.github && (
+          <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.82)] hover:bg-[rgb(var(--fg)/0.06)] transition" href={site.github} target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        )}
       </nav>
     </Container>
   </div>
@@ -106,18 +119,26 @@ const headshot = (site.headshotUrl ?? "");
         const nav = document.getElementById("mobileNav");
         if(!btn || !nav) return;
 
-        btn.addEventListener("click", () => {
+        function closeMenu(){
+          nav.classList.add("hidden");
+          btn.setAttribute("aria-expanded", "false");
+        }
+
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
           const open = nav.classList.toggle("hidden") === false;
           btn.setAttribute("aria-expanded", open ? "true" : "false");
         });
 
-        // close on link click
         nav.addEventListener("click", (e) => {
           const a = e.target && e.target.closest && e.target.closest("a");
-          if(a){
-            nav.classList.add("hidden");
-            btn.setAttribute("aria-expanded", "false");
-          }
+          if(a) closeMenu();
+        });
+
+        document.addEventListener("click", () => closeMenu());
+
+        window.addEventListener("resize", () => {
+          if(window.matchMedia("(min-width: 768px)").matches) closeMenu();
         });
       })();
     `}

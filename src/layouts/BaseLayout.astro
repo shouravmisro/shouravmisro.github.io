@@ -39,11 +39,9 @@ const metaDesc = description ?? "Personal portfolio";
     </script>
   </head>
 
-  <body>
-    <Nav />
+<body class={Astro.url.pathname === "/" ? "home" : ""}>    <Nav />
 
-    <main>
-      <slot />
+<main class="pt-2">      <slot />
     </main>
 
     <Footer />
