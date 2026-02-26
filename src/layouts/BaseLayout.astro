@@ -18,7 +18,7 @@ const metaDesc = description ?? "Personal portfolio";
     <meta name="description" content={metaDesc} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
 
-    <!-- Alive UI: Mesh background styles -->
+    <!-- Mesh background CSS -->
     <link rel="stylesheet" href="/motion/mesh.css" />
 
     <!-- Prevent theme flash -->
@@ -38,19 +38,15 @@ const metaDesc = description ?? "Personal portfolio";
       `}
     </script>
   </head>
-
-<body class={Astro.url.pathname === "/" ? "home" : ""}>    <Nav />
-
-<main class="pt-2">      <slot />
+  <body>
+    <Nav />
+    <main>
+      <slot />
     </main>
-
     <Footer />
 
-    <!-- Existing scripts -->
     <script type="module" src="/theme/theme.js"></script>
     <script type="module" src="/motion/reveal.js"></script>
-
-    <!-- Alive UI: Spotlight hover -->
     <script type="module" src="/motion/spotlight.js"></script>
   </body>
 </html>
