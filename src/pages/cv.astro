@@ -6,31 +6,235 @@ import { loadSiteJson } from "../lib/sitejson";
 
 const data = loadSiteJson();
 const b = data.basics;
+
+const sqaPdf = b.resumeSqaUrl ?? "/resume-sqa.pdf";
+const iotPdf = b.resumeIotUrl ?? "/resume-iot.pdf";
+
+/**
+ * We’ll render from site.json + your existing sections (skills, projects, experience, education, achievements).
+ * And we’ll show two “focus panels” (SQA + IoT) on the left.
+ */
 ---
 
 <BaseLayout title="CV" description="Curriculum Vitae">
-  <section class="py-14">
+  <section class="py-10">
     <Container>
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 class="text-3xl font-extrabold tracking-tight reveal">CV</h1>
-          <p class="mt-2 text-[rgb(var(--fg)/0.70)] reveal">
-            Print to PDF from the browser for best results.
-          </p>
-        </div>
-        <div class="flex gap-2 reveal">
-          <Button href="/make" variant="secondary">Open Builder</Button>
-          <Button href="/resume">Resume</Button>
+      <div class="grid gap-6 md:grid-cols-[260px_1fr]">
+        <!-- LEFT SIDEBAR -->
+        <aside class="md:sticky md:top-20 h-max">
+          <div class="card p-4 reveal" data-spotlight>
+            <div class="flex items-center gap-3">
+              {b.headshotUrl && (
+                <img src={b.headshotUrl} alt={`${b.name} headshot`} class="h-12 w-12 rounded-full border border-[rgb(var(--border))] object-cover" />
+              )}
+              <div>
+                <div class="font-bold">{b.name}</div>
+                <div class="text-xs text-[rgb(var(--fg)/0.65)]">{b.roles?.join(" • ")}</div>
+              </div>
+            </div>
+
+            <div class="mt-4 grid gap-2">
+              <Button href="/resume-pdfs">Open PDF Resumes</Button>
+              <div class="flex gap-2">
+                <Button href={sqaPdf} variant="secondary">Download SQA</Button>
+                <Button href={iotPdf} variant="secondary">Download IoT</Button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two focus sections like you asked -->
+          <div class="mt-4 card p-4 reveal" data-spotlight>
+            <div class="text-sm font-semibold">Focus</div>
+            <div class="mt-2 text-sm text-[rgb(var(--fg)/0.75)]">
+              <div class="font-semibold">SQA</div>
+              <div class="text-[rgb(var(--fg)/0.65)]">Testing, bug reporting, API validation, quality mindset.</div>
+
+              <div class="mt-3 font-semibold">IoT</div>
+              <div class="text-[rgb(var(--fg)/0.65)]">Sensors, microcontrollers, automation, hardware + software integration.</div>
+            </div>
+          </div>
+
+          <!-- Section nav -->
+          <nav class="mt-4 card p-3 reveal" data-spotlight>
+            <a class="cvlink block rounded-xl px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition" href="#contact">Contact</a>
+            <a class="cvlink block rounded-xl px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition" href="#summary">Summary</a>
+            <a class="cvlink block rounded-xl px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition" href="#skills">Skills</a>
+            <a class="cvlink block rounded-xl px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition" href="#projects">Projects</a>
+            <a class="cvlink block rounded-xl px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition" href="#experience">Experience</a>
+            <a class="cvlink block rounded-xl px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition" href="#education">Education</a>
+            <a class="cvlink block rounded-xl px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition" href="#achievements">Achievements</a>
+          </nav>
+        </aside>
+
+        <!-- RIGHT CONTENT -->
+        <div class="grid gap-4">
+          <header class="reveal">
+            <h1 class="text-4xl font-extrabold tracking-tight">CV</h1>
+            <p class="mt-2 text-[rgb(var(--fg)/0.70)]">{b.headline}</p>
+          </header>
+
+          <section id="contact" class="card p-6 reveal" data-spotlight>
+            <h2 class="text-xl font-bold">Contact Information</h2>
+            <div class="mt-4 grid gap-3 sm:grid-cols-2 text-sm">
+              <div><div class="text-xs text-[rgb(var(--fg)/0.60)]">Email</div><div>{b.email}</div></div>
+              <div><div class="text-xs text-[rgb(var(--fg)/0.60)]">Location</div><div>{b.location ?? "—"}</div></div>
+              <div><div class="text-xs text-[rgb(var(--fg)/0.60)]">Phone</div><div>{b.phone ?? "—"}</div></div>
+              <div><div class="text-xs text-[rgb(var(--fg)/0.60)]">GitHub</div><div>{b.github ?? "—"}</div></div>
+            </div>
+          </section>
+
+          <section id="summary" class="card p-6 reveal" data-spotlight>
+            <h2 class="text-xl font-bold">Professional Summary</h2>
+            <p class="mt-3 text-[rgb(var(--fg)/0.75)]">{data.about.short}</p>
+          </section>
+
+          <section id="skills" class="card p-6 reveal" data-spotlight>
+            <h2 class="text-xl font-bold">Skills</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {data.skills?.length ? data.skills.map((s) => (
+                <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.75)]">
+                  {s.name}{s.level ? ` (${s.level})` : ""}
+                </span>
+              )) : <span class="text-sm text-[rgb(var(--fg)/0.70)]">No skills yet — add from /make.</span>}
+            </div>
+          </section>
+
+          <section id="projects" class="card p-6 reveal" data-spotlight>
+            <h2 class="text-xl font-bold">Projects</h2>
+            {data.projects?.length ? (
+              <div class="mt-4 grid gap-3">
+                {data.projects.map((p) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="font-semibold">{p.title}</div>
+                        <div class="text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</div>
+                      </div>
+                      <div class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</div>
+                    </div>
+                    <p class="mt-2 text-sm text-[rgb(var(--fg)/0.75)]">{p.summary}</p>
+                    {p.stack?.length ? (
+                      <div class="mt-3 flex flex-wrap gap-2">
+                        {p.stack.map((t) => (
+                          <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.70)]">{t}</span>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="mt-3 text-sm text-[rgb(var(--fg)/0.70)]">No projects yet — add from /make.</p>
+            )}
+          </section>
+
+          <section id="experience" class="card p-6 reveal" data-spotlight>
+            <h2 class="text-xl font-bold">Experience</h2>
+            {data.experience?.length ? (
+              <div class="mt-4 grid gap-3">
+                {data.experience.map((e) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                      <div class="font-semibold">{e.title} — {e.company}</div>
+                      <div class="text-xs text-[rgb(var(--fg)/0.60)]">{e.start} - {e.end}</div>
+                    </div>
+                    {e.highlights?.length ? (
+                      <ul class="mt-2 list-disc pl-5 text-sm text-[rgb(var(--fg)/0.75)]">
+                        {e.highlights.map((h) => <li>{h}</li>)}
+                      </ul>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="mt-3 text-sm text-[rgb(var(--fg)/0.70)]">No experience yet — add from /make.</p>
+            )}
+          </section>
+
+          <section id="education" class="card p-6 reveal" data-spotlight>
+            <h2 class="text-xl font-bold">Education</h2>
+            {data.education?.length ? (
+              <div class="mt-4 grid gap-3">
+                {data.education.map((e) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                      <div class="font-semibold">{e.degree}</div>
+                      <div class="text-xs text-[rgb(var(--fg)/0.60)]">{e.year}</div>
+                    </div>
+                    <div class="text-sm text-[rgb(var(--fg)/0.70)]">{e.school}</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="mt-3 text-sm text-[rgb(var(--fg)/0.70)]">No education yet — add from /make.</p>
+            )}
+          </section>
+
+          <section id="achievements" class="card p-6 reveal" data-spotlight>
+            <h2 class="text-xl font-bold">Achievements</h2>
+            {data.achievements?.length ? (
+              <div class="mt-4 grid gap-3">
+                {data.achievements.map((a) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                      <div class="font-semibold">{a.title}</div>
+                      <div class="text-xs text-[rgb(var(--fg)/0.60)]">{a.date}</div>
+                    </div>
+                    {a.org && <div class="text-sm text-[rgb(var(--fg)/0.70)]">{a.org}</div>}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p class="mt-3 text-sm text-[rgb(var(--fg)/0.70)]">No achievements yet — add from /make.</p>
+            )}
+          </section>
         </div>
       </div>
-
-      <div class="mt-8 overflow-hidden rounded-2xl border border-[rgb(var(--border))] reveal">
-        <iframe title="CV" src="/cv.html" class="h-[85vh] w-full"></iframe>
-      </div>
-
-      <p class="mt-4 text-xs text-[rgb(var(--fg)/0.55)] reveal">
-        This page loads <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">public/cv.html</code>. Export it from <code>/make</code> and overwrite the file.
-      </p>
     </Container>
   </section>
+
+  <style>
+    /* active section highlight (like al-folio) */
+    .cvlink.active {
+      background: rgb(var(--fg) / 0.06);
+      border: 1px solid rgb(var(--fg) / 0.18);
+    }
+  </style>
+
+  <script is:inline>
+    {String.raw`
+      (function(){
+        const links = Array.from(document.querySelectorAll(".cvlink"));
+        const ids = links.map(a => (a.getAttribute("href") || "").replace("#","")).filter(Boolean);
+        const secs = ids.map(id => document.getElementById(id)).filter(Boolean);
+
+        if(!("IntersectionObserver" in window) || !secs.length) return;
+
+        const byId = new Map();
+        links.forEach(a => byId.set((a.getAttribute("href")||"").replace("#",""), a));
+
+        function setActive(id){
+          links.forEach(a => a.classList.remove("active"));
+          const el = byId.get(id);
+          if(el) el.classList.add("active");
+        }
+
+        const obs = new IntersectionObserver((entries) => {
+          // pick the most visible section
+          const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a,b) => (b.intersectionRatio||0) - (a.intersectionRatio||0))[0];
+
+          if(visible && visible.target && visible.target.id){
+            setActive(visible.target.id);
+          }
+        }, { root: null, threshold: [0.2, 0.35, 0.5] });
+
+        secs.forEach(s => obs.observe(s));
+
+        // default
+        setActive(secs[0].id);
+      })();
+    `}
+  </script>
 </BaseLayout>

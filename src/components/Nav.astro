@@ -13,14 +13,25 @@ const links = [
   { href: "/contact", label: "Contact" },
   { href: "/create", label: "Create" },
 ];
+
+const headshot = (site.headshotUrl ?? "");
 ---
 
 <header class="sticky top-0 z-50 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.82)] backdrop-blur">
   <Container class="flex h-16 items-center justify-between gap-4">
-    <a href="/" class="font-bold tracking-tight">
-      {site.name}
+    <a href="/" class="flex items-center gap-3 font-bold tracking-tight">
+      {headshot && (
+        <img
+          src={headshot}
+          alt={`${site.name} headshot`}
+          class="h-9 w-9 rounded-full border border-[rgb(var(--border))] object-cover"
+          loading="lazy"
+        />
+      )}
+      <span>{site.name}</span>
     </a>
 
+    <!-- Desktop nav -->
     <nav class="hidden items-center gap-6 md:flex">
       {links.map((l) => (
         <a class="navlink text-sm text-[rgb(var(--fg)/0.70)] hover:text-[rgb(var(--fg))] transition" href={l.href}>
@@ -51,12 +62,64 @@ const links = [
         </a>
       )}
 
+      <!-- Resume should go to CV page -->
       <a
         class="rounded-xl bg-[linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)))] px-3 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
-        href="/resume"
+        href="/cv"
       >
         Resume
       </a>
+
+      <!-- Mobile menu button -->
+      <button
+        id="menuBtn"
+        type="button"
+        class="md:hidden rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
     </div>
   </Container>
+
+  <!-- Mobile nav panel -->
+  <div id="mobileNav" class="md:hidden hidden border-t border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.95)]">
+    <Container class="py-3">
+      <nav class="grid gap-2">
+        {links.map((l) => (
+          <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.80)] hover:bg-[rgb(var(--fg)/0.06)] transition" href={l.href}>
+            {l.label}
+          </a>
+        ))}
+        <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.80)] hover:bg-[rgb(var(--fg)/0.06)] transition" href="/cv">
+          Resume / CV
+        </a>
+      </nav>
+    </Container>
+  </div>
+
+  <script is:inline>
+    {String.raw`
+      (function(){
+        const btn = document.getElementById("menuBtn");
+        const nav = document.getElementById("mobileNav");
+        if(!btn || !nav) return;
+
+        btn.addEventListener("click", () => {
+          const open = nav.classList.toggle("hidden") === false;
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+
+        // close on link click
+        nav.addEventListener("click", (e) => {
+          const a = e.target && e.target.closest && e.target.closest("a");
+          if(a){
+            nav.classList.add("hidden");
+            btn.setAttribute("aria-expanded", "false");
+          }
+        });
+      })();
+    `}
+  </script>
 </header>

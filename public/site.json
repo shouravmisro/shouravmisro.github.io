@@ -10,7 +10,8 @@
     "linkedin": "",
     "facebook": "https://www.facebook.com/shourav.05",
  "resumeSqaUrl": "/resume-sqa.pdf",
-"resumeIotUrl": "/resume-iot.pdf"
+"resumeIotUrl": "/resume-iot.pdf",
+"headshotUrl": "/headshot.jpg"
   },
   "about": {
     "short": "I focus on quality-first development: clear test cases, reliable workflows, and practical IoT projects. I enjoy building things that feel smooth to use and stable to maintain.",

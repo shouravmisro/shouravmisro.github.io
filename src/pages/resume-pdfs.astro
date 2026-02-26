@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/Container.astro";
+import Button from "../components/Button.astro";
+import { loadSiteJson } from "../lib/sitejson";
+
+const data = loadSiteJson();
+const b = data.basics;
+
+const sqa = b.resumeSqaUrl ?? "/resume-sqa.pdf";
+const iot = b.resumeIotUrl ?? "/resume-iot.pdf";
+---
+
+<BaseLayout title="Resume PDFs" description="Download or view both resumes">
+  <section class="py-14">
+    <Container>
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 class="text-3xl font-extrabold tracking-tight reveal">Resume PDFs</h1>
+          <p class="mt-2 text-[rgb(var(--fg)/0.70)] reveal">Download or view both versions.</p>
+        </div>
+        <div class="flex gap-2 reveal">
+          <Button href={sqa}>Download SQA</Button>
+          <Button href={iot} variant="secondary">Download IoT</Button>
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-2">
+        <div class="card overflow-hidden p-0 reveal" data-spotlight>
+          <div class="border-b border-[rgb(var(--border))] px-4 py-3 text-sm font-semibold">SQA Resume</div>
+          <iframe class="h-[78vh] w-full" src={sqa} title="SQA Resume"></iframe>
+        </div>
+
+        <div class="card overflow-hidden p-0 reveal" data-spotlight>
+          <div class="border-b border-[rgb(var(--border))] px-4 py-3 text-sm font-semibold">IoT Resume</div>
+          <iframe class="h-[78vh] w-full" src={iot} title="IoT Resume"></iframe>
+        </div>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

@@ -5,5 +5,6 @@ import react from "@astrojs/react";
 export default defineConfig({
   site: "https://shouravmisro.github.io",
   base: "/",
+  output: "static",
   integrations: [tailwind(), react()],
 });
