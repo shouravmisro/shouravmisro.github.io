@@ -8,6 +8,7 @@ const { title, description, noindex = false } = Astro.props;
 const metaTitle = title ?? "Portfolio";
 const metaDesc = description ?? "Personal portfolio";
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -16,6 +17,9 @@ const metaDesc = description ?? "Personal portfolio";
     <title>{metaTitle}</title>
     <meta name="description" content={metaDesc} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+    <!-- Alive UI: Mesh background styles -->
+    <link rel="stylesheet" href="/motion/mesh.css" />
 
     <!-- Prevent theme flash -->
     <script>
@@ -34,14 +38,21 @@ const metaDesc = description ?? "Personal portfolio";
       `}
     </script>
   </head>
+
   <body>
     <Nav />
+
     <main>
       <slot />
     </main>
+
     <Footer />
 
+    <!-- Existing scripts -->
     <script type="module" src="/theme/theme.js"></script>
     <script type="module" src="/motion/reveal.js"></script>
+
+    <!-- Alive UI: Spotlight hover -->
+    <script type="module" src="/motion/spotlight.js"></script>
   </body>
 </html>

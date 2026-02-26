@@ -2,39 +2,131 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
 import Button from "../components/Button.astro";
-import { site } from "../lib/site";
+import { loadSiteJson } from "../lib/sitejson";
+
+const data = loadSiteJson();
+const b = data.basics;
+
+const resumeSqaUrl = (b.resumeSqaUrl ?? "/resume-sqa.pdf");
+const resumeIotUrl = (b.resumeIotUrl ?? "/resume-iot.pdf");
 ---
 
-<BaseLayout title="Resume" description="Download my resume">
+<BaseLayout title="Resume" description="Download and view my resumes">
   <section class="py-14">
     <Container>
-      <h1 class="text-3xl font-extrabold tracking-tight reveal">
-        Resume
-      </h1>
+      <div class="flex flex-wrap items-start justify-between gap-4">
+        <div class="max-w-2xl">
+          <h1 class="text-3xl font-extrabold tracking-tight reveal">Resume</h1>
+          <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
+            I work across SQA/QA and IoT. Choose the resume you prefer, and below you’ll also see my full skillset snapshot.
+          </p>
 
-      <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
-        Download the PDF or view it below.
-      </p>
-
-      <div class="mt-6 flex flex-wrap gap-3 reveal">
-        <Button href={site.resumeUrl}>Download PDF</Button>
-        <Button href="/contact" variant="secondary">Contact</Button>
+          <div class="mt-6 flex flex-wrap gap-3 reveal">
+            <Button href={resumeSqaUrl}>Download SQA Resume</Button>
+            <Button href={resumeIotUrl} variant="secondary">Download IoT Resume</Button>
+            <Button href="/contact" variant="secondary">Contact</Button>
+          </div>
+        </div>
       </div>
 
+      <!-- Full skillset snapshot -->
+      <div class="mt-10 rounded-2xl border border-[rgb(var(--border))] p-6 reveal">
+        <h2 class="text-lg font-bold">Full Skillset Snapshot</h2>
+        <p class="mt-2 text-sm text-[rgb(var(--fg)/0.70)]">
+          Quick overview pulled from <code>public/site.json</code>.
+        </p>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          {data.skills?.length ? (
+            data.skills.map((s) => (
+              <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.75)]">
+                {s.name}{s.level ? ` (${s.level})` : ""}
+              </span>
+            ))
+          ) : (
+            <span class="text-sm text-[rgb(var(--fg)/0.70)]">No skills added yet. Add skills in /make.</span>
+          )}
+        </div>
+      </div>
+
+      <!-- Viewer Tabs -->
       <div class="mt-10 overflow-hidden rounded-2xl border border-[rgb(var(--border))] reveal">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.7)] p-3">
+          <div class="text-sm font-semibold">View</div>
+          <div class="flex gap-2">
+            <button
+              class="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.04)] transition"
+              onclick="setResumeTab('sqa')"
+              id="tab-sqa"
+            >
+              SQA
+            </button>
+            <button
+              class="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.04)] transition"
+              onclick="setResumeTab('iot')"
+              id="tab-iot"
+            >
+              IoT
+            </button>
+          </div>
+        </div>
+
         <iframe
-          title="Resume"
-          src={site.resumeUrl}
-          class="h-[80vh] w-full"
+          id="resumeFrame"
+          title="Resume Viewer"
+          src={resumeSqaUrl}
+          class="h-[85vh] w-full"
         ></iframe>
       </div>
 
       <p class="mt-4 text-xs text-[rgb(var(--fg)/0.55)] reveal">
-        Place your resume file here:
-        <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">
-          public/resume.pdf
-        </code>
+        Files live in <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">public/</code> as
+        <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">resume-sqa.pdf</code> and
+        <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">resume-iot.pdf</code>.
       </p>
     </Container>
   </section>
+
+  <script is:inline>
+  {String.raw`
+    (function () {
+      const SQA_URL = ${JSON.stringify(resumeSqaUrl)};
+      const IOT_URL = ${JSON.stringify(resumeIotUrl)};
+
+      const frame = document.getElementById("resumeFrame");
+      const sqaBtn = document.getElementById("tab-sqa");
+      const iotBtn = document.getElementById("tab-iot");
+
+      if (!frame || !sqaBtn || !iotBtn) return;
+
+      function setActive(active) {
+        const activeCls = ["border-[rgb(var(--fg)/0.22)]", "bg-[rgb(var(--fg)/0.06)]"];
+        const normalCls = ["border-[rgb(var(--border))]"];
+
+        // reset
+        sqaBtn.classList.remove(...activeCls);
+        iotBtn.classList.remove(...activeCls);
+
+        sqaBtn.classList.add(...normalCls);
+        iotBtn.classList.add(...normalCls);
+
+        // set active
+        const btn = active === "iot" ? iotBtn : sqaBtn;
+        btn.classList.remove(...normalCls);
+        btn.classList.add(...activeCls);
+      }
+
+      function setTab(tab) {
+        frame.setAttribute("src", tab === "iot" ? IOT_URL : SQA_URL);
+        setActive(tab);
+      }
+
+      sqaBtn.addEventListener("click", () => setTab("sqa"));
+      iotBtn.addEventListener("click", () => setTab("iot"));
+
+      // default
+      setTab("sqa");
+    })();
+  `}
+</script>
 </BaseLayout>

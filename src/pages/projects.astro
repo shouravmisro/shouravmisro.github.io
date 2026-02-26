@@ -6,7 +6,6 @@ import { loadSiteJson } from "../lib/sitejson";
 
 const data = loadSiteJson();
 const b = data.basics;
-
 const featured = [...data.projects].sort((a, c) => Number(c.featured) - Number(a.featured));
 ---
 
@@ -15,20 +14,21 @@ const featured = [...data.projects].sort((a, c) => Number(c.featured) - Number(a
     <Container>
       <h1 class="text-3xl font-extrabold tracking-tight reveal">Projects</h1>
       <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
-        Selected work. For collaborations, check my GitHub.
+        Selected work. Featured projects appear first.
       </p>
 
       {featured.length === 0 ? (
-        <div class="mt-8 rounded-2xl border border-[rgb(var(--border))] p-6 reveal">
+        <div class="mt-8 card p-6 reveal" data-spotlight>
           <p class="text-[rgb(var(--fg)/0.70)]">
-            No projects added yet. Go to <a class="underline" href="/make">/make</a> and add projects, then export and overwrite <code>public/site.json</code>.
+            No projects added yet. Go to <a class="underline" href="/make">/make</a>, add projects, export, then overwrite
+            <code> public/site.json</code>.
           </p>
           {b.github && <div class="mt-3"><Button href={b.github} variant="secondary">Open GitHub</Button></div>}
         </div>
       ) : (
         <div class="mt-8 grid gap-4 md:grid-cols-2">
           {featured.map((p) => (
-            <article class="rounded-2xl border border-[rgb(var(--border))] p-6 reveal">
+            <article class="card p-6 reveal" data-spotlight>
               <div class="flex items-start justify-between gap-4">
                 <div>
                   <h2 class="text-lg font-bold">{p.title}</h2>

@@ -55,6 +55,9 @@ export const SiteJsonSchema = z.object({
     github: z.string().url().optional().or(z.literal("")),
     linkedin: z.string().url().optional().or(z.literal("")),
     facebook: z.string().url().optional().or(z.literal("")),
+    resumeSqaUrl: z.string().optional(),
+resumeIotUrl: z.string().optional(),
+  
   }),
   about: z.object({
     short: z.string().min(1).max(260),

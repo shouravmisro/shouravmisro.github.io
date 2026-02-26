@@ -44,3 +44,55 @@ body {
   box-shadow: 0 0 0 2px rgb(var(--fg) / 0.25), 0 0 0 6px rgb(var(--bg));
   border-radius: 12px;
 }
+/* ---------- Alive UI pack ---------- */
+
+/* smooth hover lift */
+.card {
+  border: 1px solid rgb(var(--border));
+  border-radius: 16px;
+  background: rgb(var(--bg) / 0.6);
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgb(var(--fg) / 0.18);
+}
+
+/* spotlight glow */
+[data-spotlight] {
+  position: relative;
+  overflow: hidden;
+}
+[data-spotlight]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(250px circle at var(--sx, 50%) var(--sy, 50%), rgb(var(--fg) / 0.10), transparent 55%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+[data-spotlight]:hover::after { opacity: 1; }
+
+/* nav underline slide */
+.navlink {
+  position: relative;
+  padding-bottom: 6px;
+}
+.navlink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, rgb(var(--grad-a)), rgb(var(--grad-b)));
+  transition: transform 200ms ease;
+}
+.navlink:hover::after { transform: scaleX(1); }
+
+/* magnetic-ish button hover (safe subtle scale) */
+.btnalive:hover { transform: translateY(-1px) scale(1.01); }
+.btnalive:active { transform: translateY(0) scale(0.99); }
