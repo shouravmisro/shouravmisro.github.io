@@ -93,3 +93,16 @@ body {
   transition: transform 200ms ease;
 }
 .navlink:hover::after { transform: scaleX(1); }
+
+/* Make dropdown readable in dark mode */
+.make-select option {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+}
+
+/* Keep Make header compact on small screens */
+@media (max-width: 640px) {
+  .make-select {
+    max-width: 180px;
+  }
+}
