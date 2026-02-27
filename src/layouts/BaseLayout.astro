@@ -4,13 +4,12 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 
 const { title, description, noindex = false } = Astro.props;
-
-const metaTitle = title ?? "Portfolio";
-const metaDesc = description ?? "Personal portfolio";
+const metaTitle = title ?? "Shourav Misro — Portfolio";
+const metaDesc = description ?? "SQA • QA • IoT — Portfolio & CV";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -18,7 +17,7 @@ const metaDesc = description ?? "Personal portfolio";
     <meta name="description" content={metaDesc} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
 
-    <!-- Mesh background CSS -->
+    <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/motion/mesh.css" />
 
     <!-- Prevent theme flash -->
@@ -38,9 +37,10 @@ const metaDesc = description ?? "Personal portfolio";
       `}
     </script>
   </head>
-  <body>
+
+  <body class="min-h-full">
     <Nav />
-    <main>
+    <main class="min-h-[calc(100vh-64px)]">
       <slot />
     </main>
     <Footer />

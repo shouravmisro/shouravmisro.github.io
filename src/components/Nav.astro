@@ -17,9 +17,9 @@ const links = [
 const headshot = (site.headshotUrl ?? "").trim();
 ---
 
-<header class="sticky top-0 z-50 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.82)] backdrop-blur">
+<header class="sticky top-0 z-50 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.86)] backdrop-blur">
   <Container class="flex h-16 items-center justify-between gap-3">
-    <a href="/" class="flex items-center gap-3 font-bold tracking-tight">
+    <a href="/" class="flex min-w-0 items-center gap-3 font-bold tracking-tight">
       {headshot && (
         <img
           src={headshot}
@@ -29,7 +29,7 @@ const headshot = (site.headshotUrl ?? "").trim();
           loading="lazy"
         />
       )}
-      <span class="truncate">{site.name}</span>
+      <span class="min-w-0 truncate">{site.name}</span>
     </a>
 
     <!-- Desktop nav -->
@@ -54,7 +54,7 @@ const headshot = (site.headshotUrl ?? "").trim();
 
       {site.github && (
         <a
-          class="hidden rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition sm:inline"
+          class="hidden sm:inline-flex rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
           href={site.github}
           target="_blank"
           rel="noreferrer"
@@ -63,15 +63,13 @@ const headshot = (site.headshotUrl ?? "").trim();
         </a>
       )}
 
-      <!-- Resume button -> CV page -->
       <a
-        class="rounded-xl bg-[linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)))] px-3 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
+        class="hidden sm:inline-flex rounded-xl bg-[linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)))] px-3 py-2 text-sm font-semibold text-white hover:opacity-90 transition"
         href="/cv"
       >
         Resume
       </a>
 
-      <!-- Mobile menu button -->
       <button
         id="menuBtn"
         type="button"
@@ -96,6 +94,11 @@ const headshot = (site.headshotUrl ?? "").trim();
         <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition" href="/cv">
           Resume / CV
         </a>
+        {site.github && (
+          <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition" href={site.github} target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        )}
       </nav>
     </Container>
   </div>
@@ -107,7 +110,13 @@ const headshot = (site.headshotUrl ?? "").trim();
         const nav = document.getElementById("mobileNav");
         if (!btn || !nav) return;
 
-        btn.addEventListener("click", () => {
+        function closeMenu() {
+          nav.classList.add("hidden");
+          btn.setAttribute("aria-expanded", "false");
+        }
+
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
           nav.classList.toggle("hidden");
           const open = !nav.classList.contains("hidden");
           btn.setAttribute("aria-expanded", open ? "true" : "false");
@@ -115,10 +124,13 @@ const headshot = (site.headshotUrl ?? "").trim();
 
         nav.addEventListener("click", (e) => {
           const a = e.target && e.target.closest && e.target.closest("a");
-          if (a) {
-            nav.classList.add("hidden");
-            btn.setAttribute("aria-expanded", "false");
-          }
+          if (a) closeMenu();
+        });
+
+        document.addEventListener("click", () => closeMenu());
+
+        window.addEventListener("resize", () => {
+          if (window.matchMedia("(min-width: 768px)").matches) closeMenu();
         });
       })();
     `}

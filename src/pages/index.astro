@@ -14,13 +14,13 @@ const headshot =
 ---
 
 <BaseLayout title={`${b.name} — Portfolio`} description={b.headline}>
-  <section class="py-12 sm:py-16">
+  <section class="py-10 sm:py-14">
     <Container>
       <div class="relative overflow-hidden rounded-3xl border border-[rgb(var(--border))]">
         <div class="mesh"></div>
 
         <div class="relative p-6 sm:p-10">
-          <div class="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
             <!-- LEFT -->
             <div class="max-w-2xl">
               <p class="text-sm text-[rgb(var(--fg)/0.60)] reveal">{b.location ?? ""}</p>
@@ -32,7 +32,7 @@ const headshot =
               <p class="mt-4 text-base leading-relaxed text-[rgb(var(--fg)/0.75)] reveal">
                 I’m <span class="font-semibold">{b.name}</span> — focused on
                 <span class="font-semibold"> Software QA</span> and
-                <span class="font-semibold"> IoT</span>. I build reliable systems, test thoughtfully, and ship clean UI.
+                <span class="font-semibold"> IoT</span>.
               </p>
 
               <div class="mt-5 flex flex-wrap gap-2 reveal">
@@ -68,21 +68,16 @@ const headshot =
                       <img
                         src={headshot}
                         alt={`${b.name} headshot`}
-                        class="h-24 w-24 shrink-0 rounded-full border border-[rgb(var(--border))] object-cover sm:h-28 sm:w-28"
+                        class="h-20 w-20 shrink-0 rounded-full border border-[rgb(var(--border))] object-cover sm:h-24 sm:w-24"
                         loading="lazy"
                       />
                     ) : (
-                      <div class="h-24 w-24 shrink-0 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.06)] sm:h-28 sm:w-28" />
+                      <div class="h-20 w-20 shrink-0 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.06)] sm:h-24 sm:w-24" />
                     )}
 
                     <div class="min-w-0">
                       <div class="truncate text-lg font-bold">{b.name}</div>
-                      <div class="text-sm text-[rgb(var(--fg)/0.70)]">
-                        SQA Intern • Junior QA • IoT
-                      </div>
-                      <div class="mt-2 text-xs text-[rgb(var(--fg)/0.60)]">
-                        Recruiters: resume/contact • Clients: email/social • Collaborators: projects/GitHub
-                      </div>
+                      <div class="text-sm text-[rgb(var(--fg)/0.70)]">SQA • QA • IoT</div>
                     </div>
                   </div>
 
@@ -103,6 +98,7 @@ const headshot =
             </div>
           </div>
         </div>
+
       </div>
     </Container>
   </section>
