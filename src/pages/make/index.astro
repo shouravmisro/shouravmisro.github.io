@@ -1,15 +1,13 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
-import MakeApp from "../../components/make/MakeApp";---
+import MakeApp from "../../components/make/MakeApp";
+---
 
-<BaseLayout
-  title="Create your website"
-  description="Build your portfolio + CV and export files"
->
-  <section class="py-14">
+<BaseLayout title="Create — Website & CV" description="Create your website + CV">
+  <section class="py-10 sm:py-14">
     <Container>
-      <MakeApp client:load />
+      <MakeApp client:only="react" />
     </Container>
   </section>
 </BaseLayout>
