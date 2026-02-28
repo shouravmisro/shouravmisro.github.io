@@ -1,98 +1,131 @@
 import React from "react";
 import type { SiteJson } from "../utils/schema";
-import { exportSiteJson } from "../utils/export";
+import { exportSiteJson, exportCvHtml as exportCvHtmlFile } from "../utils/export";
 import { getWarnings } from "../utils/guards";
 
-export default function PreviewStep({
-  data,
-  setData,
-  exportCvHtml,
-}: {
+type Props = {
   data: SiteJson;
   setData: (d: SiteJson) => void;
-  exportCvHtml: () => void;
-}) {
+  // optional: if caller wants to override behavior
+  exportCvHtml?: () => void;
+};
+
+export default function PreviewStep({ data, setData, exportCvHtml }: Props) {
   const warnings = getWarnings(data);
+
+  const settings = data.settings ?? {};
+  const cvLayout = settings.cvLayout ?? "modern";
+  const showPhone = settings.showPhone ?? true;
+  const compactSpacing = settings.compactSpacing ?? false;
+  const onePageMode = settings.onePageMode ?? false;
 
   return (
     <div className="grid gap-4">
       <div className="rounded-2xl border border-[rgb(var(--border))] p-4">
-        <h3 className="font-bold">CV Export Settings</h3>
+        <div className="text-sm font-semibold">CV Export Settings</div>
 
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <label className="flex items-center gap-2 text-sm">
+        <div className="mt-3 grid gap-2 text-sm">
+          <label className="flex items-center gap-2">
             <input
               type="checkbox"
-              checked={data.settings.showPhone}
-              onChange={(e) => setData({ ...data, settings: { ...data.settings, showPhone: e.target.checked } })}
+              checked={showPhone}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  settings: { ...settings, showPhone: e.target.checked },
+                })
+              }
             />
             Show phone number
           </label>
 
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2">
             <input
               type="checkbox"
-              checked={data.settings.compactSpacing}
-              onChange={(e) => setData({ ...data, settings: { ...data.settings, compactSpacing: e.target.checked } })}
+              checked={compactSpacing}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  settings: { ...settings, compactSpacing: e.target.checked },
+                })
+              }
             />
             Compact spacing
           </label>
 
-          <label className="flex items-center gap-2 text-sm">
+          <label className="flex items-center gap-2">
             <input
               type="checkbox"
-              checked={data.settings.onePageMode}
-              onChange={(e) => setData({ ...data, settings: { ...data.settings, onePageMode: e.target.checked } })}
+              checked={onePageMode}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  settings: { ...settings, onePageMode: e.target.checked },
+                })
+              }
             />
             One-page mode (try to fit)
           </label>
 
-          <div>
-            <label className="text-sm font-semibold">CV Layout</label>
+          <div className="mt-2">
+            <div className="text-xs text-[rgb(var(--muted))]">CV Layout</div>
             <select
-              className="mt-2 w-full rounded-xl border border-[rgb(var(--border))] bg-transparent px-3 py-2 text-sm"
-              value={data.settings.cvLayout}
-              onChange={(e) => setData({ ...data, settings: { ...data.settings, cvLayout: e.target.value as any } })}
+              className="make-select mt-1 w-full rounded-xl border border-[rgb(var(--border))] bg-transparent px-3 py-2 text-sm text-[rgb(var(--fg))]"
+              value={cvLayout}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  settings: { ...settings, cvLayout: e.target.value as any },
+                })
+              }
             >
-              <option value="Modern">Modern</option>
-              <option value="ATS">ATS (single column)</option>
+              <option value="modern">Modern</option>
+              <option value="ats">ATS (single column)</option>
             </select>
           </div>
         </div>
       </div>
 
       <div className="rounded-2xl border border-[rgb(var(--border))] p-4">
-        <h3 className="font-bold">Export</h3>
+        <div className="text-sm font-semibold">Export</div>
+
         <div className="mt-3 flex flex-wrap gap-2">
           <button
-            className="rounded-xl bg-[rgb(var(--fg))] px-4 py-2 text-sm font-semibold text-[rgb(var(--bg))] hover:opacity-90 transition"
+            type="button"
+            className="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
             onClick={() => exportSiteJson(data)}
           >
             Export site.json
           </button>
+
           <button
-            className="rounded-xl border border-[rgb(var(--border))] px-4 py-2 text-sm hover:bg-[rgb(var(--fg)/0.04)] transition"
-            onClick={exportCvHtml}
+            type="button"
+            className="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
+            onClick={() => (exportCvHtml ? exportCvHtml() : exportCvHtmlFile(data))}
           >
             Export cv.html
           </button>
         </div>
-        <p className="mt-2 text-xs text-[rgb(var(--muted))]">
+
+        <p className="mt-3 text-xs text-[rgb(var(--muted))]">
           Forkers will overwrite <code>public/site.json</code> and <code>public/cv.html</code> then push.
         </p>
       </div>
 
       <div className="rounded-2xl border border-[rgb(var(--border))] p-4">
-        <h3 className="font-bold">Guardrails</h3>
-        {warnings.length === 0 ? (
-          <p className="mt-2 text-sm text-green-600">No warnings — looks good.</p>
-        ) : (
-          <ul className="mt-2 list-disc pl-5 text-sm text-[rgb(var(--muted))]">
-            {warnings.slice(0, 10).map((w) => (
-              <li key={w}>{w}</li>
-            ))}
-          </ul>
-        )}
+        <div className="text-sm font-semibold">Guardrails</div>
+
+        <div className="mt-3 text-sm">
+          {warnings.length === 0 ? (
+            <div className="text-[rgb(var(--muted))]">No warnings — looks good.</div>
+          ) : (
+            <ul className="list-disc pl-5 text-[rgb(var(--muted))]">
+              {warnings.slice(0, 10).map((w) => (
+                <li key={w}>{w}</li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );
