@@ -1,14 +1,9 @@
-/* stylelint-disable at-rule-no-unknown */
 @import "tailwindcss";
-/* stylelint-enable at-rule-no-unknown */
 
-img,
-video {
-  max-width: 100%;
-  height: auto;
-}
+/* ===============================
+   THEME TOKENS
+================================ */
 
-/* ---- Theme tokens (light by default) ---- */
 :root {
   --bg: 255 255 255;
   --fg: 10 10 10;
@@ -22,11 +17,17 @@ video {
 html.dark {
   --bg: 10 10 12;
   --fg: 245 245 245;
-  --muted: 255 255 255 / 0.7;
+  --muted: 255 255 255 / 0.70;
   --border: 255 255 255 / 0.12;
 }
 
-html { scroll-behavior: smooth; }
+/* ===============================
+   BASE
+================================ */
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: rgb(var(--bg));
@@ -35,47 +36,97 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation: none !important; transition: none !important; }
+img,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
-.reveal { opacity: 0; transform: translateY(10px); }
+img.rounded-full {
+  border-radius: 9999px !important;
+}
+
+/* ===============================
+   ACCESSIBILITY
+================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgb(var(--fg) / 0.25),
+    0 0 0 6px rgb(var(--bg));
+  border-radius: 12px;
+}
+
+/* ===============================
+   REVEAL
+================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
 .reveal.reveal-in {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 420ms ease, transform 420ms ease;
 }
 
-:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px rgb(var(--fg) / 0.25), 0 0 0 6px rgb(var(--bg));
-  border-radius: 12px;
-}
-
+/* ===============================
+   CARD
+================================ */
 
 .card {
+  position: relative;
   border: 1px solid rgb(var(--border));
   border-radius: 18px;
-  background: rgb(var(--bg) / 0.66);
+  background: linear-gradient(
+    180deg,
+    rgb(var(--bg) / 0.78),
+    rgb(var(--bg) / 0.62)
+  );
   transition:
-    transform 180ms ease,
+    transform 140ms ease,
     border-color 180ms ease,
-    background 180ms ease,
-    box-shadow 180ms ease;
+    box-shadow 180ms ease,
+    background 180ms ease;
   transform-style: preserve-3d;
   will-change: transform;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.05);
 }
 
 .card:hover {
   border-color: rgb(var(--fg) / 0.18);
-  box-shadow: 0 12px 40px rgb(0 0 0 / 0.08);
+  box-shadow:
+    0 18px 48px rgb(0 0 0 / 0.14),
+    0 8px 18px rgb(0 0 0 / 0.08);
 }
+
+/* ===============================
+   PREMIUM PINPOINT SPOTLIGHT
+================================ */
 
 [data-spotlight] {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
+
+/* layers */
 
 [data-spotlight]::before,
 [data-spotlight]::after {
@@ -84,47 +135,62 @@ body {
   inset: 0;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 180ms ease;
+  transition: opacity 120ms ease;
 }
+
+/* pinpoint white hotspot */
 
 [data-spotlight]::before {
   background:
     radial-gradient(
-      140px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(var(--fg) / 0.12),
-      transparent 42%
+      34px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(255 255 255 / 0.48),
+      rgb(255 255 255 / 0.20) 32%,
+      transparent 64%
     );
-  mix-blend-mode: soft-light;
+  mix-blend-mode: screen;
+  z-index: 1;
 }
+
+/* subtle color aura */
 
 [data-spotlight]::after {
   background:
     radial-gradient(
-      280px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(var(--grad-a) / 0.14),
-      transparent 34%
+      90px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(var(--grad-a) / 0.22),
+      transparent 42%
     ),
     radial-gradient(
-      180px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(var(--grad-b) / 0.12),
-      transparent 42%
+      140px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(var(--grad-b) / 0.16),
+      transparent 58%
     );
+  filter: blur(6px);
+  z-index: 1;
 }
 
-[data-spotlight]:hover::before,
-[data-spotlight]:hover::after {
+[data-spotlight].spotlight-active::before,
+[data-spotlight].spotlight-active::after {
   opacity: 1;
 }
 
-.card img {
-  border-radius: 12px;
+/* keep content above glow */
+
+[data-spotlight] > * {
+  position: relative;
+  z-index: 2;
 }
 
-img.rounded-full {
-  border-radius: 9999px !important;
+/* ===============================
+   NAV UNDERLINE
+================================ */
+
+.navlink {
+  position: relative;
+  padding-bottom: 6px;
 }
 
-.navlink { position: relative; padding-bottom: 6px; }
 .navlink::after {
   content: "";
   position: absolute;
@@ -134,27 +200,56 @@ img.rounded-full {
   width: 100%;
   transform: scaleX(0);
   transform-origin: left;
-  background: linear-gradient(90deg, rgb(var(--grad-a)), rgb(var(--grad-b)));
+  background: linear-gradient(
+    90deg,
+    rgb(var(--grad-a)),
+    rgb(var(--grad-b))
+  );
   transition: transform 200ms ease;
 }
-.navlink:hover::after { transform: scaleX(1); }
 
-/* Make dropdown readable in dark mode */
-.make-select option {
-  background: rgb(var(--bg));
+.navlink:hover::after {
+  transform: scaleX(1);
+}
+
+/* ===============================
+   BUTTON MICRO INTERACTION
+================================ */
+
+.btnalive {
+  transition:
+    transform 160ms ease,
+    opacity 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.btnalive:hover {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.btnalive:active {
+  transform: translateY(0) scale(0.99);
+}
+
+/* ===============================
+   FORM FIXES
+================================ */
+
+select,
+input,
+textarea {
   color: rgb(var(--fg));
 }
 
-/* Keep Make header compact on small screens */
-@media (max-width: 640px) {
-  .make-select {
-    max-width: 180px;
-  }
-}
 select option {
   background: rgb(var(--bg));
   color: rgb(var(--fg));
 }
+
+/* ===============================
+   MOBILE
+================================ */
+
 @media (max-width: 640px) {
   .card {
     border-radius: 14px;
