@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import type { SiteJson } from "../utils/schema";
 import { uid, moveDown, moveUp, reorder } from "../utils/helpers";
 
-export default function SkillsStep({ data, setData }: { data: SiteJson; setData: (d: SiteJson) => void }) {
+const LEVELS = ["Novice", "Beginner", "Intermediate", "Advanced", "Expert"] as const;
+
+export default function SkillsStep({
+  data,
+  setData,
+}: {
+  data: SiteJson;
+  setData: (d: SiteJson) => void;
+}) {
   const [dragFrom, setDragFrom] = useState<number | null>(null);
 
   function setSkills(skills: SiteJson["skills"]) {
@@ -10,15 +18,19 @@ export default function SkillsStep({ data, setData }: { data: SiteJson; setData:
   }
 
   function addSkill() {
-    setSkills([{ id: uid("skill"), name: "New Skill", level: "Beginner" }, ...data.skills]);
+    setSkills([
+      { id: uid("skill"), name: "New Skill", level: "Beginner" },
+      ...data.skills,
+    ]);
   }
 
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-sm text-[rgb(var(--muted))]">
-          Tip: add level optionally (Beginner / Intermediate / Advanced).
+          Drag to reorder. Add a level (5-step scale).
         </p>
+
         <button
           onClick={addSkill}
           className="rounded-xl bg-[rgb(var(--fg))] px-4 py-2 text-sm font-semibold text-[rgb(var(--bg))] hover:opacity-90 transition"
@@ -42,7 +54,7 @@ export default function SkillsStep({ data, setData }: { data: SiteJson; setData:
             className="rounded-2xl border border-[rgb(var(--border))] p-4"
             title="Drag to reorder"
           >
-            <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-3">
               <div className="flex-1 min-w-[220px]">
                 <label className="text-xs font-semibold">Skill</label>
                 <input
@@ -53,24 +65,26 @@ export default function SkillsStep({ data, setData }: { data: SiteJson; setData:
                     next[i] = { ...s, name: e.target.value };
                     setSkills(next);
                   }}
+                  placeholder="e.g. API Testing (Postman)"
                 />
               </div>
 
-              <div className="w-[190px]">
-                <label className="text-xs font-semibold">Level (optional)</label>
+              <div className="w-[200px]">
+                <label className="text-xs font-semibold">Level</label>
                 <select
                   className="mt-1 w-full rounded-xl border border-[rgb(var(--border))] bg-transparent px-3 py-2 text-sm"
-                  value={s.level ?? ""}
+                  value={s.level ?? "Beginner"}
                   onChange={(e) => {
                     const next = [...data.skills];
-                    next[i] = { ...s, level: (e.target.value || undefined) as any };
+                    next[i] = { ...s, level: e.target.value as any };
                     setSkills(next);
                   }}
                 >
-                  <option value="">—</option>
-                  <option value="Beginner">Beginner</option>
-                  <option value="Intermediate">Intermediate</option>
-                  <option value="Advanced">Advanced</option>
+                  {LEVELS.map((lvl) => (
+                    <option key={lvl} value={lvl}>
+                      {lvl}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -88,6 +102,15 @@ export default function SkillsStep({ data, setData }: { data: SiteJson; setData:
                   title="Move down"
                 >
                   ↓
+                </button>
+                <button
+                  className="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-xs hover:bg-[rgb(var(--fg)/0.04)] transition"
+                  onClick={() =>
+                    setSkills([{ ...s, id: uid("skill"), name: s.name + " (copy)" }, ...data.skills])
+                  }
+                  title="Duplicate"
+                >
+                  Duplicate
                 </button>
                 <button
                   className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-700 hover:bg-red-500/15 transition"

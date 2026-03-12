@@ -9,29 +9,30 @@ const b = data.basics;
 ---
 
 <BaseLayout title="Contact" description="Get in touch">
-  <section class="py-14">
+  <section class="py-12">
     <Container>
-      <h1 class="text-3xl font-extrabold tracking-tight reveal">Contact</h1>
-      <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
-        Recruiters: email me and download my resume. Clients: reach out via email or social links. Collaborators: GitHub is below.
-      </p>
+      <div class="max-w-2xl">
+        <h1 class="text-3xl font-extrabold tracking-tight reveal">Contact</h1>
+        <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
+          I’m open to opportunities in Software QA, Junior QA, and IoT / Embedded related roles.
+        </p>
 
-      <div class="mt-6 flex flex-wrap gap-3 reveal">
-        <Button href={`mailto:${b.email}`}>Email</Button>
-        {b.github && <Button href={b.github} variant="secondary">GitHub</Button>}
-        {b.facebook && <Button href={b.facebook} variant="secondary">Facebook</Button>}
-        {b.linkedin && <Button href={b.linkedin} variant="secondary">LinkedIn</Button>}
-      </div>
-
-      <div class="mt-10 grid gap-4 md:grid-cols-2">
-        <div class="rounded-2xl border border-[rgb(var(--border))] p-6 reveal">
-          <h2 class="font-bold">Email</h2>
-          <p class="mt-2 text-[rgb(var(--fg)/0.70)]">{b.email}</p>
+        <div class="mt-6 flex flex-wrap gap-3 reveal">
+          <Button href={`mailto:${b.email}`}>Email</Button>
+          {b.github && <Button href={b.github} variant="secondary">GitHub</Button>}
+          {b.facebook && <Button href={b.facebook} variant="secondary">Facebook</Button>}
         </div>
 
-        <div class="rounded-2xl border border-[rgb(var(--border))] p-6 reveal">
-          <h2 class="font-bold">Phone</h2>
-          <p class="mt-2 text-[rgb(var(--fg)/0.70)]">{b.phone ?? "—"}</p>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+          <div class="card p-5 reveal" data-spotlight>
+            <div class="text-sm text-[rgb(var(--fg)/0.60)]">Email</div>
+            <div class="mt-2 font-semibold">{b.email}</div>
+          </div>
+
+          <div class="card p-5 reveal" data-spotlight>
+            <div class="text-sm text-[rgb(var(--fg)/0.60)]">Phone</div>
+            <div class="mt-2 font-semibold">{b.phone}</div>
+          </div>
         </div>
       </div>
     </Container>

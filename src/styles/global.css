@@ -106,3 +106,7 @@ body {
     max-width: 180px;
   }
 }
+select option {
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+}

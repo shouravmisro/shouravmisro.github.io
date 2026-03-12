@@ -1,32 +1,243 @@
 {
   "basics": {
     "name": "Shourav Misro",
-    "headline": "Building reliable software and IoT systems with clean UI and a strong QA mindset.",
-    "roles": ["SQA Intern", "Junior QA", "IoT"],
-    "location": "Bangladesh",
+    "headline": "SQA / QA and IoT / Embedded-focused CSE graduate building reliable software, tested systems, and practical hardware.",
+    "roles": [
+      "SQA Intern",
+      "Junior QA",
+      "IoT / Embedded"
+    ],
+    "location": "Dhaka, Bangladesh",
     "email": "misroshourav@gmail.com",
-    "phone": "01400300661",
+    "phone": "+88-01400300661",
     "github": "https://github.com/shouravmisro",
     "linkedin": "",
     "facebook": "https://www.facebook.com/shourav.05",
- "resumeSqaUrl": "/resume-sqa.pdf",
-"resumeIotUrl": "/resume-iot.pdf",
-"headshotUrl": "/headshot.jpg"
+    "resumeSqaUrl": "/resume-sqa.pdf",
+    "resumeIotUrl": "/resume-iot.pdf",
+    "headshotUrl": "/headshot.jpg"
   },
   "about": {
-    "short": "I focus on quality-first development: clear test cases, reliable workflows, and practical IoT projects. I enjoy building things that feel smooth to use and stable to maintain.",
-    "long": ""
+    "short": "I am a CSE graduate with a blended background in software quality assurance and IoT / embedded systems. I enjoy validating systems, finding practical issues, improving reliability, and working on projects that combine software logic with real-world hardware.",
+    "long": "My work combines structured software testing with practical embedded and IoT development. On the QA side, I focus on manual testing, test case design, API validation, regression testing, and quality bug reporting. On the embedded side, I have experience with ESP32, Arduino, Raspberry Pi, communication protocols, sensor integration, actuator control, firmware debugging, and system validation. I enjoy solving practical problems, collaborating in teams, and building systems that are both functional and dependable."
   },
   "skills": [
-    { "id": "skill_qa", "name": "Test Case Design", "level": "Intermediate" },
-    { "id": "skill_api", "name": "API Testing (Postman)", "level": "Intermediate" },
-    { "id": "skill_bug", "name": "Bug Reporting", "level": "Intermediate" },
-    { "id": "skill_iot", "name": "IoT / Sensors", "level": "Intermediate" }
+    { "id": "skill_1", "name": "Manual Testing", "level": "Expert" },
+    { "id": "skill_2", "name": "Test Case Design", "level": "Advanced" },
+    { "id": "skill_3", "name": "Bug Reporting", "level": "Advanced" },
+    { "id": "skill_4", "name": "API Testing (Postman)", "level": "Advanced" },
+    { "id": "skill_5", "name": "Regression Testing", "level": "Advanced" },
+    { "id": "skill_6", "name": "Jira", "level": "Intermediate" },
+    { "id": "skill_7", "name": "Requirement Analysis", "level": "Intermediate" },
+    { "id": "skill_8", "name": "SDLC / STLC", "level": "Intermediate" },
+
+    { "id": "skill_9", "name": "ESP32", "level": "Advanced" },
+    { "id": "skill_10", "name": "Arduino", "level": "Advanced" },
+    { "id": "skill_11", "name": "Raspberry Pi", "level": "Intermediate" },
+    { "id": "skill_12", "name": "Embedded C", "level": "Advanced" },
+    { "id": "skill_13", "name": "Sensor Interfacing", "level": "Advanced" },
+    { "id": "skill_14", "name": "Actuator Control", "level": "Advanced" },
+    { "id": "skill_15", "name": "GPIO / ADC / PWM / Timers", "level": "Advanced" },
+    { "id": "skill_16", "name": "UART / I2C / SPI", "level": "Advanced" },
+    { "id": "skill_17", "name": "MQTT / HTTP REST", "level": "Intermediate" },
+    { "id": "skill_18", "name": "Firmware Debugging", "level": "Advanced" },
+    { "id": "skill_19", "name": "System Validation", "level": "Advanced" },
+
+    { "id": "skill_20", "name": "Python", "level": "Intermediate" },
+    { "id": "skill_21", "name": "C", "level": "Advanced" },
+    { "id": "skill_22", "name": "C++", "level": "Intermediate" },
+    { "id": "skill_23", "name": "C#", "level": "Intermediate" },
+    { "id": "skill_24", "name": "Java", "level": "Intermediate" },
+    { "id": "skill_25", "name": "HTML / CSS", "level": "Intermediate" },
+    { "id": "skill_26", "name": "Git", "level": "Intermediate" },
+    { "id": "skill_27", "name": "Docker", "level": "Intermediate" }
   ],
-  "projects": [],
-  "experience": [],
-  "education": [],
-  "achievements": [],
+  "projects": [
+    {
+      "id": "proj_1",
+      "title": "LearnLink",
+      "year": 2024,
+      "summary":"QA validation of an ASP.NET MVC learning platform. Executed 50+ test cases, tested 30+ user flows, verified 500+ records, and found 20+ defects.",    "role": "QA Engineer / Software Tester",
+      "featured": true,
+      "stack": ["QA", "Manual Testing", "Postman", "ASP.NET MVC", "HTML", "CSS", "JavaScript", "C#"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_2",
+      "title": "Local Business Directory",
+      "year": 2024,
+      "summary": "Web-based business directory system where I conducted functional testing, listing/search validation, backend data integrity checks, and structured bug reporting.",
+      "role": "Tester / QA Contributor",
+      "featured": true,
+      "stack": ["QA", "Functional Testing", "PHP", "MySQL", "HTML", "CSS", "Bootstrap"],
+      "github": "",
+      "demo": ""
+    },
+    {
+
+      
+      "id": "proj_3",
+      "title": "root",
+      "year": 2023,
+      "summary": "Performed end-to-end testing of product, cart, and checkout flows in an Android app, reported UI and functional issues, and verified fixes through structured regression testing.",
+      "role": "Tester / QA Contributor",
+      "featured": false,
+      "stack": ["QA", "Regression Testing", "Android", "Java"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_4",
+      "title": "Hospital Management System",
+      "year": 2023,
+      "summary": "Executed functional and regression tests for patient, appointment, and record modules, identifying issues in validation, workflow logic, and database consistency.",
+      "role": "Tester / QA Contributor",
+      "featured": false,
+      "stack": ["QA", "Functional Testing", "Regression Testing", "Java", "MySQL"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_5",
+      "title": "Intelligent Solar Panel System",
+      "year": 2025,
+      "summary": "Built an ESP32 and Jetson Nano solar monitoring system with sensor integration, PWM charge control, relay protection, and AI-assisted defect detection.",
+      "role": "IoT / Embedded Developer",
+      "featured": true,
+      "stack": ["IoT", "Embedded", "ESP32", "Jetson Nano", "Embedded C", "I2C", "PWM", "Sensors"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_6",
+      "title": "Unified Smart Home Ecosystem",
+      "year": 2025,
+      "summary": "Developed an ESP32 and Raspberry Pi smart home system with sensor acquisition, motion interrupts, MQTT communication, and real-time automation logic."
+     , "role": "IoT / Embedded Developer",
+      "featured": true,
+      "stack": ["IoT", "ESP32", "Raspberry Pi", "MQTT", "GPIO", "ADC", "Embedded"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_7",
+      "title": "Traffic Management System",
+      "year": 2024,
+      "summary": "Built a real-time ESP32-based edge decision system using sensor data processing and low-latency firmware logic for traffic-related automation.",
+      "role": "Embedded Developer",
+      "featured": false,
+      "stack": ["Embedded", "ESP32", "Sensors", "Edge Computing", "Firmware"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_8",
+      "title": "Smart Security System",
+      "year": 2016,
+      "summary": "An Arduino-based security project with sonar, keypad, GSM, and Wi-Fi based real-time alerting and tracking features.",
+      "role": "Project Developer",
+      "featured": false,
+      "stack": ["IoT", "Arduino", "GSM", "Sensors"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_9",
+      "title": "Affordable Prosthetic Hand",
+      "year": 2019,
+      "summary": "Designed and developed a low-cost 3D-printed prosthetic hand prototype with basic mechanical actuation to assist physically disabled individuals in daily activities.",
+      "role": "Project Developer",
+      "featured": false,
+      "stack": ["Embedded", "3D Printing", "Servo Motor", "Hardware"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_10",
+      "title": "Personal Dashboard",
+      "year": 2025,
+      "summary": "A cloud-deployed personal dashboard web application built with Python and Flask, focused on organizing and visualizing personal data through a clean interface.",
+      "role": "Developer",
+      "featured": false,
+      "stack": ["Python", "Flask", "HTML", "CSS"],
+      "github": "",
+      "demo": ""
+    }
+  ],
+  "experience": [
+    {
+      "id": "exp_1",
+      "company": "AI ROBOT BONDHU / ICT Ministry, Bangladesh",
+      "title": "AI & Hardware Developer",
+      "start": "2016",
+      "end": "2019",
+      "highlights": [
+        "Participated in system validation and functional testing of AI modules.",
+        "Conducted hardware and software integration testing.",
+        "Supported issue identification, debugging, and performance evaluation.",
+        "Contributed to hardware integration and embedded firmware development."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "edu_1",
+      "school": "Ahsanullah University of Science and Technology",
+      "degree": "B.Sc. in Computer Science and Engineering",
+      "year": "2021 - 2025"
+    },
+    {
+      "id": "edu_2",
+      "school": "Bir Shreshtha Munshi Abdur Rouf Public College",
+      "degree": "HSC",
+      "year": "2020 (GPA 5.0)"
+    }
+  ],
+  "achievements": [
+    {
+      "id": "ach_1",
+      "title": "Champion — SQA Hackathon 2026 by Tech X",
+      "date": "2026",
+      "org": "Tech X",
+      "link": ""
+    },
+    {
+      "id": "ach_2",
+      "title": "Champion — BCSIR National Science Fest (Smart Security System)",
+      "date": "2016",
+      "org": "BCSIR",
+      "link": ""
+    },
+    {
+      "id": "ach_3",
+      "title": "Runner-up — BCSIR National Science Fest (Affordable Prosthetic Hand)",
+      "date": "2019",
+      "org": "BCSIR",
+      "link": ""
+    },
+    {
+      "id": "ach_4",
+      "title": "Runner-up — Robomania 1.0 (Bot Fight)",
+      "date": "2024",
+      "org": "",
+      "link": ""
+    },
+    {
+      "id": "ach_5",
+      "title": "Runner-up — CEFALO, AUST CSE Carnival 2.0 (Soccer-Bot)",
+      "date": "2023",
+      "org": "",
+      "link": ""
+    },
+    {
+      "id": "ach_6",
+      "title": "Champion — AUST CSE Futsal Championship",
+      "date": "2025",
+      "org": "",
+      "link": ""
+    }
+  ],
   "settings": {
     "themeStyle": "CleanGradient",
     "showPhone": true,

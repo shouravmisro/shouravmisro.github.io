@@ -11,6 +11,8 @@ const headshot =
   b.headshotUrl && typeof b.headshotUrl === "string" && b.headshotUrl.trim().length > 0
     ? b.headshotUrl
     : null;
+
+const featuredProjects = data.projects.filter((p) => p.featured).slice(0, 4);
 ---
 
 <BaseLayout title={`${b.name} — Portfolio`} description={b.headline}>
@@ -21,7 +23,6 @@ const headshot =
 
         <div class="relative p-6 sm:p-10">
           <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-            <!-- LEFT -->
             <div class="max-w-2xl">
               <p class="text-sm text-[rgb(var(--fg)/0.60)] reveal">{b.location ?? ""}</p>
 
@@ -30,9 +31,9 @@ const headshot =
               </h1>
 
               <p class="mt-4 text-base leading-relaxed text-[rgb(var(--fg)/0.75)] reveal">
-                I’m <span class="font-semibold">{b.name}</span> — focused on
-                <span class="font-semibold"> Software QA</span> and
-                <span class="font-semibold"> IoT</span>.
+                I work across <span class="font-semibold">Software QA</span> and
+                <span class="font-semibold"> IoT / Embedded Systems</span> — validating products,
+                designing tests, debugging issues, and building practical systems that combine software and hardware.
               </p>
 
               <div class="mt-5 flex flex-wrap gap-2 reveal">
@@ -45,21 +46,12 @@ const headshot =
 
               <div class="mt-7 flex flex-wrap gap-3 reveal">
                 <Button href="/cv">Resume / CV</Button>
+                <Button href="/projects" variant="secondary">Projects</Button>
                 <Button href="/contact" variant="secondary">Contact</Button>
                 {b.github && <Button href={b.github} variant="secondary">GitHub</Button>}
               </div>
-
-              <div class="mt-8 card p-5 reveal" data-spotlight>
-                <p class="text-sm text-[rgb(var(--fg)/0.75)]">
-                  Want to create your own website + CV like this? Fork the template and edit your info in minutes.
-                </p>
-                <div class="mt-3">
-                  <Button href="/make" variant="ghost">Create your website →</Button>
-                </div>
-              </div>
             </div>
 
-            <!-- RIGHT -->
             <div class="reveal">
               <div class="mx-auto w-full max-w-sm">
                 <div class="card p-5" data-spotlight>
@@ -77,7 +69,7 @@ const headshot =
 
                     <div class="min-w-0">
                       <div class="truncate text-lg font-bold">{b.name}</div>
-                      <div class="text-sm text-[rgb(var(--fg)/0.70)]">SQA • QA • IoT</div>
+                      <div class="text-sm text-[rgb(var(--fg)/0.70)]">SQA • QA • IoT / Embedded</div>
                     </div>
                   </div>
 
@@ -90,15 +82,27 @@ const headshot =
                     </a>
                   </div>
                 </div>
-
-                <p class="mt-3 text-xs text-[rgb(var(--fg)/0.55)] text-center">
-                  Tip: replace <code>/public/headshot.jpg</code> anytime.
-                </p>
               </div>
             </div>
           </div>
-        </div>
 
+          {featuredProjects.length > 0 && (
+            <div class="mt-10 grid gap-4 md:grid-cols-2">
+              {featuredProjects.map((p) => (
+                <article class="card p-5 reveal" data-spotlight>
+                  <div class="flex items-start justify-between gap-3">
+                    <div>
+                      <h2 class="text-lg font-bold">{p.title}</h2>
+                      <p class="mt-1 text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</p>
+                    </div>
+                    <span class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</span>
+                  </div>
+                  <p class="mt-3 text-sm text-[rgb(var(--fg)/0.75)]">{p.summary}</p>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </Container>
   </section>

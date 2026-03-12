@@ -1,7 +1,12 @@
 import { z } from "zod";
 
-export const SkillLevel = z.enum(["Beginner", "Intermediate", "Advanced"]);
-
+export const SkillLevel = z.enum([
+  "Novice",
+  "Beginner",
+  "Intermediate",
+  "Advanced",
+  "Expert",
+]);
 export const SkillSchema = z.object({
   id: z.string(),
   name: z.string().min(1, "Skill name is required"),
