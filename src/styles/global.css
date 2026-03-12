@@ -65,19 +65,44 @@ body {
   border-color: rgb(var(--fg) / 0.18);
 }
 
-/* Spotlight glow */
-[data-spotlight] { position: relative; overflow: hidden; }
+[data-spotlight]::before,
 [data-spotlight]::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(250px circle at var(--sx, 50%) var(--sy, 50%), rgb(var(--fg) / 0.10), transparent 55%);
-  opacity: 0;
-  transition: opacity 200ms ease;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
 }
-[data-spotlight]:hover::after { opacity: 1; }
 
+[data-spotlight]::before {
+  background:
+    radial-gradient(
+      140px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(var(--fg) / 0.12),
+      transparent 45%
+    );
+  mix-blend-mode: soft-light;
+}
+
+[data-spotlight]::after {
+  background:
+    radial-gradient(
+      320px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(var(--grad-a) / 0.10),
+      transparent 35%
+    ),
+    radial-gradient(
+      220px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(var(--grad-b) / 0.10),
+      transparent 45%
+    );
+}
+
+[data-spotlight]:hover::before,
+[data-spotlight]:hover::after {
+  opacity: 1;
+}
 /* Nav underline */
 .navlink { position: relative; padding-bottom: 6px; }
 .navlink::after {

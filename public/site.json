@@ -84,8 +84,8 @@
       "role": "Tester / QA Contributor",
       "featured": false,
       "stack": ["QA", "Regression Testing", "Android", "Java"],
-      "github": "",
-      "demo": ""
+     "github": "https://github.com/shouravmisro/root-android",
+"demo": ""
     },
     {
       "id": "proj_4",
@@ -95,8 +95,8 @@
       "role": "Tester / QA Contributor",
       "featured": false,
       "stack": ["QA", "Functional Testing", "Regression Testing", "Java", "MySQL"],
-      "github": "",
-      "demo": ""
+  "github": "https://github.com/shouravmisro/Hospital-management-system",
+"demo": ""
     },
     {
       "id": "proj_5",
@@ -106,8 +106,8 @@
       "role": "IoT / Embedded Developer",
       "featured": true,
       "stack": ["IoT", "Embedded", "ESP32", "Jetson Nano", "Embedded C", "I2C", "PWM", "Sensors"],
-      "github": "",
-      "demo": ""
+     "github": "https://github.com/shouravmisro/Optimal_solar_system",
+"demo": "https://shouravmisro.github.io/Optimal_solar_system/"
     },
     {
       "id": "proj_6",
@@ -117,8 +117,8 @@
      , "role": "IoT / Embedded Developer",
       "featured": true,
       "stack": ["IoT", "ESP32", "Raspberry Pi", "MQTT", "GPIO", "ADC", "Embedded"],
-      "github": "",
-      "demo": ""
+     "github": "https://github.com/shouravmisro/The-Unified-Smart-Home-Ecosystem-for-Wellness-Security-and-Efficiency",
+"demo": ""
     },
     {
       "id": "proj_7",
@@ -163,7 +163,18 @@
       "stack": ["Python", "Flask", "HTML", "CSS"],
       "github": "",
       "demo": ""
-    }
+    },
+    {
+  "id": "proj_11",
+  "title": "Underground Racing iGraphic",
+  "year": 2023,
+  "summary": "Graphics-focused university project related to game-style visual work and implementation.",
+  "role": "Developer",
+  "featured": false,
+  "stack": ["C++", "Graphics"],
+  "github": "https://github.com/shouravmisro/underground-racing-igraphic",
+  "demo": ""
+}
   ],
   "experience": [
     {
