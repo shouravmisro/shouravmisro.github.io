@@ -4,8 +4,9 @@ import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 
 const { title, description, noindex = false } = Astro.props;
-const metaTitle = title ?? "Shourav Misro — Portfolio";
-const metaDesc = description ?? "SQA • QA • IoT — Portfolio & CV";
+
+const metaTitle = title ?? "Portfolio";
+const metaDesc = description ?? "Personal portfolio";
 ---
 
 <!doctype html>
@@ -20,7 +21,6 @@ const metaDesc = description ?? "SQA • QA • IoT — Portfolio & CV";
     <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/motion/mesh.css" />
 
-    <!-- Prevent theme flash -->
     <script>
       {String.raw`
         (function () {
@@ -44,9 +44,9 @@ const metaDesc = description ?? "SQA • QA • IoT — Portfolio & CV";
       <slot />
     </main>
     <Footer />
-
-    <script type="module" src="/theme/theme.js"></script>
-    <script type="module" src="/motion/reveal.js"></script>
-    <script type="module" src="/motion/spotlight.js"></script>
+<script type="module" src="/theme/theme.js"></script>
+<script type="module" src="/motion/reveal.js"></script>
+<script type="module" src="/motion/spotlight.js"></script>
+<script is:inline src="/nav-menu.js"></script>
   </body>
 </html>

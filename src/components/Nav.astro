@@ -99,12 +99,14 @@ const headshot = (site.headshotUrl ?? "").trim();
             {l.label}
           </a>
         ))}
+
         <a
           class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition"
           href="/cv"
         >
           Resume / CV
         </a>
+
         {site.github && (
           <a
             class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition"
@@ -118,47 +120,4 @@ const headshot = (site.headshotUrl ?? "").trim();
       </nav>
     </Container>
   </div>
-
-  <script is:inline>
-    {String.raw`
-      (() => {
-        const btn = document.getElementById("menuBtn");
-        const nav = document.getElementById("mobileNav");
-        const overlay = document.getElementById("mobileOverlay");
-        if (!btn || !nav || !overlay) return;
-
-        const closeMenu = () => {
-          nav.classList.add("hidden");
-          overlay.classList.add("hidden");
-          btn.setAttribute("aria-expanded", "false");
-          document.body.style.overflow = "";
-        };
-
-        const openMenu = () => {
-          nav.classList.remove("hidden");
-          overlay.classList.remove("hidden");
-          btn.setAttribute("aria-expanded", "true");
-          document.body.style.overflow = "hidden";
-        };
-
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          const isOpen = !nav.classList.contains("hidden");
-          isOpen ? closeMenu() : openMenu();
-        });
-
-        overlay.addEventListener("click", closeMenu);
-
-        nav.addEventListener("click", (e) => {
-          const a = e.target && e.target.closest && e.target.closest("a");
-          if (a) closeMenu();
-        });
-
-        window.addEventListener("resize", () => {
-          if (window.matchMedia("(min-width: 768px)").matches) closeMenu();
-        });
-      })();
-    `}
-  </script>
 </header>
