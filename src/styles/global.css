@@ -110,3 +110,8 @@ select option {
   background: rgb(var(--bg));
   color: rgb(var(--fg));
 }
+@media (max-width: 640px) {
+  .card {
+    border-radius: 14px;
+  }
+}

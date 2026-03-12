@@ -19,12 +19,13 @@ const headshot = (site.headshotUrl ?? "").trim();
 
 <header class="sticky top-0 z-50 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.86)] backdrop-blur">
   <Container class="flex h-16 items-center justify-between gap-3">
+    <!-- Brand -->
     <a href="/" class="flex min-w-0 items-center gap-3 font-bold tracking-tight">
       {headshot && (
         <img
           src={headshot}
           alt={`${site.name} headshot`}
-          style="width:32px;height:32px;object-fit:cover;border-radius:9999px;"
+          style="width:34px;height:34px;object-fit:cover;border-radius:9999px;"
           class="shrink-0 border border-[rgb(var(--border))]"
           loading="lazy"
         />
@@ -35,12 +36,13 @@ const headshot = (site.headshotUrl ?? "").trim();
     <!-- Desktop nav -->
     <nav class="hidden items-center gap-6 md:flex">
       {links.map((l) => (
-        <a class="navlink text-sm text-[rgb(var(--fg)/0.70)] hover:text-[rgb(var(--fg))] transition" href={l.href}>
+        <a class="navlink text-sm text-[rgb(var(--fg)/0.72)] hover:text-[rgb(var(--fg))] transition" href={l.href}>
           {l.label}
         </a>
       ))}
     </nav>
 
+    <!-- Actions -->
     <div class="flex items-center gap-2">
       <button
         type="button"
@@ -54,7 +56,7 @@ const headshot = (site.headshotUrl ?? "").trim();
 
       {site.github && (
         <a
-          class="hidden sm:inline-flex rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
+          class="hidden lg:inline-flex rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
           href={site.github}
           target="_blank"
           rel="noreferrer"
@@ -82,7 +84,7 @@ const headshot = (site.headshotUrl ?? "").trim();
     </div>
   </Container>
 
-  <!-- Mobile nav panel -->
+  <!-- Mobile panel -->
   <div id="mobileNav" class="md:hidden hidden border-t border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.95)]">
     <Container class="py-3">
       <nav class="grid gap-1">
@@ -95,7 +97,12 @@ const headshot = (site.headshotUrl ?? "").trim();
           Resume / CV
         </a>
         {site.github && (
-          <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition" href={site.github} target="_blank" rel="noreferrer">
+          <a
+            class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition"
+            href={site.github}
+            target="_blank"
+            rel="noreferrer"
+          >
             GitHub
           </a>
         )}
