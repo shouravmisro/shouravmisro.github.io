@@ -19,30 +19,29 @@ const headshot = (site.headshotUrl ?? "").trim();
 
 <header class="sticky top-0 z-50 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.86)] backdrop-blur">
   <Container class="flex h-16 items-center justify-between gap-3">
-    <!-- Brand -->
     <a href="/" class="flex min-w-0 items-center gap-3 font-bold tracking-tight">
       {headshot && (
         <img
           src={headshot}
           alt={`${site.name} headshot`}
-          style="width:34px;height:34px;object-fit:cover;border-radius:9999px;"
-          class="shrink-0 border border-[rgb(var(--border))]"
+          class="h-9 w-9 shrink-0 rounded-full border border-[rgb(var(--border))] object-cover"
           loading="lazy"
         />
       )}
       <span class="min-w-0 truncate">{site.name}</span>
     </a>
 
-    <!-- Desktop nav -->
     <nav class="hidden items-center gap-6 md:flex">
       {links.map((l) => (
-        <a class="navlink text-sm text-[rgb(var(--fg)/0.72)] hover:text-[rgb(var(--fg))] transition" href={l.href}>
+        <a
+          class="navlink text-sm text-[rgb(var(--fg)/0.72)] hover:text-[rgb(var(--fg))] transition"
+          href={l.href}
+        >
           {l.label}
         </a>
       ))}
     </nav>
 
-    <!-- Actions -->
     <div class="flex items-center gap-2">
       <button
         type="button"
@@ -84,16 +83,26 @@ const headshot = (site.headshotUrl ?? "").trim();
     </div>
   </Container>
 
-  <!-- Mobile panel -->
-  <div id="mobileNav" class="md:hidden hidden border-t border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.95)]">
+  <div id="mobileOverlay" class="fixed inset-0 z-40 hidden bg-black/35 md:hidden"></div>
+
+  <div
+    id="mobileNav"
+    class="fixed inset-x-3 top-[72px] z-50 hidden rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.98)] shadow-xl md:hidden"
+  >
     <Container class="py-3">
       <nav class="grid gap-1">
         {links.map((l) => (
-          <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition" href={l.href}>
+          <a
+            class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition"
+            href={l.href}
+          >
             {l.label}
           </a>
         ))}
-        <a class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition" href="/cv">
+        <a
+          class="rounded-xl px-3 py-2 text-sm text-[rgb(var(--fg)/0.85)] hover:bg-[rgb(var(--fg)/0.06)] transition"
+          href="/cv"
+        >
           Resume / CV
         </a>
         {site.github && (
@@ -112,29 +121,39 @@ const headshot = (site.headshotUrl ?? "").trim();
 
   <script is:inline>
     {String.raw`
-      (function () {
+      (() => {
         const btn = document.getElementById("menuBtn");
         const nav = document.getElementById("mobileNav");
-        if (!btn || !nav) return;
+        const overlay = document.getElementById("mobileOverlay");
+        if (!btn || !nav || !overlay) return;
 
-        function closeMenu() {
+        const closeMenu = () => {
           nav.classList.add("hidden");
+          overlay.classList.add("hidden");
           btn.setAttribute("aria-expanded", "false");
-        }
+          document.body.style.overflow = "";
+        };
+
+        const openMenu = () => {
+          nav.classList.remove("hidden");
+          overlay.classList.remove("hidden");
+          btn.setAttribute("aria-expanded", "true");
+          document.body.style.overflow = "hidden";
+        };
 
         btn.addEventListener("click", (e) => {
+          e.preventDefault();
           e.stopPropagation();
-          nav.classList.toggle("hidden");
-          const open = !nav.classList.contains("hidden");
-          btn.setAttribute("aria-expanded", open ? "true" : "false");
+          const isOpen = !nav.classList.contains("hidden");
+          isOpen ? closeMenu() : openMenu();
         });
+
+        overlay.addEventListener("click", closeMenu);
 
         nav.addEventListener("click", (e) => {
           const a = e.target && e.target.closest && e.target.closest("a");
           if (a) closeMenu();
         });
-
-        document.addEventListener("click", () => closeMenu());
 
         window.addEventListener("resize", () => {
           if (window.matchMedia("(min-width: 768px)").matches) closeMenu();

@@ -53,16 +53,28 @@ body {
   border-radius: 12px;
 }
 
-/* Cards */
+
 .card {
   border: 1px solid rgb(var(--border));
-  border-radius: 16px;
-  background: rgb(var(--bg) / 0.6);
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  border-radius: 18px;
+  background: rgb(var(--bg) / 0.66);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
+
 .card:hover {
-  transform: translateY(-2px);
   border-color: rgb(var(--fg) / 0.18);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.08);
+}
+
+[data-spotlight] {
+  position: relative;
+  overflow: hidden;
 }
 
 [data-spotlight]::before,
@@ -80,7 +92,7 @@ body {
     radial-gradient(
       140px circle at var(--sx, 50%) var(--sy, 50%),
       rgb(var(--fg) / 0.12),
-      transparent 45%
+      transparent 42%
     );
   mix-blend-mode: soft-light;
 }
@@ -88,14 +100,14 @@ body {
 [data-spotlight]::after {
   background:
     radial-gradient(
-      320px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(var(--grad-a) / 0.10),
-      transparent 35%
+      280px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(var(--grad-a) / 0.14),
+      transparent 34%
     ),
     radial-gradient(
-      220px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(var(--grad-b) / 0.10),
-      transparent 45%
+      180px circle at var(--sx, 50%) var(--sy, 50%),
+      rgb(var(--grad-b) / 0.12),
+      transparent 42%
     );
 }
 
@@ -103,7 +115,15 @@ body {
 [data-spotlight]:hover::after {
   opacity: 1;
 }
-/* Nav underline */
+
+.card img {
+  border-radius: 12px;
+}
+
+img.rounded-full {
+  border-radius: 9999px !important;
+}
+
 .navlink { position: relative; padding-bottom: 6px; }
 .navlink::after {
   content: "";
