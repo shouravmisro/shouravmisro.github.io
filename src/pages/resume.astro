@@ -7,126 +7,256 @@ import { loadSiteJson } from "../lib/sitejson";
 const data = loadSiteJson();
 const b = data.basics;
 
-const resumeSqaUrl = (b.resumeSqaUrl ?? "/resume-sqa.pdf");
-const resumeIotUrl = (b.resumeIotUrl ?? "/resume-iot.pdf");
+const qaSkills = data.skills.filter((s) =>
+  [
+    "Manual Testing",
+    "Test Case Design",
+    "Bug Reporting",
+    "API Testing (Postman)",
+    "Regression Testing",
+    "Jira",
+    "Requirement Analysis",
+    "SDLC / STLC"
+  ].includes(s.name)
+);
+
+const iotSkills = data.skills.filter((s) =>
+  [
+    "ESP32",
+    "Arduino",
+    "Raspberry Pi",
+    "Embedded C",
+    "Sensor Interfacing",
+    "Actuator Control",
+    "GPIO / ADC / PWM / Timers",
+    "UART / I2C / SPI",
+    "MQTT / HTTP REST",
+    "Firmware Debugging",
+    "System Validation"
+  ].includes(s.name)
+);
+
+const qaProjects = data.projects.filter((p) =>
+  p.stack.some((s) =>
+    ["QA", "Manual Testing", "Functional Testing", "Regression Testing", "Postman"].includes(s)
+  )
+);
+
+const iotProjects = data.projects.filter((p) =>
+  p.stack.some((s) =>
+    ["IoT", "Embedded", "ESP32", "Arduino", "Raspberry Pi", "Firmware"].includes(s)
+  )
+);
 ---
 
-<BaseLayout title="Resume" description="Download and view my resumes">
-  <section class="py-14">
+<BaseLayout title="Resume" description={`Resume and profile of ${b.name}`}>
+  <section class="py-10">
     <Container>
-      <div class="flex flex-wrap items-start justify-between gap-4">
-        <div class="max-w-2xl">
-          <h1 class="text-3xl font-extrabold tracking-tight reveal">Resume</h1>
-          <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
-            I work across SQA/QA and IoT. Choose the resume you prefer, and below you’ll also see my full skillset snapshot.
-          </p>
+      <div class="grid gap-6 lg:grid-cols-[300px_1fr]">
+        <!-- Left sticky sidebar -->
+        <aside class="lg:sticky lg:top-20 h-max">
+          <div class="gsap-resume-slide-left card p-5 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+            {b.headshotUrl && (
+              <img
+                src={b.headshotUrl}
+                alt={`${b.name} headshot`}
+                class="h-24 w-24 rounded-full border border-[rgb(var(--border))] object-cover"
+              />
+            )}
 
-          <div class="mt-6 flex flex-wrap gap-3 reveal">
-            <Button href={resumeSqaUrl}>Download SQA Resume</Button>
-            <Button href={resumeIotUrl} variant="secondary">Download IoT Resume</Button>
-            <Button href="/contact" variant="secondary">Contact</Button>
+            <h1 class="mt-4 text-2xl font-extrabold">{b.name}</h1>
+            <p class="mt-2 text-sm text-[rgb(var(--fg)/0.70)]">{b.headline}</p>
+
+            <div class="mt-4 space-y-2 text-sm text-[rgb(var(--fg)/0.78)]">
+              <div>{b.email}</div>
+              <div>{b.phone}</div>
+              <div>{b.location}</div>
+            </div>
+
+            <div class="mt-5 grid gap-2">
+              <Button href={b.resumeSqaUrl ?? "/resume-sqa.pdf"}>Download SQA CV</Button>
+              <Button href={b.resumeIotUrl ?? "/resume-iot.pdf"} variant="secondary">
+                Download IoT / Embedded CV
+              </Button>
+            </div>
+
+            <div class="mt-5 border-t border-[rgb(var(--border))] pt-4">
+              <div class="text-xs font-semibold uppercase tracking-wide text-[rgb(var(--fg)/0.55)]">
+                Focus Areas
+              </div>
+
+              <div class="mt-3">
+                <div class="font-semibold text-sm">SQA / QA</div>
+                <p class="mt-1 text-sm text-[rgb(var(--fg)/0.72)]">
+                  Manual testing, test case design, API testing, regression testing, bug reporting.
+                </p>
+              </div>
+
+              <div class="mt-4">
+                <div class="font-semibold text-sm">IoT / Embedded</div>
+                <p class="mt-1 text-sm text-[rgb(var(--fg)/0.72)]">
+                  ESP32, Arduino, Raspberry Pi, protocols, sensor integration, firmware debugging.
+                </p>
+              </div>
+            </div>
           </div>
+        </aside>
+
+        <!-- Main content -->
+        <div class="grid gap-4">
+          <section class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+            <h2 class="text-xl font-bold">Profile Summary</h2>
+            <p class="mt-3 text-[rgb(var(--fg)/0.75)] leading-relaxed">
+              {data.about.long || data.about.short}
+            </p>
+          </section>
+
+          <section class="grid gap-4 md:grid-cols-2">
+            <div class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+              <h2 class="text-xl font-bold">SQA / QA Skills</h2>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {qaSkills.map((s) => (
+                  <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.3)] px-3 py-1 text-xs text-[rgb(var(--fg)/0.75)]">
+                    {s.name}{s.level ? ` (${s.level})` : ""}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+              <h2 class="text-xl font-bold">IoT / Embedded Skills</h2>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {iotSkills.map((s) => (
+                  <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.3)] px-3 py-1 text-xs text-[rgb(var(--fg)/0.75)]">
+                    {s.name}{s.level ? ` (${s.level})` : ""}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+            <h2 class="text-xl font-bold">Experience</h2>
+            <div class="mt-5 grid gap-4">
+              {data.experience.map((e) => (
+                <div class="rounded-2xl border border-[rgb(var(--border))] p-5 transition-colors hover:border-[rgba(var(--fg)/0.2)]">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="font-semibold text-lg">{e.title} <span class="text-[rgb(var(--fg)/0.6)] font-normal text-base">— {e.company}</span></div>
+                    <div class="text-xs font-semibold px-3 py-1 bg-[rgb(var(--fg)/0.06)] rounded-full text-[rgb(var(--fg)/0.70)]">{e.start} - {e.end}</div>
+                  </div>
+                  <ul class="mt-3 list-disc pl-5 space-y-1 text-sm leading-relaxed text-[rgb(var(--fg)/0.75)]">
+                    {e.highlights.map((h) => <li>{h}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section class="grid gap-4 md:grid-cols-2">
+            <div class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+              <h2 class="text-xl font-bold">SQA / QA Projects</h2>
+              <div class="mt-4 grid gap-3">
+                {qaProjects.map((p) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4 hover:border-[rgba(var(--fg)/0.2)] transition-colors">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="font-semibold">{p.title}</div>
+                        <div class="text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</div>
+                      </div>
+                      <div class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</div>
+                    </div>
+                    <p class="mt-2 text-sm text-[rgb(var(--fg)/0.75)] line-clamp-3">{p.summary}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+              <h2 class="text-xl font-bold">IoT / Embedded Projects</h2>
+              <div class="mt-4 grid gap-3">
+                {iotProjects.map((p) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4 hover:border-[rgba(var(--fg)/0.2)] transition-colors">
+                    <div class="flex items-start justify-between gap-3">
+                      <div>
+                        <div class="font-semibold">{p.title}</div>
+                        <div class="text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</div>
+                      </div>
+                      <div class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</div>
+                    </div>
+                    <p class="mt-2 text-sm text-[rgb(var(--fg)/0.75)] line-clamp-3">{p.summary}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section class="grid gap-4 md:grid-cols-2">
+            <div class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+              <h2 class="text-xl font-bold">Education</h2>
+              <div class="mt-4 grid gap-3">
+                {data.education.map((e) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4 hover:border-[rgba(var(--fg)/0.2)] transition-colors">
+                    <div class="font-semibold">{e.degree}</div>
+                    <div class="text-sm text-[rgb(var(--fg)/0.70)]">{e.school}</div>
+                    <div class="text-xs text-[rgb(var(--fg)/0.60)] mt-1">{e.year}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="gsap-resume-card card p-6 relative overflow-hidden transition-all duration-500 hover:border-[rgba(var(--fg)/0.2)]">
+              <h2 class="text-xl font-bold">Achievements</h2>
+              <div class="mt-4 grid gap-3">
+                {data.achievements.map((a) => (
+                  <div class="rounded-2xl border border-[rgb(var(--border))] p-4 hover:border-[rgba(var(--fg)/0.2)] transition-colors">
+                    <div class="font-semibold">{a.title}</div>
+                    {a.org && <div class="text-sm text-[rgb(var(--fg)/0.70)]">{a.org}</div>}
+                    <div class="text-xs text-[rgb(var(--fg)/0.60)] mt-1">{a.date}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
         </div>
       </div>
-
-      <!-- Full skillset snapshot -->
-      <div class="mt-10 rounded-2xl border border-[rgb(var(--border))] p-6 reveal">
-        <h2 class="text-lg font-bold">Full Skillset Snapshot</h2>
-        <p class="mt-2 text-sm text-[rgb(var(--fg)/0.70)]">
-          Quick overview pulled from <code>public/site.json</code>.
-        </p>
-
-        <div class="mt-4 flex flex-wrap gap-2">
-          {data.skills?.length ? (
-            data.skills.map((s) => (
-              <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.75)]">
-                {s.name}{s.level ? ` (${s.level})` : ""}
-              </span>
-            ))
-          ) : (
-            <span class="text-sm text-[rgb(var(--fg)/0.70)]">No skills added yet. Add skills in /make.</span>
-          )}
-        </div>
-      </div>
-
-      <!-- Viewer Tabs -->
-      <div class="mt-10 overflow-hidden rounded-2xl border border-[rgb(var(--border))] reveal">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.7)] p-3">
-          <div class="text-sm font-semibold">View</div>
-          <div class="flex gap-2">
-            <button
-              class="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.04)] transition"
-              onclick="setResumeTab('sqa')"
-              id="tab-sqa"
-            >
-              SQA
-            </button>
-            <button
-              class="rounded-xl border border-[rgb(var(--border))] px-3 py-2 text-sm hover:bg-[rgb(var(--fg)/0.04)] transition"
-              onclick="setResumeTab('iot')"
-              id="tab-iot"
-            >
-              IoT
-            </button>
-          </div>
-        </div>
-
-        <iframe
-          id="resumeFrame"
-          title="Resume Viewer"
-          src={resumeSqaUrl}
-          class="h-[85vh] w-full"
-        ></iframe>
-      </div>
-
-      <p class="mt-4 text-xs text-[rgb(var(--fg)/0.55)] reveal">
-        Files live in <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">public/</code> as
-        <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">resume-sqa.pdf</code> and
-        <code class="rounded bg-[rgb(var(--fg)/0.08)] px-1.5 py-0.5">resume-iot.pdf</code>.
-      </p>
     </Container>
   </section>
 
-  <script is:inline>
-  {String.raw`
-    (function () {
-      const SQA_URL = ${JSON.stringify(resumeSqaUrl)};
-      const IOT_URL = ${JSON.stringify(resumeIotUrl)};
+  <script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    
+    gsap.registerPlugin(ScrollTrigger);
 
-      const frame = document.getElementById("resumeFrame");
-      const sqaBtn = document.getElementById("tab-sqa");
-      const iotBtn = document.getElementById("tab-iot");
+    function initResumeAnimation() {
+      // Sidebar animation
+      gsap.from(".gsap-resume-slide-left", {
+        opacity: 0,
+        x: -30,
+        duration: 0.8,
+        ease: "power3.out",
+        clearProps: "all"
+      });
 
-      if (!frame || !sqaBtn || !iotBtn) return;
-
-      function setActive(active) {
-        const activeCls = ["border-[rgb(var(--fg)/0.22)]", "bg-[rgb(var(--fg)/0.06)]"];
-        const normalCls = ["border-[rgb(var(--border))]"];
-
-        // reset
-        sqaBtn.classList.remove(...activeCls);
-        iotBtn.classList.remove(...activeCls);
-
-        sqaBtn.classList.add(...normalCls);
-        iotBtn.classList.add(...normalCls);
-
-        // set active
-        const btn = active === "iot" ? iotBtn : sqaBtn;
-        btn.classList.remove(...normalCls);
-        btn.classList.add(...activeCls);
+      // Staggered cards entrance
+      const cards = gsap.utils.toArray(".gsap-resume-card");
+      if (cards.length > 0) {
+        gsap.from(cards, {
+          scrollTrigger: {
+            trigger: cards[0] as Element,
+            start: "top 90%",
+          },
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power3.out",
+          clearProps: "all"
+        });
       }
+    }
 
-      function setTab(tab) {
-        frame.setAttribute("src", tab === "iot" ? IOT_URL : SQA_URL);
-        setActive(tab);
-      }
-
-      sqaBtn.addEventListener("click", () => setTab("sqa"));
-      iotBtn.addEventListener("click", () => setTab("iot"));
-
-      // default
-      setTab("sqa");
-    })();
-  `}
-</script>
+    initResumeAnimation();
+    document.addEventListener('astro:page-load', initResumeAnimation);
+  </script>
 </BaseLayout>

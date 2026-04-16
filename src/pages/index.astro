@@ -1,117 +1,359 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Container from "../components/Container.astro";
 import Button from "../components/Button.astro";
 import { loadSiteJson } from "../lib/sitejson";
 
 const data = loadSiteJson();
 const b = data.basics;
 
-const headshot =
-  b.headshotUrl && typeof b.headshotUrl === "string" && b.headshotUrl.trim().length > 0
-    ? b.headshotUrl
-    : null;
-
-const featuredProjects = data.projects.filter((p) => p.featured).slice(0, 4);
+const featuredProjects = data.projects.filter((p: any) => p.featured);
+const topAchievements = data.achievements;
 ---
 
 <BaseLayout title={`${b.name} — Portfolio`} description={b.headline}>
-  <section class="py-10 sm:py-14">
-    <Container>
-      <div class="relative overflow-hidden rounded-3xl border border-[rgb(var(--border))]">
-        <div class="mesh"></div>
 
-        <div class="relative p-6 sm:p-8 lg:p-10">
-          <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-            <div class="max-w-2xl">
-              <p class="text-sm text-[rgb(var(--fg)/0.60)] reveal">{b.location ?? ""}</p>
+  <!-- ══ HERO ══ -->
+  <section id="hero" class="hero-sec">
+    <div class="hero-inner">
 
-              <h1 class="mt-3 max-w-[12ch] text-4xl font-extrabold leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl reveal">
-                SQA / QA and IoT / Embedded-focused engineer
-              </h1>
+      <div class="hero-el pill-row">
+        <span class="pill">{b.location}</span>
+        <span class="pill pill-green"><span class="dot-sm"></span>Open to work</span>
+        <span class="pill">CSE · AUST '25</span>
+      </div>
 
-              <p class="mt-5 max-w-[62ch] text-base leading-relaxed text-[rgb(var(--fg)/0.75)] reveal">
-                I’m <span class="font-semibold">{b.name}</span>, a CSE graduate working across
-                software quality assurance and IoT / embedded systems — validating products,
-                finding practical issues, and building dependable solutions.
-              </p>
+      <h1 class="hero-el hero-h1">
+        Quality-Driven<br/>
+        <span class="grad-text">Software Tester</span><br/>
+        <span class="h1-sub">& Embedded Engineer.</span>
+      </h1>
 
-              <div class="mt-5 flex flex-wrap gap-2 reveal">
-                {b.roles?.map((r) => (
-                  <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.30)] px-3 py-1 text-xs text-[rgb(var(--fg)/0.75)]">
-                    {r}
-                  </span>
-                ))}
-              </div>
+      <p class="hero-el hero-sub">
+        I'm <strong>{b.name}</strong> — a CSE grad specialising in
+        <em>manual testing, API validation &amp; regression</em> with hands-on
+        <em>IoT &amp; embedded systems</em> experience. I catch bugs before users do,
+        design comprehensive test cases, and build dependable hardware systems.
+      </p>
 
-              <div class="mt-7 flex flex-wrap gap-3 reveal">
-                <Button href="/cv">Resume / CV</Button>
-                <Button href="/projects" variant="secondary">Projects</Button>
-                <Button href="/contact" variant="secondary">Contact</Button>
-                {b.github && <Button href={b.github} variant="secondary">GitHub</Button>}
-              </div>
-            </div>
+      <div class="hero-el role-row">
+        {b.roles.map((r: string) => <span class="role-chip">{r}</span>)}
+        <span class="role-chip">Manual Testing</span>
+        <span class="role-chip">Postman / API</span>
+        <span class="role-chip">Jira · SDLC</span>
+        <span class="role-chip">ESP32 / Arduino</span>
+      </div>
 
-            <div class="reveal">
-              <div class="mx-auto w-full max-w-sm">
-                <div class="card p-5" data-spotlight>
-                  <div class="flex items-center gap-4">
-                    {headshot ? (
-                      <img
-                        src={headshot}
-                        alt={`${b.name} headshot`}
-                        class="h-20 w-20 shrink-0 rounded-full border border-[rgb(var(--border))] object-cover sm:h-24 sm:w-24"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div class="h-20 w-20 shrink-0 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.06)] sm:h-24 sm:w-24" />
-                    )}
+      <div class="hero-el cta-row">
+        <Button href="/resume">View Resume</Button>
+        <Button href={`mailto:${b.email}`} variant="secondary">Get in Touch</Button>
+      </div>
 
-                    <div class="min-w-0">
-                      <div class="truncate text-xl font-bold">{b.name}</div>
-                      <div class="mt-1 text-sm text-[rgb(var(--fg)/0.70)]">
-                        SQA • QA • IoT / Embedded
-                      </div>
-                    </div>
-                  </div>
+    </div>
+  </section>
 
-                  <div class="mt-5 grid gap-2">
-                    <a
-                      class="rounded-xl border border-[rgb(var(--border))] px-4 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
-                      href="/projects"
-                    >
-                      View Projects →
-                    </a>
-                    <a
-                      class="rounded-xl border border-[rgb(var(--border))] px-4 py-2 text-sm hover:bg-[rgb(var(--fg)/0.06)] transition"
-                      href="/cv"
-                    >
-                      View CV →
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <!-- ══ ACHIEVEMENTS (moved above projects) ══ -->
+  <section id="achievements" class="content-sec">
+    <div class="sec-head reveal-item">
+      <div class="sec-tag">Recognition</div>
+      <h2 class="sec-h2">Awards &amp; <span class="grad-text">Achievements</span></h2>
+      <p class="sec-desc">National-level competitions, hackathons, and academic victories.</p>
+    </div>
+    <div class="ach-grid">
+      {topAchievements.map((a: any, i: number) => (
+        <div class="ach-card reveal-item" style={`--d:${i*55}ms`}>
+          <div class="ach-icon">{["🏆","🥇","🥈","🤖","⚽","🏅"][i] ?? "🏅"}</div>
+          <div>
+            <div class="ach-title">{a.title}</div>
+            {a.org && <div class="ach-org">{a.org}</div>}
+            <div class="ach-date">{a.date}</div>
           </div>
+        </div>
+      ))}
+    </div>
+  </section>
 
-          {featuredProjects.length > 0 && (
-            <div class="mt-10 grid gap-4 md:grid-cols-2">
-              {featuredProjects.map((p) => (
-                <article class="card p-5 reveal" data-spotlight>
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <h2 class="text-lg font-bold">{p.title}</h2>
-                      <p class="mt-1 text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</p>
-                    </div>
-                    <span class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</span>
-                  </div>
-                  <p class="mt-3 text-sm text-[rgb(var(--fg)/0.75)]">{p.summary}</p>
-                </article>
-              ))}
+  <!-- ══ PROJECTS ══ -->
+  <section id="projects" class="content-sec">
+    <div class="sec-head reveal-item">
+      <div class="sec-tag">Selected Work</div>
+      <h2 class="sec-h2">Featured <span class="grad-text">Projects</span></h2>
+      <p class="sec-desc">QA validation work &amp; hands-on IoT / embedded builds from my CV.</p>
+    </div>
+    <div class="proj-grid">
+      {featuredProjects.map((p: any, i: number) => (
+        <article class="proj-card reveal-item" style={`--d:${i*70}ms`}>
+          <div class="proj-top">
+            <span class={`proj-badge ${p.stack.some((s: string)=>["IoT","Embedded","ESP32","Arduino"].includes(s))?"badge-iot":"badge-qa"}`}>
+              {p.stack.some((s: string)=>["IoT","Embedded","ESP32","Arduino"].includes(s))?"IoT / Embedded":"SQA / QA"}
+            </span>
+            <span class="proj-year">{p.year}</span>
+          </div>
+          <h3 class="proj-title">{p.title}</h3>
+          <p class="proj-desc">{p.summary}</p>
+          <div class="stack-row">
+            {p.stack.slice(0,5).map((s: string)=><span class="stack-chip">{s}</span>)}
+          </div>
+          {(p.github||p.demo) && (
+            <div class="proj-links">
+              {p.github && <a href={p.github} target="_blank" rel="noopener" class="plink">GitHub ↗</a>}
+              {p.demo   && <a href={p.demo}   target="_blank" rel="noopener" class="plink">Live Demo ↗</a>}
             </div>
           )}
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- ══ SKILLS ══ -->
+  <section id="skills" class="content-sec">
+    <div class="sec-head reveal-item">
+      <div class="sec-tag">Toolbox</div>
+      <h2 class="sec-h2">Core <span class="grad-text">Skills</span></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group reveal-item" style="--d:0ms">
+        <div class="sg-head"><span class="sg-ico">🧪</span><div><div class="sg-title">SQA / Quality Assurance</div><div class="sg-sub">Testing · Validation · Reporting</div></div></div>
+        <div class="chip-row">
+          {["Manual Testing","Test Case Design","Bug Reporting","API Testing (Postman)","Regression Testing","Functional Testing","Jira","Requirement Analysis","SDLC / STLC"].map(s=><span class="s-chip chip-qa">{s}</span>)}
         </div>
       </div>
-    </Container>
+      <div class="skill-group reveal-item" style="--d:90ms">
+        <div class="sg-head"><span class="sg-ico">🔌</span><div><div class="sg-title">IoT / Embedded Systems</div><div class="sg-sub">Hardware · Firmware · Protocols</div></div></div>
+        <div class="chip-row">
+          {["ESP32","Arduino","Raspberry Pi","Embedded C","Sensor Interfacing","GPIO / ADC / PWM","UART / I2C / SPI","MQTT / HTTP REST","Firmware Debugging","System Validation"].map(s=><span class="s-chip chip-iot">{s}</span>)}
+        </div>
+      </div>
+      <div class="skill-group reveal-item" style="--d:160ms;grid-column:1/-1">
+        <div class="sg-head"><span class="sg-ico">💻</span><div><div class="sg-title">Languages &amp; Tools</div><div class="sg-sub">Code · Version Control · DevOps</div></div></div>
+        <div class="chip-row">
+          {["Python","C","C++","C#","Java","HTML / CSS","Git","Docker"].map(s=><span class="s-chip">{s}</span>)}
+        </div>
+      </div>
+    </div>
   </section>
+
+  <!-- ══ CTA ══ -->
+  <section class="content-sec">
+    <div class="cta-block reveal-item">
+      <div>
+        <h2 style="font-size:1.65rem;font-weight:800;line-height:1.2">Let's work together.</h2>
+        <p style="margin-top:6px;font-size:0.85rem;opacity:0.52;max-width:320px;line-height:1.6">
+          Open to SQA roles, QA internships, IoT positions &amp; freelance projects.
+        </p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px">
+        <Button href={`mailto:${b.email}`}>Send Email</Button>
+        <Button href="/resume" variant="secondary">View Resume</Button>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<!-- ═══ STYLES ═══ -->
+<style>
+/* ── Hero ── */
+.hero-sec{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px 28px 48px;
+}
+@media(min-width:640px){.hero-sec{padding:60px 52px 48px;}}
+@media(min-width:1280px){.hero-sec{padding:60px 72px 48px;}}
+
+.hero-inner{max-width:640px;}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 11px;border-radius:9999px;
+  border:1px solid rgb(var(--border));
+  font-size:.75rem;font-weight:600;background:rgb(var(--fg)/.03);
+}
+.pill-green{color:#22c55e;border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.05);}
+.dot-sm{display:inline-block;width:6px;height:6px;border-radius:50%;background:#22c55e;animation:blink 2s ease-in-out infinite;}
+
+.hero-h1{
+  font-size:clamp(2rem,5vw,3.6rem);
+  font-weight:800;line-height:1.02;letter-spacing:-.025em;
+  margin-bottom:18px;
+}
+.h1-sub{color:rgb(var(--fg)/.28);}
+.grad-text{
+  background:linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+
+.hero-sub{
+  font-size:.95rem;line-height:1.75;
+  color:rgb(var(--fg)/.6);max-width:540px;margin-bottom:20px;
+}
+.hero-sub strong{color:rgb(var(--fg));}
+
+.role-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:22px;}
+.role-chip{
+  padding:3px 10px;border-radius:6px;font-size:.65rem;
+  font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  border:1px solid rgb(var(--border));background:rgb(var(--bg));
+  color:rgb(var(--fg)/.55);transition:border-color .2s,color .2s;
+}
+.role-chip:hover{border-color:rgb(var(--grad-a)/.5);color:rgb(var(--fg));}
+
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;}
+
+/* ── Content sections ── */
+.content-sec{
+  padding:60px 28px;
+  border-top:1px solid rgb(var(--border));
+}
+@media(min-width:640px){.content-sec{padding:72px 52px;}}
+@media(min-width:1280px){.content-sec{padding:72px 72px;}}
+
+.sec-head{margin-bottom:36px;}
+.sec-tag{
+  font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  background:linear-gradient(135deg,rgb(var(--grad-a)),rgb(var(--grad-b)));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:6px;
+}
+.sec-h2{
+  font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;
+  letter-spacing:-.02em;line-height:1.1;
+}
+.sec-desc{margin-top:8px;font-size:.85rem;opacity:.52;max-width:440px;line-height:1.6;}
+
+/* ── Achievements ── */
+.ach-grid{display:grid;gap:10px;}
+@media(min-width:500px){.ach-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:860px){.ach-grid{grid-template-columns:repeat(3,1fr);}}
+
+.ach-card{
+  display:flex;align-items:flex-start;gap:11px;
+  border:1px solid rgb(var(--border));border-radius:14px;
+  padding:16px;background:rgb(var(--fg)/.015);
+  transition:border-color .2s,transform .2s;
+}
+.ach-card:hover{border-color:rgb(var(--fg)/.2);transform:translateY(-2px);}
+.ach-icon{font-size:1.3rem;flex-shrink:0;line-height:1;}
+.ach-title{font-weight:600;font-size:.8rem;line-height:1.4;}
+.ach-org{font-size:.68rem;opacity:.4;margin-top:2px;}
+.ach-date{font-size:.62rem;font-family:monospace;opacity:.3;margin-top:3px;}
+
+/* ── Projects ── */
+.proj-grid{display:grid;gap:16px;}
+@media(min-width:580px){.proj-grid{grid-template-columns:repeat(2,1fr);}}
+
+.proj-card{
+  border:1px solid rgb(var(--border));border-radius:16px;
+  padding:22px;background:rgb(var(--fg)/.02);
+  transition:border-color .2s,box-shadow .2s,transform .2s;
+}
+.proj-card:hover{
+  border-color:rgb(var(--fg)/.18);
+  box-shadow:0 14px 42px rgb(0 0 0/.1);
+  transform:translateY(-3px);
+}
+.proj-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.proj-badge{
+  padding:2px 8px;border-radius:5px;
+  font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+}
+.badge-qa {background:rgb(99 102 241/.12);color:rgb(139 92 246);border:1px solid rgb(99 102 241/.3);}
+.badge-iot{background:rgb(236 72 153/.12);color:rgb(236 72 153);border:1px solid rgb(236 72 153/.3);}
+.proj-year{font-size:.68rem;font-family:monospace;opacity:.35;}
+.proj-title{font-size:1rem;font-weight:700;margin-bottom:7px;}
+.proj-desc{font-size:.8rem;color:rgb(var(--fg)/.6);line-height:1.6;margin-bottom:12px;}
+.stack-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;}
+.stack-chip{
+  padding:2px 8px;border-radius:9999px;font-size:.62rem;font-weight:600;
+  border:1px solid rgb(var(--border));background:rgb(var(--bg)/.5);color:rgb(var(--fg)/.6);
+}
+.proj-links{display:flex;gap:14px;padding-top:10px;border-top:1px solid rgb(var(--border));}
+.plink{font-size:.75rem;font-weight:700;color:rgb(var(--fg)/.42);transition:color .15s;}
+.plink:hover{color:rgb(var(--fg));}
+
+/* ── Skills ── */
+.skills-grid{display:grid;gap:14px;}
+@media(min-width:600px){.skills-grid{grid-template-columns:repeat(2,1fr);}}
+.skill-group{
+  border:1px solid rgb(var(--border));border-radius:14px;
+  padding:20px;background:rgb(var(--fg)/.015);
+  transition:border-color .2s;
+}
+.skill-group:hover{border-color:rgb(var(--fg)/.14);}
+.sg-head{display:flex;align-items:center;gap:9px;margin-bottom:12px;}
+.sg-ico{font-size:1.2rem;}
+.sg-title{font-weight:700;font-size:.82rem;}
+.sg-sub{font-size:.66rem;opacity:.38;margin-top:1px;}
+.chip-row{display:flex;flex-wrap:wrap;gap:5px;}
+.s-chip{
+  padding:3px 10px;border-radius:9999px;font-size:.68rem;font-weight:600;
+  border:1px solid rgb(var(--border));background:rgb(var(--bg));color:rgb(var(--fg)/.6);
+}
+.chip-qa {border-color:rgb(99 102 241/.35);color:rgb(139 92 246);background:rgb(99 102 241/.06);}
+.chip-iot{border-color:rgb(236 72 153/.35);color:rgb(236 72 153);background:rgb(236 72 153/.06);}
+
+/* ── CTA ── */
+.cta-block{
+  border:1px solid rgb(var(--border));border-radius:20px;
+  padding:32px 32px;
+  background:linear-gradient(135deg,rgb(var(--grad-a)/.06),rgb(var(--grad-b)/.04));
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;
+}
+
+/* ── Reveal ── */
+.reveal-item{
+  transition:opacity .5s ease calc(var(--d,0ms)),
+             transform .5s ease calc(var(--d,0ms));
+}
+.reveal-item.in{opacity:1 !important;transform:translateY(0) !important;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(1.7)}}
+</style>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+import { gsap } from "gsap";
+
+// ── Smooth scroll for anchors ──────────────────────────────────────────────
+function bindAnchors() {
+  document.querySelectorAll<HTMLAnchorElement>("a[data-anchor='true']").forEach(a => {
+    a.addEventListener("click", e => {
+      const id = a.getAttribute("href");
+      if (!id?.startsWith("#")) return;
+      const target = document.querySelector(id);
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    });
+  });
+}
+
+// ── Page init (animations) ────────────────────────────────────────────────
+function init() {
+  // Set initial hidden state empty
+  gsap.set(".hero-el",     { opacity: 0, y: 24  });
+  gsap.set(".reveal-item", { opacity: 0, y: 36  });
+
+  // Hero stagger
+  gsap.to(".hero-el", {
+    opacity: 1, y: 0, duration: .7, stagger: .09, ease: "power3.out", delay: .2
+  });
+
+  // Intersection Observer for scroll reveals
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        (e.target as HTMLElement).classList.add("in");
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: .09 });
+  
+  document.querySelectorAll(".reveal-item").forEach(el => io.observe(el));
+
+  bindAnchors();
+}
+
+init();
+document.addEventListener("astro:page-load", () => {
+  init();
+});
+</script>

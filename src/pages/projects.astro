@@ -6,16 +6,17 @@ import { loadSiteJson } from "../lib/sitejson";
 
 const data = loadSiteJson();
 
+// Sort by featured
 const featured = [...data.projects].sort((a, b) => Number(b.featured) - Number(a.featured));
 
 const qaProjects = featured.filter((p) =>
-  p.stack.some((s) =>
+  p.stack.some((s: string) =>
     ["QA", "Manual Testing", "Functional Testing", "Regression Testing", "Postman"].includes(s)
   )
 );
 
 const iotProjects = featured.filter((p) =>
-  p.stack.some((s) =>
+  p.stack.some((s: string) =>
     ["IoT", "Embedded", "ESP32", "Arduino", "Raspberry Pi", "Firmware"].includes(s)
   )
 );
@@ -26,116 +27,194 @@ const otherProjects = featured.filter(
 ---
 
 <BaseLayout title="Projects" description="Selected work and practical projects">
-  <section class="py-12">
-    <Container>
-      <div class="max-w-3xl">
-        <h1 class="text-3xl font-extrabold tracking-tight reveal">Projects</h1>
-        <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
-          A selection of my QA/testing work, IoT/embedded projects, and technical builds.
-          Links can be added later.
+  <section class="relative py-16 lg:py-24 overflow-hidden min-h-[100dvh]">
+    <!-- Decorative background elements -->
+    <div class="absolute top-20 left-10 w-72 h-72 bg-[rgb(var(--grad-a)/0.05)] rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-[rgb(var(--grad-b)/0.05)] rounded-full blur-[120px] pointer-events-none"></div>
+
+    <Container class="relative z-10 w-full max-w-[1200px] mx-auto px-5 lg:px-8">
+      <div class="max-w-3xl mb-16 lg:mb-24">
+        <div class="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.02)] backdrop-blur-sm reveal-item">
+          <span class="w-2 h-2 rounded-full bg-[rgb(var(--grad-b))]"></span>
+          <span class="text-xs font-semibold uppercase tracking-widest text-[rgb(var(--fg)/0.7)]">Portfolio</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight reveal-item">
+          Selected <span class="text-transparent bg-clip-text bg-gradient-to-r from-[rgb(var(--grad-a))] to-[rgb(var(--grad-b))]">Projects</span>
+        </h1>
+        <p class="mt-6 text-lg text-[rgb(var(--fg)/0.65)] leading-relaxed max-w-2xl reveal-item">
+          A curated selection of my QA validation methodologies, hands-on IoT & embedded hardware projects, and full-stack technical builds.
         </p>
       </div>
 
-      {qaProjects.length > 0 && (
-        <section class="mt-10">
-          <h2 class="text-2xl font-bold reveal">QA / Testing Projects</h2>
-          <div class="mt-4 grid gap-4 md:grid-cols-2">
-            {qaProjects.map((p) => (
-              <article class="card p-6 reveal" data-spotlight>
-                <div class="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 class="text-lg font-bold">{p.title}</h3>
-                    <p class="mt-1 text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</p>
+      <div class="grid gap-20">
+        <!-- QA Projects Section -->
+        {qaProjects.length > 0 && (
+          <section>
+            <div class="flex items-center gap-4 mb-8 reveal-item">
+              <h2 class="text-2xl lg:text-3xl font-bold">SQA & Testing Suite</h2>
+              <div class="h-[1px] flex-1 bg-gradient-to-r from-[rgb(var(--border))] to-transparent"></div>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2">
+              {qaProjects.map((p, i) => (
+                <article class="group relative flex flex-col justify-between p-7 lg:p-8 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.015)] backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] hover:border-[rgb(var(--grad-a)/0.3)] reveal-item" style={`--d:${i*100}ms`}>
+                  <!-- Hover gradient flush -->
+                  <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--grad-a)/0.03)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none"></div>
+                  
+                  <div class="relative z-10 flex-1">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                      <div class="inline-flex px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider bg-[rgb(99,102,241,0.1)] text-indigo-400 border border-[rgb(99,102,241,0.2)]">
+                        Quality Assurance
+                      </div>
+                      <span class="text-xs font-mono text-[rgb(var(--fg)/0.4)] px-2 py-1 bg-[rgb(var(--fg)/0.03)] rounded-md border border-[rgb(var(--border))]">{p.year}</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-[rgb(var(--grad-a))] transition-colors">{p.title}</h3>
+                    <p class="text-sm font-medium text-[rgb(var(--fg)/0.5)] mb-4">{p.role}</p>
+                    <p class="text-sm text-[rgb(var(--fg)/0.65)] leading-relaxed mb-6">{p.summary}</p>
                   </div>
-                  <span class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</span>
-                </div>
 
-                <p class="mt-3 text-sm text-[rgb(var(--fg)/0.75)]">{p.summary}</p>
+                  <div class="relative z-10">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                      {p.stack.map((t: string) => (
+                        <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg))] px-3 py-1 text-xs font-medium text-[rgb(var(--fg)/0.6)]">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
 
-                <div class="mt-4 flex flex-wrap gap-2">
-                  {p.stack.map((t) => (
-                    <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.70)]">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {(p.github || p.demo) && (
-                  <div class="mt-5 flex flex-wrap gap-2">
-                    {p.github && <Button href={p.github} variant="secondary">GitHub</Button>}
-                    {p.demo && <Button href={p.demo}>Demo</Button>}
+                    {(p.github || p.demo) && (
+                      <div class="flex gap-3 pt-5 border-t border-[rgb(var(--border))]">
+                        {p.github && <a href={p.github} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">GitHub ↗</a>}
+                        {p.demo && <a href={p.demo} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">Live Demo ↗</a>}
+                      </div>
+                    )}
                   </div>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
 
-      {iotProjects.length > 0 && (
-        <section class="mt-12">
-          <h2 class="text-2xl font-bold reveal">IoT / Embedded Projects</h2>
-          <div class="mt-4 grid gap-4 md:grid-cols-2">
-            {iotProjects.map((p) => (
-              <article class="card p-6 reveal" data-spotlight>
-                <div class="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 class="text-lg font-bold">{p.title}</h3>
-                    <p class="mt-1 text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</p>
+        <!-- IoT Projects Section -->
+        {iotProjects.length > 0 && (
+          <section>
+            <div class="flex items-center gap-4 mb-8 reveal-item">
+              <h2 class="text-2xl lg:text-3xl font-bold">IoT & Embedded Hardware</h2>
+              <div class="h-[1px] flex-1 bg-gradient-to-r from-[rgb(var(--border))] to-transparent"></div>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2">
+              {iotProjects.map((p, i) => (
+                <article class="group relative flex flex-col justify-between p-7 lg:p-8 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.015)] backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] hover:border-[rgb(var(--grad-b)/0.3)] reveal-item" style={`--d:${i*100}ms`}>
+                  <div class="absolute inset-0 bg-gradient-to-br from-[rgb(var(--grad-b)/0.03)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none"></div>
+                  
+                  <div class="relative z-10 flex-1">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                      <div class="inline-flex px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider bg-[rgb(236,72,153,0.1)] text-pink-400 border border-[rgb(236,72,153,0.2)]">
+                        Hardware Engineering
+                      </div>
+                      <span class="text-xs font-mono text-[rgb(var(--fg)/0.4)] px-2 py-1 bg-[rgb(var(--fg)/0.03)] rounded-md border border-[rgb(var(--border))]">{p.year}</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-[rgb(var(--grad-b))] transition-colors">{p.title}</h3>
+                    <p class="text-sm font-medium text-[rgb(var(--fg)/0.5)] mb-4">{p.role}</p>
+                    <p class="text-sm text-[rgb(var(--fg)/0.65)] leading-relaxed mb-6">{p.summary}</p>
                   </div>
-                  <span class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</span>
-                </div>
 
-                <p class="mt-3 text-sm text-[rgb(var(--fg)/0.75)]">{p.summary}</p>
+                  <div class="relative z-10">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                      {p.stack.map((t: string) => (
+                        <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg))] px-3 py-1 text-xs font-medium text-[rgb(var(--fg)/0.6)]">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
 
-                <div class="mt-4 flex flex-wrap gap-2">
-                  {p.stack.map((t) => (
-                    <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.70)]">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                {(p.github || p.demo) && (
-                  <div class="mt-5 flex flex-wrap gap-2">
-                    {p.github && <Button href={p.github} variant="secondary">GitHub</Button>}
-                    {p.demo && <Button href={p.demo}>Demo</Button>}
+                    {(p.github || p.demo) && (
+                      <div class="flex gap-3 pt-5 border-t border-[rgb(var(--border))]">
+                        {p.github && <a href={p.github} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">GitHub ↗</a>}
+                        {p.demo && <a href={p.demo} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">Live Demo ↗</a>}
+                      </div>
+                    )}
                   </div>
-                )}
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
 
-      {otherProjects.length > 0 && (
-        <section class="mt-12">
-          <h2 class="text-2xl font-bold reveal">Other Technical Projects</h2>
-          <div class="mt-4 grid gap-4 md:grid-cols-2">
-            {otherProjects.map((p) => (
-              <article class="card p-6 reveal" data-spotlight>
-                <div class="flex items-start justify-between gap-4">
-                  <div>
-                    <h3 class="text-lg font-bold">{p.title}</h3>
-                    <p class="mt-1 text-sm text-[rgb(var(--fg)/0.70)]">{p.role}</p>
+        <!-- Other Projects Section -->
+        {otherProjects.length > 0 && (
+          <section>
+            <div class="flex items-center gap-4 mb-8 reveal-item">
+              <h2 class="text-2xl font-bold">Other Technical Builds</h2>
+              <div class="h-[1px] flex-1 bg-[rgb(var(--border))]"></div>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {otherProjects.map((p, i) => (
+                <article class="group relative flex flex-col justify-between p-6 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.01)] transition-all duration-300 hover:border-[rgb(var(--fg)/0.15)] reveal-item" style={`--d:${i*50}ms`}>
+                  <div class="flex-1">
+                    <div class="flex items-start justify-between gap-4 mb-4">
+                      <h3 class="text-[0.95rem] font-bold group-hover:text-[rgb(var(--fg))] text-[rgb(var(--fg)/0.9)] transition-colors">{p.title}</h3>
+                      <span class="text-[0.6rem] font-mono text-[rgb(var(--fg)/0.3)] shrink-0">{p.year}</span>
+                    </div>
+                    <p class="text-[0.75rem] text-[rgb(var(--fg)/0.6)] leading-relaxed mb-5 line-clamp-3">{p.summary}</p>
                   </div>
-                  <span class="text-xs text-[rgb(var(--fg)/0.60)]">{p.year}</span>
-                </div>
-
-                <p class="mt-3 text-sm text-[rgb(var(--fg)/0.75)]">{p.summary}</p>
-
-                <div class="mt-4 flex flex-wrap gap-2">
-                  {p.stack.map((t) => (
-                    <span class="rounded-full border border-[rgb(var(--border))] px-3 py-1 text-xs text-[rgb(var(--fg)/0.70)]">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      )}
+                  
+                  <div class="flex flex-wrap gap-1.5 mt-auto">
+                    {p.stack.slice(0, 3).map((t: string) => (
+                      <span class="rounded-[4px] bg-[rgb(var(--fg)/0.04)] px-2 py-0.5 text-[0.65rem] text-[rgb(var(--fg)/0.5)]">
+                        {t}
+                      </span>
+                    ))}
+                    {p.stack.length > 3 && (
+                      <span class="rounded-[4px] bg-[rgb(var(--fg)/0.04)] px-2 py-0.5 text-[0.65rem] text-[rgb(var(--fg)/0.5)]">
+                        + {p.stack.length - 3}
+                      </span>
+                    )}
+                  </div>
+                  
+                  {(p.github || p.demo) && (
+                    <div class="flex gap-3 mt-4 pt-4 border-t border-[rgb(var(--border))]">
+                      {p.github && <a href={p.github} target="_blank" rel="noopener" class="text-[0.7rem] font-bold text-[rgb(var(--fg)/0.4)] hover:text-[rgb(var(--fg))] transition-colors">GitHub ↗</a>}
+                      {p.demo && <a href={p.demo} target="_blank" rel="noopener" class="text-[0.7rem] font-bold text-[rgb(var(--fg)/0.4)] hover:text-[rgb(var(--fg))] transition-colors">Live Demo ↗</a>}
+                    </div>
+                  )}
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
     </Container>
   </section>
+
+  <style>
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease calc(var(--d, 0ms)),
+                  transform 0.8s ease calc(var(--d, 0ms));
+    }
+    .reveal-item.in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+
+  <script>
+    function parseReveals() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll(".reveal-item").forEach(el => io.observe(el));
+    }
+
+    parseReveals();
+    document.addEventListener("astro:page-load", parseReveals);
+  </script>
 </BaseLayout>

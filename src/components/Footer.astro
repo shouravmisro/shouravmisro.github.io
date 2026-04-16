@@ -1,6 +1,8 @@
 ---
 import Container from "./Container.astro";
-import { site } from "../lib/site";
+import { loadSiteJson } from "../lib/sitejson";
+
+const site = loadSiteJson().basics;
 ---
 <footer class="border-t border-[rgb(var(--border))] py-10">
   <Container class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

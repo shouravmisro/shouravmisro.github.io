@@ -1,12 +1,16 @@
 ---
 import "../styles/global.css";
-import Nav from "../components/Nav.astro";
+import Sidebar from "../components/Sidebar.astro";
 import Footer from "../components/Footer.astro";
+import { ClientRouter } from 'astro:transitions';
 
 const { title, description, noindex = false } = Astro.props;
 
 const metaTitle = title ?? "Portfolio";
 const metaDesc = description ?? "Personal portfolio";
+    const path = Astro.url.pathname;
+    const isFullSidebar = path === '/' || path === '/contact' || path === '/contact/';
+    const compactMode = !isFullSidebar;
 ---
 
 <!doctype html>
@@ -17,36 +21,154 @@ const metaDesc = description ?? "Personal portfolio";
     <title>{metaTitle}</title>
     <meta name="description" content={metaDesc} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <ClientRouter />
 
     <link rel="icon" href="/favicon.ico" />
-    <link rel="stylesheet" href="/motion/mesh.css" />
 
-    <script>
-      {String.raw`
-        (function () {
+    <script is:inline>
+      (function () {
+        var key = "theme_v1";
+        function getTheme() {
           try {
-            var key = "theme_v1";
             var saved = localStorage.getItem(key);
-            var theme = saved === "light" || saved === "dark"
-              ? saved
-              : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-            if (theme === "dark") document.documentElement.classList.add("dark");
-            document.documentElement.dataset.theme = theme;
-          } catch (e) {}
-        })();
-      `}
+            if (saved === "light" || saved === "dark") return saved;
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          } catch (e) {
+            return "dark";
+          }
+        }
+        function applyTheme(theme) {
+          if (theme === "dark") document.documentElement.classList.add("dark");
+          else document.documentElement.classList.remove("dark");
+          document.documentElement.dataset.theme = theme;
+        }
+        
+        window.__theme = window.__theme || {};
+        window.__theme.setTheme = function(theme) {
+          try { localStorage.setItem(key, theme); } catch (e) {}
+          applyTheme(theme);
+        };
+        window.__theme.toggleTheme = function() {
+          var cur = document.documentElement.classList.contains("dark") ? "dark" : "light";
+          window.__theme.setTheme(cur === "dark" ? "light" : "dark");
+        };
+
+        // Initial application
+        applyTheme(getTheme());
+
+        // Astro page transitions support
+        document.addEventListener('astro:after-swap', function() {
+          applyTheme(getTheme());
+        });
+      })();
     </script>
   </head>
 
-  <body class="min-h-full">
-    <Nav />
-    <main class="min-h-[calc(100vh-64px)]">
-      <slot />
-    </main>
-    <Footer />
-<script type="module" src="/theme/theme.js"></script>
-<script type="module" src="/motion/reveal.js"></script>
-<script type="module" src="/motion/spotlight.js"></script>
-<script is:inline src="/nav-menu.js"></script>
+  <body class="min-h-full bg-[rgb(var(--bg))] text-[rgb(var(--fg))]">
+    <!-- Scrolling Global Background -->
+    <div id="global-bg" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      <div id="bg-flow-1" class="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vh] rounded-full bg-[rgb(var(--grad-a)/0.12)] blur-[100px] dark:bg-[rgb(var(--grad-a)/0.06)] dark:blur-[120px]"></div>
+      <div id="bg-flow-2" class="absolute top-[50%] -right-[20%] w-[60vw] h-[60vh] rounded-full bg-[rgb(var(--grad-b)/0.12)] blur-[100px] dark:bg-[rgb(var(--grad-b)/0.06)] dark:blur-[120px]"></div>
+    </div>
+
+    <div id="page-shell" class="flex min-h-[100dvh] relative z-10 w-full overflow-x-hidden">
+      <Sidebar />
+      <div id="right-pane" class={`flex-1 min-w-0 pt-[56px] flex flex-col ${compactMode ? 'lg:pt-[72px]' : 'lg:pt-0'}`}>
+        <main class="flex-1">
+          <slot />
+        </main>
+        <Footer />
+      </div>
+    </div>
+
+    <!-- Mouse glow cursor -->
+    <div id="mouse-glow" class="fixed pointer-events-none z-20 w-[360px] h-[360px] rounded-full bg-[radial-gradient(circle,rgba(99,102,241,0.08)_0%,transparent_70%)] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-300 top-0 left-0 hidden md:block"></div>
+
+    <script>
+      import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Mouse glow follow logic
+      const glow = document.getElementById("mouse-glow");
+      if (glow) {
+        window.addEventListener("mousemove", (e) => {
+          glow.style.left = e.clientX + "px";
+          glow.style.top = e.clientY + "px";
+        }, { passive: true });
+      }
+
+      // Disable browser scroll restoration which fights Lenis
+      if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+
+      let lenis: Lenis;
+
+      const initSmoothScroll = () => {
+        if (lenis) {
+          lenis.destroy();
+          gsap.ticker.remove(gsapTickerLenis);
+        }
+
+        lenis = new Lenis({
+          lerp: 0.09,
+          wheelMultiplier: 1,
+          syncTouch: true,
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(gsapTickerLenis);
+        gsap.ticker.lagSmoothing(0);
+
+        // Init Background Parallax
+        const bg1 = document.getElementById("bg-flow-1");
+        const bg2 = document.getElementById("bg-flow-2");
+        if (bg1 && bg2) {
+          gsap.to(bg1, {
+            y: "30vh",
+            x: "10vw",
+            ease: "none",
+            scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
+          });
+          gsap.to(bg2, {
+            y: "-30vh",
+            x: "-10vw",
+            ease: "none",
+            scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: true }
+          });
+        }
+      };
+
+      function gsapTickerLenis(time: number) {
+        lenis?.raf(time * 1000);
+      }
+
+      // First load
+      initSmoothScroll();
+
+      // Before swapping pages: Kill orphaned ScrollTriggers (prevent lag/mem leaks) and freeze scroll
+      document.addEventListener("astro:before-swap", () => {
+        ScrollTrigger.getAll().forEach(t => t.kill());
+        
+        if (lenis) {
+          lenis.scrollTo(0, { immediate: true });
+          lenis.destroy();
+          gsap.ticker.remove(gsapTickerLenis);
+        }
+      });
+
+      // After DOM swaps: Re-initialize from a clean slate
+      document.addEventListener('astro:page-load', () => {
+        // Wait a tick for DOM to settle, then initialize
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          initSmoothScroll();
+          ScrollTrigger.refresh();
+        }, 50);
+      });
+    </script>
   </body>
 </html>

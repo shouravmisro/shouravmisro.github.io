@@ -71,20 +71,7 @@ img.rounded-full {
   border-radius: 12px;
 }
 
-/* ===============================
-   REVEAL
-================================ */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(12px);
-}
-
-.reveal.reveal-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 420ms ease, transform 420ms ease;
-}
+/* Reveal removed for GSAP */
 
 /* ===============================
    CARD
@@ -116,71 +103,7 @@ img.rounded-full {
     0 8px 18px rgb(0 0 0 / 0.08);
 }
 
-/* ===============================
-   PREMIUM PINPOINT SPOTLIGHT
-================================ */
-
-[data-spotlight] {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-
-/* layers */
-
-[data-spotlight]::before,
-[data-spotlight]::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 120ms ease;
-}
-
-/* pinpoint white hotspot */
-
-[data-spotlight]::before {
-  background:
-    radial-gradient(
-      34px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(255 255 255 / 0.48),
-      rgb(255 255 255 / 0.20) 32%,
-      transparent 64%
-    );
-  mix-blend-mode: screen;
-  z-index: 1;
-}
-
-/* subtle color aura */
-
-[data-spotlight]::after {
-  background:
-    radial-gradient(
-      90px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(var(--grad-a) / 0.22),
-      transparent 42%
-    ),
-    radial-gradient(
-      140px circle at var(--sx, 50%) var(--sy, 50%),
-      rgb(var(--grad-b) / 0.16),
-      transparent 58%
-    );
-  filter: blur(6px);
-  z-index: 1;
-}
-
-[data-spotlight].spotlight-active::before,
-[data-spotlight].spotlight-active::after {
-  opacity: 1;
-}
-
-/* keep content above glow */
-
-[data-spotlight] > * {
-  position: relative;
-  z-index: 2;
-}
+/* Spotlight removed for GSAP */
 
 /* ===============================
    NAV UNDERLINE

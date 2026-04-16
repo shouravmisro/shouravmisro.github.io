@@ -53,4 +53,6 @@
   } else {
     initMobileMenu();
   }
+
+  document.addEventListener('astro:page-load', initMobileMenu);
 })();
