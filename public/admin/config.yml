@@ -1,0 +1,74 @@
+backend:
+  name: github
+  repo: shouravmisro/shouravmisro.github.io
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "blogs"
+    label: "Blog Posts"
+    folder: "src/content/blogs"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Category", name: "category", widget: "select", options: ["SQA", "IoT", "Engineering"] }
+      - { label: "Date", name: "date", widget: "string" }
+      - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read" }
+      - { label: "Author", name: "author", widget: "string", default: "Shourav Misro" }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - { label: "Body Content", name: "body", widget: "markdown" }
+
+  - name: "site_data"
+    label: "Site Data & Experience"
+    files:
+      - file: "public/site.json"
+        label: "Experience, Achievements & Projects"
+        name: "site_json"
+        fields:
+          - label: "Basics"
+            name: "basics"
+            widget: "object"
+            fields:
+              - { label: "Name", name: "name", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Phone", name: "phone", widget: "string" }
+              - { label: "Location", name: "location", widget: "string" }
+              - { label: "GitHub", name: "github", widget: "string" }
+              - { label: "Facebook", name: "facebook", widget: "string" }
+
+          - label: "Experience"
+            name: "experience"
+            widget: "list"
+            fields:
+              - { label: "Company", name: "company", widget: "string" }
+              - { label: "Job Title", name: "title", widget: "string" }
+              - { label: "Start Year", name: "start", widget: "string" }
+              - { label: "End Year", name: "end", widget: "string" }
+              - { label: "Highlights", name: "highlights", widget: "list" }
+
+          - label: "Achievements"
+            name: "achievements"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Organization", name: "org", widget: "string" }
+              - { label: "Date / Year", name: "date", widget: "string" }
+
+          - label: "Projects"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Year", name: "year", widget: "number" }
+              - { label: "Summary", name: "summary", widget: "text" }
+              - { label: "Role", name: "role", widget: "string" }
+              - { label: "Featured", name: "featured", widget: "boolean" }
+              - { label: "Tech Stack", name: "stack", widget: "list" }
+              - { label: "GitHub URL", name: "github", widget: "string", required: false }
+              - { label: "Demo URL", name: "demo", widget: "string", required: false }

@@ -283,14 +283,38 @@ The hybrid system demonstrated high power efficiency gains, real-time power metr
 ];
 
 export function getBlogPosts(): BlogPost[] {
-  return blogs;
+  let cmsPosts: BlogPost[] = [];
+  try {
+    const glob = import.meta.glob('../content/blogs/*.md', { eager: true });
+    cmsPosts = Object.values(glob).map((file: any, index: number) => {
+      const fm = file.frontmatter || {};
+      const rawBody = file.rawContent ? file.rawContent() : '';
+      return {
+        id: fm.slug || `cms_${index}`,
+        slug: fm.slug || `cms-post-${index}`,
+        title: fm.title || 'Untitled',
+        description: fm.description || '',
+        category: fm.category || 'Engineering',
+        date: fm.date || '2025',
+        readTime: fm.readTime || '5 min read',
+        author: fm.author || 'Shourav Misro',
+        tags: Array.isArray(fm.tags) ? fm.tags : [],
+        content: rawBody || fm.description || ''
+      };
+    });
+  } catch (e) {
+    cmsPosts = [];
+  }
+  return [...cmsPosts, ...blogs];
 }
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
-  return blogs.find((b) => b.slug === slug);
+  const all = getBlogPosts();
+  return all.find((b) => b.slug === slug);
 }
 
 export function getBlogPostsByCategory(category?: string): BlogPost[] {
-  if (!category || category === "All") return blogs;
-  return blogs.filter((b) => b.category.toLowerCase() === category.toLowerCase());
+  const all = getBlogPosts();
+  if (!category || category === "All") return all;
+  return all.filter((b) => b.category.toLowerCase() === category.toLowerCase());
 }
