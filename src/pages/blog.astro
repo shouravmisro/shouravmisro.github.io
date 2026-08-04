@@ -1,37 +1,106 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
+import { getBlogPosts } from "../data/blogs";
 
-const topics = [
-  "SQA learning notes and practical testing insights",
-  "Bug reporting and QA workflow observations",
-  "IoT / embedded build logs and engineering notes",
-  "Project lessons from QA and hardware systems",
-  "Career, tools, and practical problem-solving reflections"
-];
+const posts = getBlogPosts();
 ---
 
-<BaseLayout title="Blog" description="Notes, ideas, and technical reflections">
-  <section class="py-12">
+<BaseLayout title="Blog" description="Technical articles, SQA insights, and IoT build logs">
+  <section class="py-12 lg:py-20 min-h-[100dvh]">
     <Container>
-      <div class="max-w-3xl">
-        <h1 class="text-3xl font-extrabold tracking-tight reveal">Blog</h1>
-        <p class="mt-3 text-[rgb(var(--fg)/0.70)] reveal">
-          I’ll use this section to share practical notes from software testing, IoT / embedded work,
-          project building, and learning experiences.
+      <div class="max-w-3xl mb-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.02)] backdrop-blur-sm">
+          <span class="w-2 h-2 rounded-full bg-[rgb(var(--grad-a))]"></span>
+          <span class="text-xs font-semibold uppercase tracking-widest text-[rgb(var(--fg)/0.7)]">Articles &amp; Notes</span>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">
+          Technical <span class="text-transparent bg-clip-text bg-gradient-to-r from-[rgb(var(--grad-a))] to-[rgb(var(--grad-b))]">Blog</span>
+        </h1>
+        <p class="mt-4 text-[rgb(var(--fg)/0.70)] text-base md:text-lg leading-relaxed">
+          Practical notes, testing methodologies, IoT hardware build logs, and engineering reflections.
         </p>
       </div>
 
-      <div class="mt-10 grid gap-4 md:grid-cols-2">
-        {topics.map((topic) => (
-          <article class="card p-6 reveal" data-spotlight>
-            <h2 class="text-lg font-bold">{topic}</h2>
-            <p class="mt-3 text-sm text-[rgb(var(--fg)/0.72)]">
-              Coming soon.
-            </p>
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap gap-2 mb-10 pb-4 border-b border-[rgb(var(--border))]">
+        <button data-filter="all" class="blog-tab active-tab px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border border-[rgb(var(--border))] transition-all">All Posts</button>
+        <button data-filter="sqa" class="blog-tab px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border border-[rgb(var(--border))] text-[rgb(var(--fg)/0.6)] hover:text-[rgb(var(--fg))] transition-all">SQA / QA</button>
+        <button data-filter="iot" class="blog-tab px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border border-[rgb(var(--border))] text-[rgb(var(--fg)/0.6)] hover:text-[rgb(var(--fg))] transition-all">IoT &amp; Embedded</button>
+        <button data-filter="engineering" class="blog-tab px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider border border-[rgb(var(--border))] text-[rgb(var(--fg)/0.6)] hover:text-[rgb(var(--fg))] transition-all">Engineering</button>
+      </div>
+
+      <!-- Blog Posts Grid -->
+      <div class="grid gap-6 md:grid-cols-2">
+        {posts.map((p) => (
+          <article data-category={p.category.toLowerCase()} class="blog-card card p-6 lg:p-7 flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between gap-3 mb-4">
+                <span class={`px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider border ${p.category === 'SQA' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : p.category === 'IoT' ? 'bg-pink-500/10 text-pink-400 border-pink-500/30' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'}`}>
+                  {p.category}
+                </span>
+                <span class="text-xs font-mono text-[rgb(var(--fg)/0.4)]">{p.date} · {p.readTime}</span>
+              </div>
+
+              <h2 class="text-xl font-bold mb-3 group-hover:text-[rgb(var(--grad-a))] transition-colors">
+                <a href={`/blog/${p.slug}`} class="focus:outline-none">{p.title}</a>
+              </h2>
+              <p class="text-sm text-[rgb(var(--fg)/0.65)] leading-relaxed mb-6">
+                {p.description}
+              </p>
+            </div>
+
+            <div>
+              <div class="flex flex-wrap gap-1.5 mb-5">
+                {p.tags.map((tag) => (
+                  <span class="px-2.5 py-1 rounded-md bg-[rgb(var(--fg)/0.04)] text-[0.7rem] font-medium text-[rgb(var(--fg)/0.6)] border border-[rgb(var(--border))]">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <a href={`/blog/${p.slug}`} class="inline-flex items-center gap-1.5 text-xs font-bold text-[rgb(var(--fg)/0.8)] group-hover:text-[rgb(var(--fg))] transition-colors">
+                Read Article <span class="group-hover:translate-x-1 transition-transform">→</span>
+              </a>
+            </div>
           </article>
         ))}
       </div>
     </Container>
   </section>
+
+  <style>
+    .active-tab {
+      background: rgb(var(--fg) / 0.08);
+      color: rgb(var(--fg));
+      border-color: rgb(var(--fg) / 0.25);
+    }
+  </style>
+
+  <script>
+    function initBlogFilters() {
+      const tabs = document.querySelectorAll(".blog-tab");
+      const cards = document.querySelectorAll(".blog-card");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          tabs.forEach((t) => t.classList.remove("active-tab"));
+          tab.classList.add("active-tab");
+
+          const filter = tab.getAttribute("data-filter");
+          cards.forEach((card) => {
+            const cat = card.getAttribute("data-category");
+            if (filter === "all" || cat === filter) {
+              (card as HTMLElement).style.display = "flex";
+            } else {
+              (card as HTMLElement).style.display = "none";
+            }
+          });
+        });
+      });
+    }
+
+    initBlogFilters();
+    document.addEventListener("astro:page-load", initBlogFilters);
+  </script>
 </BaseLayout>

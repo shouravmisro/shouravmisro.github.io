@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
+import Button from "../../components/Button.astro";
+import { blogs, getBlogPostBySlug } from "../../data/blogs";
+
+export function getStaticPaths() {
+  return blogs.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = getBlogPostBySlug(slug as string);
+
+if (!post) {
+  return Astro.redirect("/blog");
+}
+---
+
+<BaseLayout title={`${post.title} — Blog`} description={post.description}>
+  <article class="py-12 lg:py-20 min-h-[100dvh]">
+    <Container class="max-w-4xl">
+      <!-- Back button -->
+      <div class="mb-8">
+        <a href="/blog" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[rgb(var(--fg)/0.6)] hover:text-[rgb(var(--fg))] transition-colors">
+          ← Back to Articles
+        </a>
+      </div>
+
+      <!-- Header -->
+      <header class="mb-10 pb-8 border-b border-[rgb(var(--border))]">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class={`px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider border ${post.category === 'SQA' ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30' : post.category === 'IoT' ? 'bg-pink-500/10 text-pink-400 border-pink-500/30' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'}`}>
+            {post.category}
+          </span>
+          <span class="text-xs font-mono text-[rgb(var(--fg)/0.5)]">{post.date}</span>
+          <span class="text-xs text-[rgb(var(--fg)/0.3)]">•</span>
+          <span class="text-xs font-mono text-[rgb(var(--fg)/0.5)]">{post.readTime}</span>
+        </div>
+
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
+          {post.title}
+        </h1>
+
+        <p class="mt-4 text-lg text-[rgb(var(--fg)/0.70)] leading-relaxed">
+          {post.description}
+        </p>
+
+        <div class="flex flex-wrap items-center justify-between gap-4 mt-6 pt-6 border-t border-[rgb(var(--border))]">
+          <div class="text-xs font-semibold text-[rgb(var(--fg)/0.7)]">
+            Written by <span class="text-[rgb(var(--fg))]">{post.author}</span>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            {post.tags.map((tag) => (
+              <span class="px-2.5 py-1 rounded-md bg-[rgb(var(--fg)/0.04)] text-[0.65rem] font-semibold text-[rgb(var(--fg)/0.6)] border border-[rgb(var(--border))]">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="blog-content text-[rgb(var(--fg)/0.85)] leading-relaxed space-y-6">
+        <Fragment set:html={post.content.trim().replace(/\n/g, '<br/>')} />
+      </div>
+
+      <!-- Footer CTA -->
+      <div class="mt-16 pt-8 border-t border-[rgb(var(--border))] flex flex-wrap items-center justify-between gap-4">
+        <a href="/blog" class="inline-flex items-center gap-2 text-sm font-bold text-[rgb(var(--fg)/0.7)] hover:text-[rgb(var(--fg))] transition-colors">
+          ← Back to Articles
+        </a>
+        <Button href="/contact" variant="secondary">Get in Touch</Button>
+      </div>
+    </Container>
+  </article>
+
+  <style is:global>
+    .blog-content h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-top: 1.8rem;
+      margin-bottom: 0.8rem;
+      color: rgb(var(--fg));
+    }
+    .blog-content p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgb(var(--fg) / 0.78);
+    }
+    .blog-content ul, .blog-content ol {
+      margin-left: 1.25rem;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .blog-content li {
+      margin-bottom: 0.35rem;
+      font-size: 0.95rem;
+    }
+    .blog-content code {
+      background: rgb(var(--fg) / 0.06);
+      padding: 0.15rem 0.4rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+    }
+  </style>
+</BaseLayout>

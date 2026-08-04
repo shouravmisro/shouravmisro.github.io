@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProfileHome from "../../components/ProfileHome.astro";
+import { loadSiteJson } from "../../lib/sitejson";
+
+const b = loadSiteJson().basics;
+---
+
+<BaseLayout title={`${b.name} — IoT & Embedded Systems Profile`} description="IoT & Embedded Systems Engineer Profile of Shourav Misro">
+  <ProfileHome mode="iot" />
+</BaseLayout>

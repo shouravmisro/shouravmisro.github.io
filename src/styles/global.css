@@ -5,10 +5,10 @@
 ================================ */
 
 :root {
-  --bg: 255 255 255;
-  --fg: 10 10 10;
+  --bg: 237 232 220;
+  --fg: 18 20 29;
   --muted: 0 0 0 / 0.65;
-  --border: 0 0 0 / 0.10;
+  --border: 0 0 0 / 0.09;
 
   --grad-a: 99 102 241;
   --grad-b: 236 72 153;
@@ -81,11 +81,9 @@ img.rounded-full {
   position: relative;
   border: 1px solid rgb(var(--border));
   border-radius: 18px;
-  background: linear-gradient(
-    180deg,
-    rgb(var(--bg) / 0.78),
-    rgb(var(--bg) / 0.62)
-  );
+  background: linear-gradient(180deg,
+      rgb(var(--bg) / 0.78),
+      rgb(var(--bg) / 0.62));
   transition:
     transform 140ms ease,
     border-color 180ms ease,
@@ -123,11 +121,9 @@ img.rounded-full {
   width: 100%;
   transform: scaleX(0);
   transform-origin: left;
-  background: linear-gradient(
-    90deg,
-    rgb(var(--grad-a)),
-    rgb(var(--grad-b))
-  );
+  background: linear-gradient(90deg,
+      rgb(var(--grad-a)),
+      rgb(var(--grad-b)));
   transition: transform 200ms ease;
 }
 

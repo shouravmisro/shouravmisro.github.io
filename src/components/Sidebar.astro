@@ -4,111 +4,287 @@ import { loadSiteJson } from "../lib/sitejson";
 const data = loadSiteJson();
 const b = data.basics;
 
+const path = Astro.url.pathname;
+const isQa = path === "/qa" || path.startsWith("/qa/");
+const isIot = path === "/iot" || path.startsWith("/iot/");
+
+const homeHref = isQa ? "/qa" : isIot ? "/iot" : "/";
+const basePrefix = isQa ? "/qa" : isIot ? "/iot" : "";
+
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/achievements", label: "Achievements" },
-  { href: "/projects", label: "Projects" },
-  { href: "/resume", label: "Resume" },
-  { href: "/blog", label: "Blog" },
-  { href: "/contact", label: "Contact" },
-  { href: "/create", label: "Create" },
+  { href: isQa ? "/qa" : isIot ? "/iot" : "/", label: "Home" },
+  { href: `${basePrefix}/achievements`, label: "Achievements" },
+  { href: `${basePrefix}/projects`, label: "Projects" },
+  { href: `${basePrefix}/resume`, label: "Resume" },
+  { href: `${basePrefix}/blog`, label: "Blog" },
+  { href: `${basePrefix}/contact`, label: "Contact" },
+  { href: `${basePrefix}/create`, label: "Create" },
 ];
 
-const path = Astro.url.pathname;
-const isFullSidebar = path === '/' || path === '/contact' || path === '/contact/';
+const isFullSidebar =
+  path === "/" ||
+  path === "/contact" ||
+  path === "/contact/" ||
+  path === "/qa" ||
+  path === "/qa/" ||
+  path === "/iot" ||
+  path === "/iot/";
 const compactMode = !isFullSidebar;
 ---
 
 <!-- ─── MOBILE TOPBAR ─────────────────────────────── -->
-<header id="mobile-topbar" class="z-[100] fixed top-0 left-0 right-0 h-[56px] flex lg:hidden items-center justify-between px-5 bg-[rgb(var(--bg)/0.8)] backdrop-blur-xl border-b border-[rgb(var(--border))]">
-  <div class="flex items-center gap-2.5">
-    {b.headshotUrl && <img src={b.headshotUrl} alt={b.name} class="w-[30px] h-[30px] rounded-full object-cover border-[1.5px] border-[rgb(var(--border))]"/>}
+<header
+  id="mobile-topbar"
+  class="z-[100] fixed top-0 left-0 right-0 h-[56px] flex lg:hidden items-center justify-between px-5 bg-[rgb(var(--bg)/0.8)] backdrop-blur-xl border-b border-[rgb(var(--border))]"
+>
+  <a href={homeHref} class="flex items-center gap-2.5">
+    {
+      b.headshotUrl && (
+        <img
+          src={b.headshotUrl}
+          alt={b.name}
+          class="w-[30px] h-[30px] rounded-full object-cover border-[1.5px] border-[rgb(var(--border))]"
+        />
+      )
+    }
     <span class="font-bold text-[0.84rem]">{b.name}</span>
-  </div>
+  </a>
   <div class="flex items-center gap-2">
     <!-- Prominent Theme Toggle Mobile -->
-    <button type="button" class="w-[36px] h-[36px] rounded-[10px] border border-[rgb(var(--border))] flex items-center justify-center bg-transparent text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors" onclick="window.__theme?.toggleTheme?.()" aria-label="Toggle theme">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-4.34-5.66 1.41-1.41M6.34 17.66l-1.41 1.41"/></svg>
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <button
+      type="button"
+      class="w-[36px] h-[36px] rounded-[10px] border border-[rgb(var(--border))] flex items-center justify-center bg-transparent text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors"
+      onclick="window.__theme?.toggleTheme?.()"
+      aria-label="Toggle theme"
+    >
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        class="dark:hidden"
+        ><circle cx="12" cy="12" r="4"></circle><path
+          d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-4.34-5.66 1.41-1.41M6.34 17.66l-1.41 1.41"
+        ></path></svg
+      >
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        class="hidden dark:block"
+        ><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg
+      >
     </button>
-    <button id="mob-menu-btn" type="button" class="w-[36px] h-[36px] rounded-[10px] border border-[rgb(var(--border))] flex items-center justify-center bg-transparent text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors" aria-label="Open menu" aria-expanded="false">
-      <svg id="icon-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
-      <svg id="icon-close" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    <button
+      id="mob-menu-btn"
+      type="button"
+      class="w-[36px] h-[36px] rounded-[10px] border border-[rgb(var(--border))] flex items-center justify-center bg-transparent text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <svg
+        id="icon-open"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        ><line x1="4" y1="8" x2="20" y2="8"></line><line
+          x1="4"
+          y1="16"
+          x2="20"
+          y2="16"></line></svg
+      >
+      <svg
+        id="icon-close"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        style="display:none"><path d="M18 6 6 18M6 6l12 12"></path></svg
+      >
     </button>
   </div>
 </header>
 
 <!-- Mobile nav overlay -->
-<div id="mob-nav-overlay" class="hidden fixed inset-0 bg-[rgb(0_0_0/0.45)] z-[90]"></div>
-<nav id="mob-nav" class="hidden fixed top-[56px] left-0 right-0 bg-[rgb(var(--bg))] border-b border-[rgb(var(--border))] px-5 pb-5 pt-4 z-[95] flex-col gap-1 max-h-[calc(100vh-56px)] overflow-y-auto w-full transition-transform duration-300">
-  <div class="mb-3 pb-3 border-b border-[rgb(var(--border))]">
-    <span class="inline-flex items-center gap-1.5 text-[0.72rem] font-semibold text-[#22c55e]">
-      <span class="w-[7px] h-[7px] rounded-full bg-[#22c55e] inline-block blink-anim"></span>Available for hire
-    </span>
-  </div>
-  {navLinks.map(l => (
-    <a href={l.href} class="block py-2.5 px-3 rounded-[10px] text-[0.875rem] font-medium text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors">{l.label}</a>
-  ))}
-  <div class="flex flex-wrap gap-2 mt-3.5 pt-3.5 border-t border-[rgb(var(--border))]">
-    {b.github && <a href={b.github} target="_blank" rel="noopener" class="py-1 px-3 rounded-full text-[0.72rem] font-semibold border border-[rgb(var(--border))] text-[rgb(var(--fg)/0.6)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors">GitHub ↗</a>}
-    <a href={`mailto:${b.email}`} class="py-1 px-3 rounded-full text-[0.72rem] font-semibold border border-[rgb(var(--border))] text-[rgb(var(--fg)/0.6)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors">Email ↗</a>
+<div
+  id="mob-nav-overlay"
+  class="hidden fixed inset-0 bg-[rgb(0_0_0/0.45)] z-[90]"
+>
+</div>
+<nav
+  id="mob-nav"
+  class="hidden fixed top-[56px] left-0 right-0 bg-[rgb(var(--bg))] border-b border-[rgb(var(--border))] px-5 pb-5 pt-4 z-[95] flex-col gap-1 max-h-[calc(100vh-56px)] overflow-y-auto w-full transition-transform duration-300"
+>
+
+
+  {
+    navLinks.map((l) => (
+      <a
+        href={l.href}
+        class="block py-2.5 px-3 rounded-[10px] text-[0.875rem] font-medium text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors"
+      >
+        {l.label}
+      </a>
+    ))
+  }
+  <div
+    class="flex flex-wrap gap-2 mt-3.5 pt-3.5 border-t border-[rgb(var(--border))]"
+  >
+    {
+      b.github && (
+        <a
+          href={b.github}
+          target="_blank"
+          rel="noopener"
+          class="py-1 px-3 rounded-full text-[0.72rem] font-semibold border border-[rgb(var(--border))] text-[rgb(var(--fg)/0.6)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors"
+        >
+          GitHub ↗
+        </a>
+      )
+    }
+    <a
+      href={`mailto:${b.email}`}
+      class="py-1 px-3 rounded-full text-[0.72rem] font-semibold border border-[rgb(var(--border))] text-[rgb(var(--fg)/0.6)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors"
+      >Email ↗</a
+    >
   </div>
 </nav>
 
 <!-- Desktop Floating Nav (Only shown in compact mode) -->
-{compactMode && (
-  <div id="desktop-floating-nav" class="hidden lg:flex fixed top-[20px] left-[28px] z-[100] gap-3">
-    <button id="desktop-drawer-btn" class="w-[42px] h-[42px] rounded-[12px] border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.8)] backdrop-blur-md flex items-center justify-center text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] shadow-sm transition-all shadow-[rgb(var(--fg)/0.05)]" aria-label="Open menu">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
-    </button>
-    <a href="/" class="w-[42px] h-[42px] rounded-[12px] border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.8)] backdrop-blur-md flex items-center justify-center text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] shadow-sm transition-all shadow-[rgb(var(--fg)/0.05)]" aria-label="Go home" title="Back to Home">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    </a>
-  </div>
-)}
+{
+  compactMode && (
+    <div
+      id="desktop-floating-nav"
+      class="hidden lg:flex fixed top-[20px] left-[28px] z-[100] gap-3"
+    >
+      <button
+        id="desktop-drawer-btn"
+        class="w-[42px] h-[42px] rounded-[12px] border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.8)] backdrop-blur-md flex items-center justify-center text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] shadow-sm transition-all shadow-[rgb(var(--fg)/0.05)]"
+        aria-label="Open menu"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <>
+            <line x1="4" y1="8" x2="20" y2="8" />
+            <line x1="4" y1="16" x2="20" y2="16" />
+          </>
+        </svg>
+      </button>
+      <a
+        href={homeHref}
+        class="w-[42px] h-[42px] rounded-[12px] border border-[rgb(var(--border))] bg-[rgb(var(--bg)/0.8)] backdrop-blur-md flex items-center justify-center text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] shadow-sm transition-all shadow-[rgb(var(--fg)/0.05)]"
+        aria-label="Go home"
+        title="Back to Profile Home"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <>
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </>
+        </svg>
+      </a>
+    </div>
+  )
+}
 
 <!-- ─── DESKTOP SIDEBAR ────────────────────────────── -->
-<aside id="sidebar" class={`
+<aside
+  id="sidebar"
+  class={`
   hidden lg:flex flex-col h-[100dvh] w-[270px] xl:w-[290px] shrink-0 border-r border-[rgb(var(--border))] px-[22px] py-[28px] overflow-hide bg-[rgb(var(--bg))] z-[98] transition-transform duration-400 ease-in-out
-  ${compactMode ? 'fixed top-0 left-0 -translate-x-[105%] shadow-2xl' : 'sticky top-0 translate-x-0'}
-`}>
+  ${compactMode ? "fixed top-0 left-0 -translate-x-[105%] shadow-2xl" : "sticky top-0 translate-x-0"}
+`}
+>
   <!-- Desktop Drawer Close Button -->
-  {compactMode && (
-    <button id="desktop-close-btn" class="absolute top-[28px] right-[22px] w-[30px] h-[30px] rounded-[8px] flex items-center justify-center text-[rgb(var(--fg)/0.5)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-  )}
+  {
+    compactMode && (
+      <button
+        id="desktop-close-btn"
+        class="absolute top-[28px] right-[22px] w-[30px] h-[30px] rounded-[8px] flex items-center justify-center text-[rgb(var(--fg)/0.5)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors"
+      >
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+    )
+  }
 
   <!-- Brand -->
-  <div class="sb-block flex items-center gap-2.5 mb-5 mt-[2px]">
-    {b.headshotUrl && <img src={b.headshotUrl} alt={b.name} class="w-[38px] h-[38px] rounded-full object-cover border-[2px] border-[rgb(var(--border))] shrink-0"/>}
+  <a
+    href={homeHref}
+    class="sb-block flex items-center gap-2.5 mb-5 mt-[2px] group"
+  >
+    {
+      b.headshotUrl && (
+        <img
+          src={b.headshotUrl}
+          alt={b.name}
+          class="w-[38px] h-[38px] rounded-full object-cover border-[2px] border-[rgb(var(--border))] shrink-0"
+        />
+      )
+    }
     <div>
-      <div class="font-bold text-[0.82rem] leading-[1.2]">{b.name}</div>
+      <div
+        class="font-bold text-[0.82rem] leading-[1.2] group-hover:text-[rgb(var(--grad-a))] transition-colors"
+      >
+        {b.name}
+      </div>
       <div class="text-[0.68rem] opacity-40 mt-[2px]">{b.location}</div>
     </div>
-  </div>
+  </a>
 
-  <!-- Available -->
-  <div class="sb-block mb-5">
-    <span class="inline-flex items-center gap-[7px] py-[4px] px-[12px] rounded-full border border-[rgba(34,197,94,0.4)] bg-[rgba(34,197,94,0.07)] text-[0.72rem] font-semibold text-[#22c55e]">
-      <span class="w-[7px] h-[7px] rounded-full bg-[#22c55e] inline-block shrink-0 blink-anim"></span>Available for hire
-    </span>
-  </div>
+
 
   <!-- Nav links -->
   <nav class="sb-block flex flex-col gap-[1px] mb-5">
-    {navLinks.map((l, i) => {
-      const isExternal = l.href.startsWith("http");
-      return (
-        <a href={l.href}
-           class="flex items-center gap-[9px] py-[7px] px-[9px] rounded-[9px] text-[0.78rem] font-medium text-[rgb(var(--fg)/0.52)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors group"
-           target={isExternal ? '_blank' : undefined}
-           data-navlink>
-          <span class="text-[0.6rem] font-mono opacity-30 w-[18px] shrink-0 group-hover:opacity-60 transition-opacity">{String(i+1).padStart(2,'0')}</span>
-          <span>{l.label}</span>
-        </a>
-      );
-    })}
+    {
+      navLinks.map((l, i) => {
+        const isExternal = l.href.startsWith("http");
+        return (
+          <a
+            href={l.href}
+            class="flex items-center gap-[9px] py-[7px] px-[9px] rounded-[9px] text-[0.78rem] font-medium text-[rgb(var(--fg)/0.52)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors group"
+            target={isExternal ? "_blank" : undefined}
+            data-navlink
+          >
+            <span class="text-[0.6rem] font-mono opacity-30 w-[18px] shrink-0 group-hover:opacity-60 transition-opacity">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <span>{l.label}</span>
+          </a>
+        );
+      })
+    }
   </nav>
 
   <!-- Empty space to separate nav from bottom -->
@@ -116,132 +292,200 @@ const compactMode = !isFullSidebar;
 
   <!-- Social + theme -->
   <div class="sb-block flex flex-wrap gap-[6px] mt-[20px]">
-    {b.github && <a href={b.github} target="_blank" rel="noopener" class="w-[30px] h-[30px] rounded-[8px] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--fg)/0.45)] hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg)/0.06)] transition-colors" aria-label="GitHub">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604C7.145 17.07 4.343 16.076 4.343 11.461c0-1.338.465-2.432 1.235-3.29-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.858 1.23 1.952 1.23 3.29 0 4.629-2.807 5.604-5.479 5.899.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-    </a>}
-    <a href={`mailto:${b.email}`} class="w-[30px] h-[30px] rounded-[8px] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--fg)/0.45)] hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg)/0.06)] transition-colors" aria-label="Email">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+    {
+      b.github && (
+        <a
+          href={b.github}
+          target="_blank"
+          rel="noopener"
+          class="w-[30px] h-[30px] rounded-[8px] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--fg)/0.45)] hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg)/0.06)] transition-colors"
+          aria-label="GitHub"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604C7.145 17.07 4.343 16.076 4.343 11.461c0-1.338.465-2.432 1.235-3.29-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.858 1.23 1.952 1.23 3.29 0 4.629-2.807 5.604-5.479 5.899.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+          </svg>
+        </a>
+      )
+    }
+    <a
+      href={`mailto:${b.email}`}
+      class="w-[30px] h-[30px] rounded-[8px] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--fg)/0.45)] hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg)/0.06)] transition-colors"
+      aria-label="Email"
+    >
+      <svg
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        ><rect x="2" y="4" width="20" height="16" rx="2"></rect><path
+          d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
+      >
     </a>
-    
+
     <!-- Prominent Theme Toggle Desktop -->
-    <button type="button" class="w-[30px] h-[30px] rounded-[8px] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--fg)/0.45)] hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg)/0.06)] transition-colors" onclick="window.__theme?.toggleTheme?.()" aria-label="Toggle theme">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-4.34-5.66 1.41-1.41M6.34 17.66l-1.41 1.41"/></svg>
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <button
+      type="button"
+      class="w-[30px] h-[30px] rounded-[8px] border border-[rgb(var(--border))] flex items-center justify-center text-[rgb(var(--fg)/0.45)] hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--fg)/0.06)] transition-colors"
+      onclick="window.__theme?.toggleTheme?.()"
+      aria-label="Toggle theme"
+    >
+      <svg
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        class="dark:hidden"
+        ><circle cx="12" cy="12" r="4"></circle><path
+          d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2m-4.34-5.66 1.41-1.41M6.34 17.66l-1.41 1.41"
+        ></path></svg
+      >
+      <svg
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        class="hidden dark:block"
+        ><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg
+      >
     </button>
   </div>
 </aside>
 
-<div id="desktop-overlay" class="hidden fixed inset-0 bg-[rgb(0_0_0/0.45)] z-[97] backdrop-blur-sm transition-opacity duration-300 opacity-0 lg:hidden"></div>
+<div
+  id="desktop-overlay"
+  class="hidden fixed inset-0 bg-[rgb(0_0_0/0.45)] z-[97] backdrop-blur-sm transition-opacity duration-300 opacity-0 lg:hidden"
+>
+</div>
 
 <style>
-.blink-anim {
-  animation: blink 2s ease-in-out infinite;
-}
-@keyframes blink {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(1.7); }
-}
+  .blink-anim {
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.3;
+      transform: scale(1.7);
+    }
+  }
 </style>
 
 <script>
-import { gsap } from "gsap";
+  import { gsap } from "gsap";
 
-function initSidebar() {
-  // Mobile Menu Logic
-  const mobMenuBtn = document.getElementById("mob-menu-btn");
-  const mobNav = document.getElementById("mob-nav");
-  const mobOverlay = document.getElementById("mob-nav-overlay");
-  const iconOpen = document.getElementById("icon-open");
-  const iconClose = document.getElementById("icon-close");
+  function initSidebar() {
+    const mobMenuBtn = document.getElementById("mob-menu-btn");
+    const mobNav = document.getElementById("mob-nav");
+    const mobOverlay = document.getElementById("mob-nav-overlay");
+    const iconOpen = document.getElementById("icon-open");
+    const iconClose = document.getElementById("icon-close");
 
-  function closeMobMenu() {
-    mobNav?.classList.remove("!flex");
-    mobOverlay?.classList.remove("!block");
-    if (iconOpen) iconOpen.style.display = "";
-    if (iconClose) iconClose.style.display = "none";
-    mobMenuBtn?.setAttribute("aria-expanded", "false");
-  }
-
-  function toggleMobMenu() {
-    if (mobNav?.classList.contains("!flex")) { closeMobMenu(); return; }
-    mobNav?.classList.add("!flex");
-    mobOverlay?.classList.add("!block");
-    if (iconOpen) iconOpen.style.display = "none";
-    if (iconClose) iconClose.style.display = "";
-    mobMenuBtn?.setAttribute("aria-expanded", "true");
-  }
-
-  mobMenuBtn?.addEventListener("click", toggleMobMenu);
-  mobOverlay?.addEventListener("click", closeMobMenu);
-
-  // Desktop Drawer Logic
-  const deskNav = document.getElementById("desktop-floating-nav");
-  const deskBtn = document.getElementById("desktop-drawer-btn");
-  const deskClose = document.getElementById("desktop-close-btn");
-  const sidebar = document.getElementById("sidebar");
-  const deskOverlay = document.getElementById("desktop-overlay");
-
-  function openDrawer() {
-    sidebar?.classList.remove("-translate-x-[105%]");
-    sidebar?.classList.add("translate-x-0");
-    deskOverlay?.classList.remove("hidden", "opacity-0", "lg:hidden");
-    deskOverlay?.classList.add("block", "opacity-100", "lg:block");
-    deskNav?.classList.remove("lg:flex");
-    deskNav?.classList.add("hidden");
-  }
-
-  function closeDrawer() {
-    sidebar?.classList.remove("translate-x-0");
-    sidebar?.classList.add("-translate-x-[105%]");
-    deskOverlay?.classList.add("opacity-0");
-    setTimeout(() => {
-      deskOverlay?.classList.remove("block", "lg:block", "opacity-100");
-      deskOverlay?.classList.add("hidden", "lg:hidden");
-      if (document.documentElement.clientWidth >= 1024) {
-        deskNav?.classList.add("lg:flex");
-      }
-    }, 300);
-  }
-
-  deskBtn?.addEventListener("click", openDrawer);
-  deskClose?.addEventListener("click", closeDrawer);
-  deskOverlay?.addEventListener("click", closeDrawer);
-
-  // Close menus on link click
-  document.querySelectorAll("#mob-nav a, #sidebar a").forEach(a => {
-    a.addEventListener("click", () => {
-      setTimeout(() => {
-        closeMobMenu();
-        if (deskBtn) closeDrawer(); // only close desktop drawer if it's in compact mode
-      }, 80);
-    });
-  });
-
-  // Active link state
-  const currentPath = window.location.pathname;
-  document.querySelectorAll("[data-navlink]").forEach(link => {
-    const href = link.getAttribute("href");
-    if (href === currentPath || (href !== "/" && currentPath.startsWith(href))) {
-      link.classList.add("bg-[rgb(var(--fg)/0.07)]", "text-[rgb(var(--fg))]");
-      link.classList.remove("text-[rgb(var(--fg)/0.52)]");
+    function closeMobMenu() {
+      mobNav?.classList.remove("!flex");
+      mobOverlay?.classList.remove("!block");
+      if (iconOpen) iconOpen.style.display = "";
+      if (iconClose) iconClose.style.display = "none";
+      mobMenuBtn?.setAttribute("aria-expanded", "false");
     }
-  });
 
+    function toggleMobMenu() {
+      if (mobNav?.classList.contains("!flex")) {
+        closeMobMenu();
+        return;
+      }
+      mobNav?.classList.add("!flex");
+      mobOverlay?.classList.add("!block");
+      if (iconOpen) iconOpen.style.display = "none";
+      if (iconClose) iconClose.style.display = "";
+      mobMenuBtn?.setAttribute("aria-expanded", "true");
+    }
 
-  // Slide-in Animation (only if sidebar is visibly inline on load)
-  if (sidebar && !sidebar.classList.contains("fixed")) {
-    gsap.set(".sb-block", { opacity: 0, x: -16 });
-    gsap.to(".sb-block", {
-      opacity: 1, x: 0, duration: 0.6, stagger: 0.07, ease: "power3.out", delay: 0.1
+    mobMenuBtn?.addEventListener("click", toggleMobMenu);
+    mobOverlay?.addEventListener("click", closeMobMenu);
+
+    const deskNav = document.getElementById("desktop-floating-nav");
+    const deskBtn = document.getElementById("desktop-drawer-btn");
+    const deskClose = document.getElementById("desktop-close-btn");
+    const sidebar = document.getElementById("sidebar");
+    const deskOverlay = document.getElementById("desktop-overlay");
+
+    function openDrawer() {
+      sidebar?.classList.remove("-translate-x-[105%]");
+      sidebar?.classList.add("translate-x-0");
+      deskOverlay?.classList.remove("hidden", "opacity-0", "lg:hidden");
+      deskOverlay?.classList.add("block", "opacity-100", "lg:block");
+      deskNav?.classList.remove("lg:flex");
+      deskNav?.classList.add("hidden");
+    }
+
+    function closeDrawer() {
+      sidebar?.classList.remove("translate-x-0");
+      sidebar?.classList.add("-translate-x-[105%]");
+      deskOverlay?.classList.add("opacity-0");
+      setTimeout(() => {
+        deskOverlay?.classList.remove("block", "lg:block", "opacity-100");
+        deskOverlay?.classList.add("hidden", "lg:hidden");
+        if (document.documentElement.clientWidth >= 1024) {
+          deskNav?.classList.add("lg:flex");
+        }
+      }, 300);
+    }
+
+    deskBtn?.addEventListener("click", openDrawer);
+    deskClose?.addEventListener("click", closeDrawer);
+    deskOverlay?.addEventListener("click", closeDrawer);
+
+    document.querySelectorAll("#mob-nav a, #sidebar a").forEach((a) => {
+      a.addEventListener("click", () => {
+        setTimeout(() => {
+          closeMobMenu();
+          if (deskBtn) closeDrawer();
+        }, 80);
+      });
     });
-  } else {
-    // Just make them visible instantly if in drawer mode
-    gsap.set(".sb-block", { opacity: 1, x: 0 });
-  }
-}
 
-initSidebar();
-document.addEventListener("astro:page-load", () => {
+    const currentPath = window.location.pathname;
+    document.querySelectorAll("[data-navlink]").forEach((link) => {
+      const href = link.getAttribute("href");
+      if (
+        href === currentPath ||
+        (href !== "/" &&
+          href !== "/qa" &&
+          href !== "/iot" &&
+          currentPath.startsWith(href))
+      ) {
+        link.classList.add("bg-[rgb(var(--fg)/0.07)]", "text-[rgb(var(--fg))]");
+        link.classList.remove("text-[rgb(var(--fg)/0.52)]");
+      }
+    });
+
+    if (sidebar && !sidebar.classList.contains("fixed")) {
+      gsap.set(".sb-block", { opacity: 0, x: -16 });
+      gsap.to(".sb-block", {
+        opacity: 1,
+        x: 0,
+        duration: 0.6,
+        stagger: 0.07,
+        ease: "power3.out",
+        delay: 0.1,
+      });
+    } else {
+      gsap.set(".sb-block", { opacity: 1, x: 0 });
+    }
+  }
+
+  initSidebar();
+  document.addEventListener("astro:page-load", () => {
     initSidebar();
-});
+  });
 </script>

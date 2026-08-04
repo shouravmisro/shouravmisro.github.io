@@ -1,0 +1,164 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
+import { loadSiteJson } from "../../lib/sitejson";
+
+const data = loadSiteJson();
+
+const qaProjects = data.projects.filter((p) =>
+  p.stack.some((s: string) =>
+    ["QA", "Manual Testing", "Functional Testing", "Regression Testing", "Postman"].includes(s)
+  )
+);
+
+const iotProjects = data.projects.filter((p) =>
+  p.stack.some((s: string) =>
+    ["IoT", "Embedded", "ESP32", "Arduino", "Raspberry Pi", "Firmware"].includes(s)
+  )
+);
+
+const otherProjects = data.projects.filter(
+  (p) => !qaProjects.includes(p) && !iotProjects.includes(p)
+);
+---
+
+<BaseLayout title="SQA Projects — Portfolio" description="Software Quality Assurance projects and test automation validation suites">
+  <section class="relative py-16 lg:py-24 overflow-hidden min-h-[100dvh]">
+    <Container class="relative z-10 w-full max-w-[1200px] mx-auto px-5 lg:px-8">
+      <div class="max-w-3xl mb-16 lg:mb-24">
+        <div class="inline-flex items-center gap-2 px-3 py-1 mb-6 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.02)] backdrop-blur-sm reveal-item">
+          <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+          <span class="text-xs font-semibold uppercase tracking-widest text-[rgb(var(--fg)/0.7)]">SQA Profile</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight reveal-item">
+          SQA &amp; <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-500">Testing Projects</span>
+        </h1>
+        <p class="mt-6 text-lg text-[rgb(var(--fg)/0.65)] leading-relaxed max-w-2xl reveal-item">
+          Detailed manual testing suites, API collection validation, regression matrices, and software quality defect reports.
+        </p>
+      </div>
+
+      <div class="grid gap-20">
+        <!-- QA Projects Section (First) -->
+        {qaProjects.length > 0 && (
+          <section>
+            <div class="flex items-center gap-4 mb-8 reveal-item">
+              <h2 class="text-2xl lg:text-3xl font-bold">SQA &amp; Testing Suite</h2>
+              <div class="h-[1px] flex-1 bg-gradient-to-r from-indigo-500/40 to-transparent"></div>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2">
+              {qaProjects.map((p, i) => (
+                <article class="group relative flex flex-col justify-between p-7 lg:p-8 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.015)] backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] hover:border-indigo-500/40 reveal-item" style={`--d:${i*100}ms`}>
+                  <div class="relative z-10 flex-1">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                      <div class="inline-flex px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider bg-[rgb(99,102,241,0.1)] text-indigo-400 border border-[rgb(99,102,241,0.2)]">
+                        Quality Assurance
+                      </div>
+                      <span class="text-xs font-mono text-[rgb(var(--fg)/0.4)] px-2 py-1 bg-[rgb(var(--fg)/0.03)] rounded-md border border-[rgb(var(--border))]">{p.year}</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-indigo-400 transition-colors">{p.title}</h3>
+                    <p class="text-sm font-medium text-[rgb(var(--fg)/0.5)] mb-4">{p.role}</p>
+                    <p class="text-sm text-[rgb(var(--fg)/0.65)] leading-relaxed mb-6">{p.summary}</p>
+                  </div>
+
+                  <div class="relative z-10">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                      {p.stack.map((t: string) => (
+                        <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg))] px-3 py-1 text-xs font-medium text-[rgb(var(--fg)/0.6)]">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {(p.github || p.demo) && (
+                      <div class="flex gap-3 pt-5 border-t border-[rgb(var(--border))]">
+                        {p.github && <a href={p.github} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">GitHub ↗</a>}
+                        {p.demo && <a href={p.demo} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">Live Demo ↗</a>}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <!-- IoT Projects Section -->
+        {iotProjects.length > 0 && (
+          <section>
+            <div class="flex items-center gap-4 mb-8 reveal-item">
+              <h2 class="text-2xl lg:text-3xl font-bold opacity-80">IoT &amp; Hardware Builds</h2>
+              <div class="h-[1px] flex-1 bg-[rgb(var(--border))]"></div>
+            </div>
+            <div class="grid gap-6 md:grid-cols-2">
+              {iotProjects.map((p, i) => (
+                <article class="group relative flex flex-col justify-between p-7 lg:p-8 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--fg)/0.015)] backdrop-blur-md overflow-hidden transition-all duration-500 hover:-translate-y-1 reveal-item" style={`--d:${i*100}ms`}>
+                  <div class="relative z-10 flex-1">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                      <div class="inline-flex px-2.5 py-1 rounded-md text-[0.65rem] font-bold uppercase tracking-wider bg-[rgb(236,72,153,0.1)] text-pink-400 border border-[rgb(236,72,153,0.2)]">
+                        Hardware Engineering
+                      </div>
+                      <span class="text-xs font-mono text-[rgb(var(--fg)/0.4)] px-2 py-1 bg-[rgb(var(--fg)/0.03)] rounded-md border border-[rgb(var(--border))]">{p.year}</span>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-2 group-hover:text-pink-400 transition-colors">{p.title}</h3>
+                    <p class="text-sm font-medium text-[rgb(var(--fg)/0.5)] mb-4">{p.role}</p>
+                    <p class="text-sm text-[rgb(var(--fg)/0.65)] leading-relaxed mb-6">{p.summary}</p>
+                  </div>
+
+                  <div class="relative z-10">
+                    <div class="flex flex-wrap gap-2 mb-6">
+                      {p.stack.map((t: string) => (
+                        <span class="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg))] px-3 py-1 text-xs font-medium text-[rgb(var(--fg)/0.6)]">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    {(p.github || p.demo) && (
+                      <div class="flex gap-3 pt-5 border-t border-[rgb(var(--border))]">
+                        {p.github && <a href={p.github} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">GitHub ↗</a>}
+                        {p.demo && <a href={p.demo} target="_blank" rel="noopener" class="text-sm font-bold text-[rgb(var(--fg)/0.5)] hover:text-[rgb(var(--fg))] transition-colors">Live Demo ↗</a>}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+      </div>
+    </Container>
+  </section>
+
+  <style>
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease calc(var(--d, 0ms)),
+                  transform 0.8s ease calc(var(--d, 0ms));
+    }
+    .reveal-item.in {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+  </style>
+
+  <script>
+    function parseReveals() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add("in");
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll(".reveal-item").forEach(el => io.observe(el));
+    }
+
+    parseReveals();
+    document.addEventListener("astro:page-load", parseReveals);
+  </script>
+</BaseLayout>
