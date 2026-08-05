@@ -170,7 +170,14 @@ select option {
 ================================ */
 
 @media (max-width: 640px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
   .card {
     border-radius: 14px;
+  }
+  .card, .btnalive, header, nav, aside {
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 }
