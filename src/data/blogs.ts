@@ -282,51 +282,53 @@ The hybrid system demonstrated high power efficiency gains, real-time power metr
   }
 ];
 
-export function getBlogPosts(): BlogPost[] {
+export async function getBlogPosts(): Promise<BlogPost[]> {
   let cmsPosts: BlogPost[] = [];
   try {
     const glob1 = import.meta.glob('/src/content/blogs/*.md', { eager: true });
     const glob2 = import.meta.glob('../content/blogs/*.md', { eager: true });
     const glob = { ...glob1, ...glob2 };
     
-    cmsPosts = Object.entries(glob).map(([filepath, file]: [string, any], index: number) => {
-      const fm = file.frontmatter || {};
-      
-      const filename = filepath.split('/').pop()?.replace('.md', '') || `cms-post-${index}`;
-      const slug = fm.slug || filename;
-      
-      let contentHtml = '';
-      try {
-        if (typeof file.compiledContent === 'function') {
-          contentHtml = file.compiledContent();
-        } else if (typeof file.rawContent === 'function') {
-          contentHtml = file.rawContent();
-        } else if (file.default && typeof file.default === 'string') {
-          contentHtml = file.default;
-        } else {
+    cmsPosts = await Promise.all(
+      Object.entries(glob).map(async ([filepath, file]: [string, any], index: number) => {
+        const fm = file.frontmatter || {};
+        
+        const filename = filepath.split('/').pop()?.replace('.md', '') || `cms-post-${index}`;
+        const slug = fm.slug || filename;
+        
+        let contentHtml = '';
+        try {
+          if (typeof file.compiledContent === 'function') {
+            contentHtml = await file.compiledContent();
+          } else if (typeof file.rawContent === 'function') {
+            contentHtml = file.rawContent();
+          } else if (file.default && typeof file.default === 'string') {
+            contentHtml = file.default;
+          } else {
+            contentHtml = fm.description || '';
+          }
+        } catch (err) {
           contentHtml = fm.description || '';
         }
-      } catch (err) {
-        contentHtml = fm.description || '';
-      }
 
-      if (typeof contentHtml !== 'string') {
-        contentHtml = String(contentHtml || '');
-      }
+        if (typeof contentHtml !== 'string') {
+          contentHtml = String(contentHtml || '');
+        }
 
-      return {
-        id: slug,
-        slug: slug,
-        title: fm.title || 'Untitled',
-        description: fm.description || '',
-        category: fm.category || 'Engineering',
-        date: fm.date || '2026',
-        readTime: fm.readTime || '5 min read',
-        author: fm.author || 'Shourav Misro',
-        tags: Array.isArray(fm.tags) ? fm.tags : [],
-        content: contentHtml
-      };
-    });
+        return {
+          id: slug,
+          slug: slug,
+          title: fm.title || 'Untitled',
+          description: fm.description || '',
+          category: fm.category || 'Engineering',
+          date: fm.date || '2026',
+          readTime: fm.readTime || '5 min read',
+          author: fm.author || 'Shourav Misro',
+          tags: Array.isArray(fm.tags) ? fm.tags : [],
+          content: contentHtml
+        };
+      })
+    );
   } catch (e) {
     console.error('Error loading CMS posts:', e);
     cmsPosts = [];
@@ -338,13 +340,13 @@ export function getBlogPosts(): BlogPost[] {
   return [...cmsPosts, ...fallbackPosts];
 }
 
-export function getBlogPostBySlug(slug: string): BlogPost | undefined {
-  const all = getBlogPosts();
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
+  const all = await getBlogPosts();
   return all.find((b) => b.slug === slug);
 }
 
-export function getBlogPostsByCategory(category?: string): BlogPost[] {
-  const all = getBlogPosts();
+export async function getBlogPostsByCategory(category?: string): Promise<BlogPost[]> {
+  const all = await getBlogPosts();
   if (!category || category === "All") return all;
   return all.filter((b) => b.category.toLowerCase() === category.toLowerCase());
 }

@@ -4,15 +4,15 @@ import Container from "../../components/Container.astro";
 import Button from "../../components/Button.astro";
 import { getBlogPosts, getBlogPostBySlug } from "../../data/blogs";
 
-export function getStaticPaths() {
-  const allPosts = getBlogPosts();
+export async function getStaticPaths() {
+  const allPosts = await getBlogPosts();
   return allPosts.map((post) => ({
     params: { slug: post.slug },
   }));
 }
 
 const { slug } = Astro.params;
-const post = getBlogPostBySlug(slug as string);
+const post = await getBlogPostBySlug(slug as string);
 
 if (!post) {
   return Astro.redirect("/blog");
