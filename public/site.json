@@ -23,25 +23,96 @@
     "long": "Detail-oriented Software Quality Assurance Engineer with hands-on experience in manual testing, API testing, regression testing, and test automation using Playwright. Skilled in designing and executing test plans, validating REST APIs, documenting defects, and ensuring software quality throughout the SDLC using Agile methodologies. On the embedded side, I also have experience with microcontrollers (ESP32, Arduino), sensor integration, communication protocols, and system validation."
   },
   "skills": [
-    { "id": "skill_1", "name": "Manual Testing", "level": "Expert" },
-    { "id": "skill_2", "name": "Test Case Design", "level": "Expert" },
-    { "id": "skill_3", "name": "Test Planning & RTM", "level": "Advanced" },
-    { "id": "skill_4", "name": "Bug Reporting & Defect Lifecycle", "level": "Expert" },
-    { "id": "skill_5", "name": "API Testing (Postman)", "level": "Expert" },
-    { "id": "skill_6", "name": "Playwright Automation", "level": "Advanced" },
-    { "id": "skill_7", "name": "Regression Testing", "level": "Expert" },
-    { "id": "skill_8", "name": "Jira & Trello", "level": "Advanced" },
-    { "id": "skill_9", "name": "Requirement Analysis", "level": "Advanced" },
-    { "id": "skill_10", "name": "SDLC / STLC / Agile Scrum", "level": "Advanced" },
-    { "id": "skill_11", "name": "SQL & MySQL Validation", "level": "Advanced" },
-    { "id": "skill_12", "name": "Browser DevTools", "level": "Advanced" },
-    { "id": "skill_13", "name": "Basic Security & Load Testing", "level": "Intermediate" },
-
-    { "id": "skill_14", "name": "ESP32 / Arduino / Raspberry Pi", "level": "Advanced" },
-    { "id": "skill_15", "name": "Embedded C / C++", "level": "Advanced" },
-    { "id": "skill_16", "name": "Python & Java", "level": "Intermediate" },
-    { "id": "skill_17", "name": "HTML / CSS / JavaScript", "level": "Intermediate" },
-    { "id": "skill_18", "name": "Git & Firebase", "level": "Intermediate" }
+    {
+      "id": "skill_1",
+      "name": "Manual Testing",
+      "level": "Expert"
+    },
+    {
+      "id": "skill_2",
+      "name": "Test Case Design",
+      "level": "Expert"
+    },
+    {
+      "id": "skill_3",
+      "name": "Test Planning & RTM",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_4",
+      "name": "Bug Reporting & Defect Lifecycle",
+      "level": "Expert"
+    },
+    {
+      "id": "skill_5",
+      "name": "API Testing (Postman)",
+      "level": "Expert"
+    },
+    {
+      "id": "skill_6",
+      "name": "Playwright Automation",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_7",
+      "name": "Regression Testing",
+      "level": "Expert"
+    },
+    {
+      "id": "skill_8",
+      "name": "Jira & Trello",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_9",
+      "name": "Requirement Analysis",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_10",
+      "name": "SDLC / STLC / Agile Scrum",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_11",
+      "name": "SQL & MySQL Validation",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_12",
+      "name": "Browser DevTools",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_13",
+      "name": "Basic Security & Load Testing",
+      "level": "Intermediate"
+    },
+    {
+      "id": "skill_14",
+      "name": "ESP32 / Arduino / Raspberry Pi",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_15",
+      "name": "Embedded C / C++",
+      "level": "Advanced"
+    },
+    {
+      "id": "skill_16",
+      "name": "Python & Java",
+      "level": "Intermediate"
+    },
+    {
+      "id": "skill_17",
+      "name": "HTML / CSS / JavaScript",
+      "level": "Intermediate"
+    },
+    {
+      "id": "skill_18",
+      "name": "Git & Firebase",
+      "level": "Intermediate"
+    }
   ],
   "projects": [
     {
@@ -51,7 +122,14 @@
       "summary": "Designed and executed 50+ manual test cases covering authentication, course management, enrollment, dashboard, REST API, and database workflows. Performed REST API testing using Postman, validated 500+ SQL records, and reported 20+ defects.",
       "role": "QA Engineer",
       "featured": true,
-      "stack": ["QA", "Manual Testing", "Postman", "SQL", "REST API", "Jira"],
+      "stack": [
+        "QA",
+        "Manual Testing",
+        "Postman",
+        "SQL",
+        "REST API",
+        "Jira"
+      ],
       "github": "",
       "demo": ""
     },
@@ -62,7 +140,13 @@
       "summary": "Conducted functional testing and database validation for listing, search, filtering, and backend consistency across user scenarios. Prepared structured test scenarios and defect reports.",
       "role": "QA Validation",
       "featured": true,
-      "stack": ["QA", "Functional Testing", "Database Validation", "MySQL", "Jira"],
+      "stack": [
+        "QA",
+        "Functional Testing",
+        "Database Validation",
+        "MySQL",
+        "Jira"
+      ],
       "github": "",
       "demo": ""
     },
@@ -73,7 +157,13 @@
       "summary": "Conducted manual, usability, and regression testing for mobile e-commerce workflows including product browsing, cart, checkout, and payment interactions. Identified UI and usability issues and verified fixes.",
       "role": "Mobile App Tester",
       "featured": false,
-      "stack": ["QA", "Mobile Testing", "Regression Testing", "Usability Testing", "Android"],
+      "stack": [
+        "QA",
+        "Mobile Testing",
+        "Regression Testing",
+        "Usability Testing",
+        "Android"
+      ],
       "github": "https://github.com/shouravmisro/root-android",
       "demo": ""
     },
@@ -84,7 +174,13 @@
       "summary": "Designed and executed functional and regression test cases for patient, appointment, record management, CRUD operations, and backend business logic. Validated input handling, data integrity, and SQL database consistency.",
       "role": "Backend & QA",
       "featured": false,
-      "stack": ["QA", "Functional Testing", "SQL", "CRUD Testing", "Java"],
+      "stack": [
+        "QA",
+        "Functional Testing",
+        "SQL",
+        "CRUD Testing",
+        "Java"
+      ],
       "github": "https://github.com/shouravmisro/Hospital-management-system",
       "demo": ""
     },
@@ -95,7 +191,14 @@
       "summary": "Developed a smart energy optimization system with real-time monitoring, protection, and automated control (Published at IEEE CS BDC Summer Symposium 2025). Performed system testing, data validation, sensor accuracy verification, and performance analysis.",
       "role": "IoT & Research Developer",
       "featured": true,
-      "stack": ["IoT", "Embedded", "ESP32", "IEEE Publication", "System Testing", "Sensors"],
+      "stack": [
+        "IoT",
+        "Embedded",
+        "ESP32",
+        "IEEE Publication",
+        "System Testing",
+        "Sensors"
+      ],
       "github": "https://github.com/shouravmisro/Optimal_solar_system",
       "demo": "https://shouravmisro.github.io/Optimal_solar_system/"
     },
@@ -106,7 +209,15 @@
       "summary": "Developed an ESP32 and Raspberry Pi smart home system with sensor acquisition, motion interrupts, MQTT communication, and real-time automation logic.",
       "role": "IoT / Embedded Developer",
       "featured": true,
-      "stack": ["IoT", "ESP32", "Raspberry Pi", "MQTT", "GPIO", "ADC", "Embedded"],
+      "stack": [
+        "IoT",
+        "ESP32",
+        "Raspberry Pi",
+        "MQTT",
+        "GPIO",
+        "ADC",
+        "Embedded"
+      ],
       "github": "https://github.com/shouravmisro/The-Unified-Smart-Home-Ecosystem-for-Wellness-Security-and-Efficiency",
       "demo": ""
     },
@@ -117,7 +228,13 @@
       "summary": "Built a real-time ESP32-based edge decision system using sensor data processing and low-latency firmware logic for traffic-related automation.",
       "role": "Embedded Developer",
       "featured": false,
-      "stack": ["Embedded", "ESP32", "Sensors", "Edge Computing", "Firmware"],
+      "stack": [
+        "Embedded",
+        "ESP32",
+        "Sensors",
+        "Edge Computing",
+        "Firmware"
+      ],
       "github": "",
       "demo": ""
     },
@@ -128,7 +245,12 @@
       "summary": "An Arduino-based security project with sonar, keypad, GSM, and Wi-Fi based real-time alerting and tracking features.",
       "role": "Project Developer",
       "featured": false,
-      "stack": ["IoT", "Arduino", "GSM", "Sensors"],
+      "stack": [
+        "IoT",
+        "Arduino",
+        "GSM",
+        "Sensors"
+      ],
       "github": "",
       "demo": ""
     },
@@ -139,7 +261,12 @@
       "summary": "Designed and developed a low-cost 3D-printed prosthetic hand prototype with basic mechanical actuation to assist physically disabled individuals in daily activities.",
       "role": "Project Developer",
       "featured": false,
-      "stack": ["Embedded", "3D Printing", "Servo Motor", "Hardware"],
+      "stack": [
+        "Embedded",
+        "3D Printing",
+        "Servo Motor",
+        "Hardware"
+      ],
       "github": "",
       "demo": ""
     },
@@ -150,7 +277,12 @@
       "summary": "A cloud-deployed personal dashboard web application built with Python and Flask, focused on organizing and visualizing personal data through a clean interface.",
       "role": "Developer",
       "featured": false,
-      "stack": ["Python", "Flask", "HTML", "CSS"],
+      "stack": [
+        "Python",
+        "Flask",
+        "HTML",
+        "CSS"
+      ],
       "github": "",
       "demo": ""
     },
@@ -161,7 +293,10 @@
       "summary": "Graphics-focused university project related to game-style visual work and implementation.",
       "role": "Developer",
       "featured": false,
-      "stack": ["C++", "Graphics"],
+      "stack": [
+        "C++",
+        "Graphics"
+      ],
       "github": "https://github.com/shouravmisro/underground-racing-igraphic",
       "demo": ""
     }
