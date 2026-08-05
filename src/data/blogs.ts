@@ -285,27 +285,57 @@ The hybrid system demonstrated high power efficiency gains, real-time power metr
 export function getBlogPosts(): BlogPost[] {
   let cmsPosts: BlogPost[] = [];
   try {
-    const glob = import.meta.glob('../content/blogs/*.md', { eager: true });
-    cmsPosts = Object.values(glob).map((file: any, index: number) => {
+    const glob1 = import.meta.glob('/src/content/blogs/*.md', { eager: true });
+    const glob2 = import.meta.glob('../content/blogs/*.md', { eager: true });
+    const glob = { ...glob1, ...glob2 };
+    
+    cmsPosts = Object.entries(glob).map(([filepath, file]: [string, any], index: number) => {
       const fm = file.frontmatter || {};
-      const rawBody = file.rawContent ? file.rawContent() : '';
+      
+      const filename = filepath.split('/').pop()?.replace('.md', '') || `cms-post-${index}`;
+      const slug = fm.slug || filename;
+      
+      let contentHtml = '';
+      try {
+        if (typeof file.compiledContent === 'function') {
+          contentHtml = file.compiledContent();
+        } else if (typeof file.rawContent === 'function') {
+          contentHtml = file.rawContent();
+        } else if (file.default && typeof file.default === 'string') {
+          contentHtml = file.default;
+        } else {
+          contentHtml = fm.description || '';
+        }
+      } catch (err) {
+        contentHtml = fm.description || '';
+      }
+
+      if (typeof contentHtml !== 'string') {
+        contentHtml = String(contentHtml || '');
+      }
+
       return {
-        id: fm.slug || `cms_${index}`,
-        slug: fm.slug || `cms-post-${index}`,
+        id: slug,
+        slug: slug,
         title: fm.title || 'Untitled',
         description: fm.description || '',
         category: fm.category || 'Engineering',
-        date: fm.date || '2025',
+        date: fm.date || '2026',
         readTime: fm.readTime || '5 min read',
         author: fm.author || 'Shourav Misro',
         tags: Array.isArray(fm.tags) ? fm.tags : [],
-        content: rawBody || fm.description || ''
+        content: contentHtml
       };
     });
   } catch (e) {
+    console.error('Error loading CMS posts:', e);
     cmsPosts = [];
   }
-  return [...cmsPosts, ...blogs];
+  
+  const cmsSlugs = new Set(cmsPosts.map(p => p.slug));
+  const fallbackPosts = blogs.filter(b => !cmsSlugs.has(b.slug));
+  
+  return [...cmsPosts, ...fallbackPosts];
 }
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
