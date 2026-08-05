@@ -84,6 +84,7 @@ const compactMode = !isFullSidebar;
       id="mob-menu-btn"
       type="button"
       class="w-[36px] h-[36px] rounded-[10px] border border-[rgb(var(--border))] flex items-center justify-center bg-transparent text-[rgb(var(--fg)/0.7)] hover:bg-[rgb(var(--fg)/0.07)] hover:text-[rgb(var(--fg))] transition-colors"
+      onclick="window.__toggleMobMenu?.()"
       aria-label="Open menu"
       aria-expanded="false"
     >
@@ -119,6 +120,7 @@ const compactMode = !isFullSidebar;
 <div
   id="mob-nav-overlay"
   class="hidden fixed inset-0 bg-[rgb(0_0_0/0.45)] z-[90]"
+  onclick="window.__closeMobMenu?.()"
 >
 </div>
 <nav
@@ -383,41 +385,75 @@ const compactMode = !isFullSidebar;
 <script>
   import { gsap } from "gsap";
 
-  function initSidebar() {
-    const mobMenuBtn = document.getElementById("mob-menu-btn");
+  function closeMobMenu() {
     const mobNav = document.getElementById("mob-nav");
     const mobOverlay = document.getElementById("mob-nav-overlay");
     const iconOpen = document.getElementById("icon-open");
     const iconClose = document.getElementById("icon-close");
+    const mobMenuBtn = document.getElementById("mob-menu-btn");
 
-    function closeMobMenu() {
-      mobNav?.classList.remove("!flex");
-      mobOverlay?.classList.remove("!block");
-      if (iconOpen) iconOpen.style.display = "";
-      if (iconClose) iconClose.style.display = "none";
-      mobMenuBtn?.setAttribute("aria-expanded", "false");
+    if (mobNav) {
+      mobNav.style.display = "none";
+      mobNav.classList.add("hidden");
     }
+    if (mobOverlay) {
+      mobOverlay.style.display = "none";
+      mobOverlay.classList.add("hidden");
+    }
+    if (iconOpen) iconOpen.style.display = "block";
+    if (iconClose) iconClose.style.display = "none";
+    if (mobMenuBtn) mobMenuBtn.setAttribute("aria-expanded", "false");
+  }
 
-    function toggleMobMenu() {
-      if (mobNav?.classList.contains("!flex")) {
-        closeMobMenu();
-        return;
+  function toggleMobMenu() {
+    const mobNav = document.getElementById("mob-nav");
+    const mobOverlay = document.getElementById("mob-nav-overlay");
+    const iconOpen = document.getElementById("icon-open");
+    const iconClose = document.getElementById("icon-close");
+    const mobMenuBtn = document.getElementById("mob-menu-btn");
+
+    if (!mobNav) return;
+    const isClosed =
+      mobNav.style.display === "none" ||
+      mobNav.classList.contains("hidden") ||
+      getComputedStyle(mobNav).display === "none";
+
+    if (isClosed) {
+      mobNav.style.display = "flex";
+      mobNav.classList.remove("hidden");
+      if (mobOverlay) {
+        mobOverlay.style.display = "block";
+        mobOverlay.classList.remove("hidden");
       }
-      mobNav?.classList.add("!flex");
-      mobOverlay?.classList.add("!block");
       if (iconOpen) iconOpen.style.display = "none";
-      if (iconClose) iconClose.style.display = "";
-      mobMenuBtn?.setAttribute("aria-expanded", "true");
+      if (iconClose) iconClose.style.display = "block";
+      if (mobMenuBtn) mobMenuBtn.setAttribute("aria-expanded", "true");
+    } else {
+      closeMobMenu();
     }
+  }
 
-    mobMenuBtn?.addEventListener("click", toggleMobMenu);
-    mobOverlay?.addEventListener("click", closeMobMenu);
+  (window as any).__toggleMobMenu = toggleMobMenu;
+  (window as any).__closeMobMenu = closeMobMenu;
 
+  function initSidebar() {
+    const mobMenuBtn = document.getElementById("mob-menu-btn");
+    const mobOverlay = document.getElementById("mob-nav-overlay");
     const deskNav = document.getElementById("desktop-floating-nav");
     const deskBtn = document.getElementById("desktop-drawer-btn");
     const deskClose = document.getElementById("desktop-close-btn");
     const sidebar = document.getElementById("sidebar");
     const deskOverlay = document.getElementById("desktop-overlay");
+
+    if (mobMenuBtn) {
+      mobMenuBtn.onclick = (e) => {
+        e.stopPropagation();
+        toggleMobMenu();
+      };
+    }
+    if (mobOverlay) {
+      mobOverlay.onclick = closeMobMenu;
+    }
 
     function openDrawer() {
       sidebar?.classList.remove("-translate-x-[105%]");
@@ -441,9 +477,9 @@ const compactMode = !isFullSidebar;
       }, 300);
     }
 
-    deskBtn?.addEventListener("click", openDrawer);
-    deskClose?.addEventListener("click", closeDrawer);
-    deskOverlay?.addEventListener("click", closeDrawer);
+    if (deskBtn) deskBtn.onclick = openDrawer;
+    if (deskClose) deskClose.onclick = closeDrawer;
+    if (deskOverlay) deskOverlay.onclick = closeDrawer;
 
     document.querySelectorAll("#mob-nav a, #sidebar a").forEach((a) => {
       a.addEventListener("click", () => {
