@@ -1,16 +1,16 @@
 {
   "basics": {
     "name": "Shourav Misro",
-    "headline": "Software Quality Assurance Engineer specializing in manual testing, API validation, regression testing, and Playwright automation.",
+    "headline": "Detail-oriented Software Quality Assurance Engineer with hands-on experience in manual testing, API testing, regression testing, and test automation using Playwright.",
     "roles": [
-      "QA Intern @ Samurai Geeks",
       "SQA Engineer",
-      "Manual & API Testing",
-      "Playwright Automation"
+      "QA Intern",
+      "Manual & API Tester",
+      "IoT / Embedded"
     ],
     "location": "Dhaka, Bangladesh",
     "email": "misroshourav@gmail.com",
-    "phone": "(+880) 1400-300661",
+    "phone": "(+880)1400-300661",
     "github": "https://github.com/shouravmisro",
     "linkedin": "",
     "facebook": "https://www.facebook.com/shourav.05",
@@ -20,82 +20,82 @@
   },
   "about": {
     "short": "Detail-oriented Software Quality Assurance Engineer with hands-on experience in manual testing, API testing, regression testing, and test automation using Playwright. Skilled in designing and executing test plans, validating REST APIs, documenting defects, and ensuring software quality throughout the SDLC using Agile methodologies.",
-    "long": "Detail-oriented Software Quality Assurance Engineer with hands-on experience in manual testing, API testing, regression testing, and test automation using Playwright. Skilled in designing and executing test plans, validating REST APIs, documenting defects, and ensuring software quality throughout the SDLC using Agile methodologies."
+    "long": "Detail-oriented Software Quality Assurance Engineer with hands-on experience in manual testing, API testing, regression testing, and test automation using Playwright. Skilled in designing and executing test plans, validating REST APIs, documenting defects, and ensuring software quality throughout the SDLC using Agile methodologies. On the embedded side, I also have experience with microcontrollers (ESP32, Arduino), sensor integration, communication protocols, and system validation."
   },
   "skills": [
-    { "id": "skill_1", "name": "Test Case Design & Planning", "level": "Expert" },
-    { "id": "skill_2", "name": "API Testing (Postman)", "level": "Expert" },
-    { "id": "skill_3", "name": "Playwright Automation", "level": "Advanced" },
-    { "id": "skill_4", "name": "Manual & Regression Testing", "level": "Expert" },
-    { "id": "skill_5", "name": "Defect Lifecycle & Jira", "level": "Advanced" },
-    { "id": "skill_6", "name": "STLC & Agile Scrum", "level": "Advanced" },
-    { "id": "skill_7", "name": "Requirement Analysis & RTM", "level": "Advanced" },
-    { "id": "skill_8", "name": "REST API & SQL Validation", "level": "Advanced" },
+    { "id": "skill_1", "name": "Manual Testing", "level": "Expert" },
+    { "id": "skill_2", "name": "Test Case Design", "level": "Expert" },
+    { "id": "skill_3", "name": "Test Planning & RTM", "level": "Advanced" },
+    { "id": "skill_4", "name": "Bug Reporting & Defect Lifecycle", "level": "Expert" },
+    { "id": "skill_5", "name": "API Testing (Postman)", "level": "Expert" },
+    { "id": "skill_6", "name": "Playwright Automation", "level": "Advanced" },
+    { "id": "skill_7", "name": "Regression Testing", "level": "Expert" },
+    { "id": "skill_8", "name": "Jira & Trello", "level": "Advanced" },
+    { "id": "skill_9", "name": "Requirement Analysis", "level": "Advanced" },
+    { "id": "skill_10", "name": "SDLC / STLC / Agile Scrum", "level": "Advanced" },
+    { "id": "skill_11", "name": "SQL & MySQL Validation", "level": "Advanced" },
+    { "id": "skill_12", "name": "Browser DevTools", "level": "Advanced" },
+    { "id": "skill_13", "name": "Basic Security & Load Testing", "level": "Intermediate" },
 
-    { "id": "skill_9", "name": "Python & JavaScript", "level": "Intermediate" },
-    { "id": "skill_10", "name": "Java, C & C++", "level": "Intermediate" },
-    { "id": "skill_11", "name": "MySQL & Firebase", "level": "Intermediate" },
-    { "id": "skill_12", "name": "Git & DevTools", "level": "Advanced" },
-    { "id": "skill_13", "name": "Security & Lighthouse Testing", "level": "Intermediate" },
-
-    { "id": "skill_14", "name": "ESP32 & Microcontrollers", "level": "Advanced" },
-    { "id": "skill_15", "name": "Arduino & Sensors", "level": "Advanced" },
-    { "id": "skill_16", "name": "Raspberry Pi & Embedded C", "level": "Intermediate" },
-    { "id": "skill_17", "name": "MQTT & System Validation", "level": "Advanced" }
+    { "id": "skill_14", "name": "ESP32 / Arduino / Raspberry Pi", "level": "Advanced" },
+    { "id": "skill_15", "name": "Embedded C / C++", "level": "Advanced" },
+    { "id": "skill_16", "name": "Python & Java", "level": "Intermediate" },
+    { "id": "skill_17", "name": "HTML / CSS / JavaScript", "level": "Intermediate" },
+    { "id": "skill_18", "name": "Git & Firebase", "level": "Intermediate" }
   ],
   "projects": [
     {
       "id": "proj_1",
       "title": "LearnLink LMS",
       "year": 2024,
-      "summary": "Designed and executed 50+ manual test cases covering authentication, course management, enrollment, dashboard, REST API, and database workflows. Performed REST API testing using Postman, validated 500+ SQL database records, and identified 20+ defects through structured bug reporting and regression testing. Collaborated with developers on root cause analysis, defect verification, and release validation.",
+      "summary": "Designed and executed 50+ manual test cases covering authentication, course management, enrollment, dashboard, REST API, and database workflows. Performed REST API testing using Postman, validated 500+ SQL records, and reported 20+ defects.",
       "role": "QA Engineer",
       "featured": true,
-      "stack": ["QA", "Manual Testing", "Postman", "SQL", "Jira", "REST API", "STLC"],
+      "stack": ["QA", "Manual Testing", "Postman", "SQL", "REST API", "Jira"],
       "github": "",
       "demo": ""
     },
     {
       "id": "proj_2",
-      "title": "Hospital Management System",
-      "year": 2023,
-      "summary": "Designed and executed functional and regression test cases for patient, appointment, record management, CRUD operations, and backend business logic. Validated input handling, data integrity, SQL-based database consistency, and workflow accuracy; reported defects related to validation and system logic.",
-      "role": "Backend & QA",
+      "title": "Local Business Directory",
+      "year": 2024,
+      "summary": "Conducted functional testing and database validation for listing, search, filtering, and backend consistency across user scenarios. Prepared structured test scenarios and defect reports.",
+      "role": "QA Validation",
       "featured": true,
-      "stack": ["QA", "Functional Testing", "Regression Testing", "SQL", "Java", "CRUD Validation"],
-      "github": "https://github.com/shouravmisro/Hospital-management-system",
+      "stack": ["QA", "Functional Testing", "Database Validation", "MySQL", "Jira"],
+      "github": "",
       "demo": ""
     },
     {
       "id": "proj_3",
       "title": "Root Android",
       "year": 2023,
-      "summary": "Conducted manual, usability, and regression testing for mobile e-commerce workflows including product browsing, cart, checkout, and payment interactions. Identified UI, functional, and usability issues and validated fixes to improve application stability and user experience.",
+      "summary": "Conducted manual, usability, and regression testing for mobile e-commerce workflows including product browsing, cart, checkout, and payment interactions. Identified UI and usability issues and verified fixes.",
       "role": "Mobile App Tester",
-      "featured": true,
-      "stack": ["QA", "Mobile Testing", "Usability Testing", "Regression Testing", "Android"],
+      "featured": false,
+      "stack": ["QA", "Mobile Testing", "Regression Testing", "Usability Testing", "Android"],
       "github": "https://github.com/shouravmisro/root-android",
       "demo": ""
     },
     {
       "id": "proj_4",
-      "title": "Local Business Directory",
-      "year": 2024,
-      "summary": "Conducted functional testing and database validation for listing, search, filtering, and backend consistency across multiple user scenarios. Prepared structured test scenarios and defect reports to support product improvement and reliable feature behavior.",
-      "role": "QA Validation",
-      "featured": true,
-      "stack": ["QA", "Functional Testing", "Database Validation", "Test Scenarios"],
-      "github": "",
+      "title": "Hospital Management System",
+      "year": 2023,
+      "summary": "Designed and executed functional and regression test cases for patient, appointment, record management, CRUD operations, and backend business logic. Validated input handling, data integrity, and SQL database consistency.",
+      "role": "Backend & QA",
+      "featured": false,
+      "stack": ["QA", "Functional Testing", "SQL", "CRUD Testing", "Java"],
+      "github": "https://github.com/shouravmisro/Hospital-management-system",
       "demo": ""
     },
     {
       "id": "proj_5",
       "title": "Intelligent Solar Panel System",
       "year": 2025,
-      "summary": "Abstract published at IEEE CS BDC Summer Symposium 2025. Developed a smart energy optimization system with real-time monitoring, protection, and automated control; performed system testing, data validation, sensor accuracy verification, and performance analysis.",
-      "role": "IoT & Research Lead",
+      "summary": "Developed a smart energy optimization system with real-time monitoring, protection, and automated control (Published at IEEE CS BDC Summer Symposium 2025). Performed system testing, data validation, sensor accuracy verification, and performance analysis.",
+      "role": "IoT & Research Developer",
       "featured": true,
-      "stack": ["IoT", "Embedded", "ESP32", "IEEE Publication", "Sensors", "Performance Analysis"],
+      "stack": ["IoT", "Embedded", "ESP32", "IEEE Publication", "System Testing", "Sensors"],
       "github": "https://github.com/shouravmisro/Optimal_solar_system",
       "demo": "https://shouravmisro.github.io/Optimal_solar_system/"
     },
@@ -105,15 +105,70 @@
       "year": 2025,
       "summary": "Developed an ESP32 and Raspberry Pi smart home system with sensor acquisition, motion interrupts, MQTT communication, and real-time automation logic.",
       "role": "IoT / Embedded Developer",
-      "featured": false,
+      "featured": true,
       "stack": ["IoT", "ESP32", "Raspberry Pi", "MQTT", "GPIO", "ADC", "Embedded"],
       "github": "https://github.com/shouravmisro/The-Unified-Smart-Home-Ecosystem-for-Wellness-Security-and-Efficiency",
+      "demo": ""
+    },
+    {
+      "id": "proj_7",
+      "title": "Traffic Management System",
+      "year": 2024,
+      "summary": "Built a real-time ESP32-based edge decision system using sensor data processing and low-latency firmware logic for traffic-related automation.",
+      "role": "Embedded Developer",
+      "featured": false,
+      "stack": ["Embedded", "ESP32", "Sensors", "Edge Computing", "Firmware"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_8",
+      "title": "Smart Security System",
+      "year": 2016,
+      "summary": "An Arduino-based security project with sonar, keypad, GSM, and Wi-Fi based real-time alerting and tracking features.",
+      "role": "Project Developer",
+      "featured": false,
+      "stack": ["IoT", "Arduino", "GSM", "Sensors"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_9",
+      "title": "Affordable Prosthetic Hand",
+      "year": 2019,
+      "summary": "Designed and developed a low-cost 3D-printed prosthetic hand prototype with basic mechanical actuation to assist physically disabled individuals in daily activities.",
+      "role": "Project Developer",
+      "featured": false,
+      "stack": ["Embedded", "3D Printing", "Servo Motor", "Hardware"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_10",
+      "title": "Personal Dashboard",
+      "year": 2025,
+      "summary": "A cloud-deployed personal dashboard web application built with Python and Flask, focused on organizing and visualizing personal data through a clean interface.",
+      "role": "Developer",
+      "featured": false,
+      "stack": ["Python", "Flask", "HTML", "CSS"],
+      "github": "",
+      "demo": ""
+    },
+    {
+      "id": "proj_11",
+      "title": "Underground Racing iGraphic",
+      "year": 2023,
+      "summary": "Graphics-focused university project related to game-style visual work and implementation.",
+      "role": "Developer",
+      "featured": false,
+      "stack": ["C++", "Graphics"],
+      "github": "https://github.com/shouravmisro/underground-racing-igraphic",
       "demo": ""
     }
   ],
   "experience": [
     {
-      "id": "exp_1",
+      "id": "exp_qa_samurai",
       "company": "Samurai Geeks",
       "title": "QA Intern",
       "start": "May 2026",
@@ -124,6 +179,19 @@
         "Validated business rules, REST API responses, database consistency, edge cases, and cross-module workflows to ensure software reliability.",
         "Reported and tracked defects in Jira with detailed reproduction steps, logs, severity, priority, screenshots, and validation notes.",
         "Developed and maintained Playwright automation scripts for regression testing of critical application workflows."
+      ]
+    },
+    {
+      "id": "exp_1",
+      "company": "AI ROBOT BONDHU / ICT Ministry, Bangladesh",
+      "title": "AI & Hardware Developer",
+      "start": "2016",
+      "end": "2019",
+      "highlights": [
+        "Participated in system validation and functional testing of AI modules.",
+        "Conducted hardware and software integration testing.",
+        "Supported issue identification, debugging, and performance evaluation.",
+        "Contributed to hardware integration and embedded firmware development."
       ]
     }
   ],
@@ -150,31 +218,80 @@
   "achievements": [
     {
       "id": "ach_1",
-      "title": "SQA Hackathon Champion — TECH X",
+      "title": "SQA Hackathon Champion, TECH X",
       "date": "2026",
-      "org": "TECH X",
+      "org": "Identified 20+ defects in a banking application within 3 hours through structured exploratory and functional testing",
       "link": ""
     },
     {
       "id": "ach_2",
-      "title": "BCSIR National Science Fest Runner-up (Prosthetic Hand)",
+      "title": "BCSIR National Science Fest Runner-up (Affordable Prosthetic Hand)",
       "date": "2019",
-      "org": "BCSIR",
+      "org": "Developed a low-cost prosthetic hand using embedded system principles",
       "link": ""
     },
     {
       "id": "ach_3",
       "title": "BCSIR National Science Fest Champion (Smart Security System)",
       "date": "2016",
-      "org": "BCSIR",
+      "org": "Built an Arduino-based smart security system with real-time monitoring",
       "link": ""
     },
     {
       "id": "ach_4",
-      "title": "AUST CSE Sports Achievements (Football & Futsal Champion)",
+      "title": "AUST CSE Sports Achievements",
       "date": "2022–2025",
-      "org": "AUST",
+      "org": "AC RED League Football Tournament Champion; Futsal Championship Champion; Football Championship Runner-up; Cricket Tournament Runner-up",
       "link": ""
+    },
+    {
+      "id": "ach_5",
+      "title": "Robomania 1.0 Runner-up (Bot Fight)",
+      "date": "2024",
+      "org": "Robotics Competition",
+      "link": ""
+    },
+    {
+      "id": "ach_6",
+      "title": "CEFALO AUST CSE Carnival 2.0 Runner-up (Soccer-Bot)",
+      "date": "2023",
+      "org": "AUST CSE Carnival",
+      "link": ""
+    }
+  ],
+  "research": [
+    {
+      "id": "res_1",
+      "title": "Design & Implementation of Intelligent Solar Panel System",
+      "publisher": "IEEE CS BDC Summer Symposium 2025",
+      "year": "2025",
+      "details": "Developed a smart energy optimization system with real-time monitoring, protection, and automated control; performed system testing, data validation, sensor accuracy verification, and performance analysis."
+    }
+  ],
+  "extraCurricular": [
+    {
+      "id": "ext_1",
+      "title": "Executive Member — AUST Robotics Club",
+      "org": "AUST Robotics Club",
+      "description": "Coordinated technical activities, robotics projects, and collaborative system development."
+    },
+    {
+      "id": "ext_2",
+      "title": "Executive Member — AUST Programming & Information Club",
+      "org": "AUST PIC",
+      "description": "Participated in problem-solving, development sessions, and student tech engagement."
+    },
+    {
+      "id": "ext_3",
+      "title": "Campus Ambassador — ICT Olympiad Bangladesh",
+      "org": "ICT Olympiad Bangladesh",
+      "description": "Coordinated student engagement, event promotion, and technology awareness activities."
+    },
+    {
+      "id": "ext_4",
+      "title": "Organizing Committee Member — AUST CSE Carnival 5.0, Annual Picnic, CSE Cricket Tournament & Cultural Fest",
+      "org": "AUST CSE Department",
+      "description": "Managed logistics, coordination, and team execution for large-scale events."
     }
   ],
   "settings": {

@@ -43,22 +43,23 @@ const resumeIotUrl = b.resumeIotUrl ?? "/resume-iot.pdf";
 
     {mode === "qa" && (
       <h1 class="hero-el hero-h1">
-        Quality Assurance<br/>
-        <span class="grad-text">SQA Engineer</span><br/>
+        Software Quality<br/>
+        <span class="grad-text">Assurance Engineer</span><br/>
         <span class="h1-sub">&amp; Software Tester.</span>
       </h1>
       <p class="hero-el hero-sub">
-        I'm <strong>{b.name}</strong> — a QA Intern at <em>Samurai Geeks</em> and CSE graduate specializing in
-        <em>manual testing, API validation (Postman), test case design, and Playwright test automation</em>.
-        I catch defects early, validate REST APIs &amp; database consistency, and ensure release quality across the SDLC.
+        I'm <strong>{b.name}</strong> — QA Intern at <em>Samurai Geeks</em> &amp; SQA Engineer specializing in
+        <em>manual testing, API testing (Postman), Playwright automation, and RTM test case design</em>.
+        I design structured test plans, validate REST APIs, document defects in Jira, and ensure software reliability.
       </p>
       <div class="hero-el role-row">
+        <span class="role-chip">SQA Engineer</span>
         <span class="role-chip">QA Intern @ Samurai Geeks</span>
-        <span class="role-chip">Manual &amp; API Testing</span>
+        <span class="role-chip">Manual Testing</span>
+        <span class="role-chip">REST API (Postman)</span>
         <span class="role-chip">Playwright Automation</span>
-        <span class="role-chip">Postman &amp; SQL</span>
-        <span class="role-chip">Jira · STLC</span>
-        <span class="role-chip">RTM &amp; Test Cases</span>
+        <span class="role-chip">Defect Tracking (Jira)</span>
+        <span class="role-chip">STLC / Agile Scrum</span>
       </div>
       <div class="hero-el cta-row">
         <Button href={resumeSqaUrl} target="_blank">Download SQA CV</Button>
@@ -98,16 +99,15 @@ const resumeIotUrl = b.resumeIotUrl ?? "/resume-iot.pdf";
         <span class="h1-sub">Engineer.</span>
       </h1>
       <p class="hero-el hero-sub">
-        I'm <strong>{b.name}</strong> — a CSE grad specialising in
-        <em>manual testing, API validation &amp; regression</em> with hands-on
-        <em>IoT &amp; embedded systems</em> experience. I catch bugs before users do,
-        design comprehensive test cases, and build dependable hardware systems.
+        I'm <strong>{b.name}</strong> — SQA Engineer &amp; QA Intern at <em>Samurai Geeks</em> specialising in
+        <em>manual testing, REST API validation, Playwright automation, &amp; regression</em> with hands-on
+        <em>IoT &amp; embedded systems</em> experience.
       </p>
       <div class="hero-el role-row">
         {b.roles.map((r: string) => <span class="role-chip">{r}</span>)}
-        <span class="role-chip">Manual Testing</span>
-        <span class="role-chip">Postman / API</span>
-        <span class="role-chip">Jira · SDLC</span>
+        <span class="role-chip">Manual &amp; API Testing</span>
+        <span class="role-chip">Playwright</span>
+        <span class="role-chip">Postman / Jira</span>
         <span class="role-chip">ESP32 / Arduino</span>
       </div>
       <div class="hero-el cta-row">

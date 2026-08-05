@@ -17,7 +17,7 @@ export const ProjectSchema = z.object({
   id: z.string(),
   title: z.string().min(1, "Project title is required"),
   year: z.number().int().min(2000).max(2100),
-  summary: z.string().min(1, "Summary is required").max(500),
+  summary: z.string().min(1, "Summary is required"),
   role: z.string().min(1, "Role is required"),
   featured: z.boolean().default(false),
   stack: z.array(z.string()).default([]),
@@ -52,7 +52,7 @@ export const AchievementSchema = z.object({
 export const SiteJsonSchema = z.object({
   basics: z.object({
     name: z.string().min(1, "Name is required"),
-    headline: z.string().min(1).max(300),
+    headline: z.string().min(1),
     roles: z.array(z.string()).default([]),
     location: z.string().optional(),
     email: z.string().email("Valid email required"),
@@ -65,14 +65,27 @@ export const SiteJsonSchema = z.object({
     headshotUrl: z.string().optional(),
   }),
   about: z.object({
-    short: z.string().min(1).max(600),
-    long: z.string().min(1).max(4000),
+    short: z.string().min(1),
+    long: z.string().optional(),
   }),
   skills: z.array(SkillSchema).default([]),
   projects: z.array(ProjectSchema).default([]),
   experience: z.array(ExperienceSchema).default([]),
   education: z.array(EducationSchema).default([]),
   achievements: z.array(AchievementSchema).default([]),
+  research: z.array(z.object({
+    id: z.string(),
+    title: z.string(),
+    publisher: z.string().optional(),
+    year: z.string().optional(),
+    details: z.string().optional(),
+  })).optional(),
+  extraCurricular: z.array(z.object({
+    id: z.string(),
+    title: z.string(),
+    org: z.string().optional(),
+    description: z.string().optional(),
+  })).optional(),
 
   settings: z.object({
     themeStyle: z.enum(["CleanGradient"]).default("CleanGradient"),
